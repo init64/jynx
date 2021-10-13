@@ -2,11 +2,12 @@ const express = require('express');
 const path = require('path');
 const app = express();
 const http = require('http').createServer(app);
-const io = require('socket.io')(http.listen(4041, () => {
-    console.log('Serever has been started:\n PORT: 4041');
+const port = process.argv[2] ? process.argv[2] : 4041;
+const io = require('socket.io')(http.listen(port, () => {
+    console.log('Serever has been started:\n PORT: ' + port);
 }));
 
-app.use('/', express.static(path.join(__dirname + '/public')))
+app.use('/', express.static(path.join(__dirname + '/dist')))
 
 io.on('connection', (socket) => {
     socket.on('chatMessage', data => {
@@ -16,3 +17,5 @@ io.on('connection', (socket) => {
         })
     })
 })
+
+console.log(process.argv[2])
