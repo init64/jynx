@@ -1,2 +1,2 @@
 .login
-    input.username(type="text", placeholder="Username", @keyup.enter="buttonLogin()")
+    input.username(type="text", placeholder="Username", @keyup.enter="buttonLogin()", v-if="!login")

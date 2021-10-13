@@ -5,10 +5,13 @@ html(theme="dark")
         meta(http-equiv="X-UA-Compatible", content="IE=edge")
         meta(name="viewport", content="width=device-width, initial-scale=1.0")
         title Document
+        link(rel="stylesheet", href="https://unicons.iconscout.com/release/v4.0.0/css/line.css")
         link(rel="stylesheet", href="css/style.css")
     body 
         #app
             include login.pug
+            include chat.pug
 
+        script(src="/socket.io/socket.io.js")
         script(src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js")
         script(src="js/main.js")

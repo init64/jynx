@@ -1,3 +1,7 @@
-.chat
-    
-    input(type="text")
+.chat(v-if="login")
+    .list-messages
+        include chat/message.pug
+    .bar
+        input(type="text")
+        .button
+            i.uil.uil-message

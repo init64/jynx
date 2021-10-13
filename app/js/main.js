@@ -3,11 +3,11 @@ const socket = io();
 var app = new Vue({
     el: '#app',
     data: {
-        message: 'Привет, Vue!'
+        login: false
     },
     methods: {
         buttonLogin() {
-            console.log(11);
+            this.login = true;
         }
     }
 })
