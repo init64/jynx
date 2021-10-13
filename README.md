@@ -4,8 +4,8 @@
 
 ## Installation
 ```bash
-git clone https://github.io/webgtx/webdxchat
-cd webdxchat
-npm i
-node index.js
+git clone https://github.com/Akira-Project/Mirai
+cd Mirai
+npm i -tls
+node .
 ```

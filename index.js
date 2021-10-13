@@ -1,14 +1,12 @@
 const express = require('express');
+const path = require('path');
 const app = express();
 const http = require('http').createServer(app);
 const io = require('socket.io')(http.listen(4041, () => {
     console.log('Serever has been started:\n PORT: 4041');
 }));
 
-app.get('/', (req, res) => {
-    res.sendFile(__dirname + '/index.html');
-})
-app.use(express.static(__dirname + '/assets'));
+app.use('/', express.static(path.join(__dirname + '/public')))
 
 io.on('connection', (socket) => {
     socket.on('chatMessage', data => {
