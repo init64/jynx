@@ -15,6 +15,17 @@
 .login .username:focus {
   background: var(--dimming);
 }
+.login .button {
+  cursor: pointer;
+  margin: 16px auto 0 auto;
+  padding: 8px 0;
+  max-width: 96px;
+  text-align: center;
+  background: var(--C1);
+}
+.login .button:active {
+  transform: scale(0.9);
+}
 .login .colors {
   display: flex;
   align-items: center;

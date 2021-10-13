@@ -17,6 +17,19 @@
         }
     }
 
+    .button {
+        cursor: pointer;
+        margin: 16px auto 0 auto;
+        padding: 8px 0;
+        max-width: 96px;
+        text-align: center;
+        background: var(--C1);
+
+        &:active {
+            transform: scale(.9);
+        }
+    }
+
     .colors {
         display: flex;
         align-items: center;

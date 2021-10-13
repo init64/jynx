@@ -11,20 +11,26 @@
   <body> 
     <div id="app">
       <div class="login" v-if="!login">
-        <input class="username" type="text" placeholder="Username" @keyup.enter="buttonLogin" v-model="user.username">
-        <ul class="colors">
-          <li style="background: #7579ff;" @click="setColor('#7579ff')"></li>
-        </ul>
+        <input class="username" type="text" placeholder="Username" @keyup.enter="buttonLogin()" v-model="user.username">
+        <div class="button" @click="buttonLogin()">Войти</div>
       </div>
       <div class="chat" v-if="login">
         <div class="bg" style="background-image: url('https://s.cafebazaar.ir/1/upload/screenshot/com.sadrooid15.Materialwallpapers5.jpg')"></div>
         <div class="block">
           <div class="list-messages">
-            <div class="message" v-for="message of messages" :key="message">1</div>
+            <div class="message" v-for="message of messages" :key="message" :id="message.id">
+              <div>
+                <div class="header">
+                  <div class="username" :style="{ color: message.user.color }">{{ message.user.username }}</div>
+                  <div class="date">{{ unix().day }} {{ unix().month_name }} {{ unix().year }}</div>
+                </div>
+                <div class="content">{{ message.content }}</div>
+              </div>
+            </div>
           </div>
           <div class="bar">
-            <input type="text">
-            <div class="button"><i class="uil uil-message"></i></div>
+            <input type="text" placeholder="Ваше сообщение" @keyup.enter="sendMessage()" v-model="content">
+            <div class="button" @click="sendMessage()"><i class="uil uil-message"></i></div>
           </div>
         </div>
       </div>

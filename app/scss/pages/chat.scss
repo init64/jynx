@@ -1,3 +1,5 @@
+@import 'chat/message';
+
 .chat {
     .bg {
         width: 100%;
@@ -7,22 +9,50 @@
     }
 
     .block {
-        padding: 16px 32px;
+        padding: 32px 32px 16px 32px;
         width: 70%;
         height: 80vh;
         position: absolute;
         left: 50%;
         bottom: 0px;
-        border-radius: 25px 25px 0 0;
-        background: var(--bg);
+        border-radius: 35px 35px 0 0;
+        background: linear-gradient(45deg, #151518d2, #000000d2);
         transform: translateX(-50%);
 
         .list-messages {
-            height: calc(100% - 48px);
+            margin: 0 0 8px 0;
+            height: calc(100% - 32px - 8px);
+            max-height: calc(100% - 32px - 8px);
+            overflow: auto;
         }
 
         .bar {
-            
+            display: flex;
+            align-items: center;
+
+            input {
+                padding: 8px 16px;
+                width: 100%;
+                color: var(--color);
+                border-bottom: 1px solid var(--C1);
+                background: var(--T);
+                transition: .2s;
+            }
+
+            .button {
+                cursor: pointer;
+                margin: 0 0 0 16px;
+                width: 32px;
+                height: 32px;
+                font-size: 14px;
+                text-align: center;
+                line-height: 32px;
+                background: var(--C1);
+
+                &:active {
+                    transform: scale(.9);
+                }
+            }
         }
     }
 }

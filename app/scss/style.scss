@@ -1,5 +1,7 @@
 @use 'theme' as *;
 
+@import 'data-title';
+
 @import 'pages/login', 'pages/chat';
 
 body {

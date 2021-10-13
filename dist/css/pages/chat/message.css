@@ -1,0 +1,43 @@
+.chat .list-messages .message {
+  display: flex;
+  margin: 0 0 16px 0;
+  align-items: flex-start;
+}
+.chat .list-messages .message .user {
+  margin: 0 8px 0 0;
+}
+.chat .list-messages .message .user .avatar {
+  position: relative;
+}
+.chat .list-messages .message .user .avatar .image {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background-size: 100%;
+}
+.chat .list-messages .message .user .avatar .platform {
+  width: 18px;
+  height: 18px;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  color: var(--C2);
+  font-size: 12px;
+  text-align: center;
+  line-height: 18px;
+  border-radius: 50%;
+  background: var(--bg);
+}
+.chat .list-messages .message .header {
+  display: flex;
+  align-items: center;
+}
+.chat .list-messages .message .header .date {
+  margin: 0 8px;
+  color: var(--color-2);
+  font-size: 12px;
+}
+.chat .list-messages .message .content {
+  padding: 8px;
+  color: var(--color-2);
+}

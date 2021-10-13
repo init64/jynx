@@ -1,3 +1,47 @@
+.chat .list-messages .message {
+  display: flex;
+  margin: 0 0 16px 0;
+  align-items: flex-start;
+}
+.chat .list-messages .message .user {
+  margin: 0 8px 0 0;
+}
+.chat .list-messages .message .user .avatar {
+  position: relative;
+}
+.chat .list-messages .message .user .avatar .image {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background-size: 100%;
+}
+.chat .list-messages .message .user .avatar .platform {
+  width: 18px;
+  height: 18px;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  color: var(--C2);
+  font-size: 12px;
+  text-align: center;
+  line-height: 18px;
+  border-radius: 50%;
+  background: var(--bg);
+}
+.chat .list-messages .message .header {
+  display: flex;
+  align-items: center;
+}
+.chat .list-messages .message .header .date {
+  margin: 0 8px;
+  color: var(--color-2);
+  font-size: 12px;
+}
+.chat .list-messages .message .content {
+  padding: 8px;
+  color: var(--color-2);
+}
+
 .chat .bg {
   width: 100%;
   height: 100vh;
@@ -5,16 +49,44 @@
   background-attachment: fixed;
 }
 .chat .block {
-  padding: 16px 32px;
+  padding: 32px 32px 16px 32px;
   width: 70%;
   height: 80vh;
   position: absolute;
   left: 50%;
   bottom: 0px;
-  border-radius: 25px 25px 0 0;
-  background: var(--bg);
+  border-radius: 35px 35px 0 0;
+  background: linear-gradient(45deg, #151518d2, #000000d2);
   transform: translateX(-50%);
 }
 .chat .block .list-messages {
-  height: calc(100% - 48px);
+  margin: 0 0 8px 0;
+  height: calc(100% - 32px - 8px);
+  max-height: calc(100% - 32px - 8px);
+  overflow: auto;
+}
+.chat .block .bar {
+  display: flex;
+  align-items: center;
+}
+.chat .block .bar input {
+  padding: 8px 16px;
+  width: 100%;
+  color: var(--color);
+  border-bottom: 1px solid var(--C1);
+  background: var(--T);
+  transition: 0.2s;
+}
+.chat .block .bar .button {
+  cursor: pointer;
+  margin: 0 0 0 16px;
+  width: 32px;
+  height: 32px;
+  font-size: 14px;
+  text-align: center;
+  line-height: 32px;
+  background: var(--C1);
+}
+.chat .block .bar .button:active {
+  transform: scale(0.9);
 }

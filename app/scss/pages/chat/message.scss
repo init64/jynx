@@ -1,0 +1,54 @@
+.chat {
+    .list-messages {
+        .message {
+            display: flex;
+            margin: 0 0 16px 0;
+            align-items: flex-start;
+
+            .user {
+                margin: 0 8px 0 0;
+
+                .avatar {
+                    position: relative;
+
+                    .image {
+                        width: 48px;
+                        height: 48px;
+                        border-radius: 50%;
+                        background-size: 100%;
+                    }
+
+                    .platform {
+                        width: 18px;
+                        height: 18px;
+                        position: absolute;
+                        right: 0;
+                        bottom: 0;
+                        color: var(--C2);
+                        font-size: 12px;
+                        text-align: center;
+                        line-height: 18px;
+                        border-radius: 50%;
+                        background: var(--bg);
+                    }
+                }
+            }
+
+            .header {
+                display: flex;
+                align-items: center;
+
+                .date {
+                    margin: 0 8px;
+                    color: var(--color-2);
+                    font-size: 12px;
+                }
+            }
+
+            .content {
+                padding: 8px;
+                color: var(--color-2);
+            }
+        }
+    }
+}

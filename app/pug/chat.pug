@@ -4,6 +4,6 @@
         .list-messages
             include chat/message.pug
         .bar
-            input(type="text")
-            .button
+            input(type="text", placeholder="Ваше сообщение", @keyup.enter="sendMessage()", v-model="content")
+            .button(@click="sendMessage()")
                 i.uil.uil-message

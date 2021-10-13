@@ -1,1 +1,11 @@
-.message(v-for="message of messages", :key="message") 1
+.message(v-for="message of messages", :key="message", :id="message.id")
+    //- .user
+    //-     .avatar
+    //-         .image(:style="{ 'background-image': `url('https://gamebomb.ru/files/galleries/001/5/51/292836.jpg')` }")
+    //-         .platform(:data-ui-title="message.user.platform")
+    //-             i(:class="platforms[message.user.platform]")
+    div
+        .header
+            .username(:style="{ color: message.user.color }") {{ message.user.username }}
+            .date {{ unix().day }} {{ unix().month_name }} {{ unix().year }}
+        .content {{ message.content }}
