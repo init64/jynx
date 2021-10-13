@@ -1,14 +1,27 @@
 const socket = io();
 
-var app = new Vue({
+const app = new Vue({
     el: '#app',
     data: {
-        login: false
+        login: false,
+        user: {}
     },
     methods: {
         buttonLogin() {
+            socket.emit('user:update', { username: this.user.username })
             this.login = true;
+        },
+        setColor(color) {
+            socket.emit('user:update', { color })
         }
+    },
+    mounted() {
+        socket.emit('user:connect', localStorage['userID'])
+
+        socket.on('user:loadUser', user => {
+            this.user = user;
+            localStorage.setItem('userID', user.id)
+        })
     }
 })
 

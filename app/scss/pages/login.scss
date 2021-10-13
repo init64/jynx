@@ -16,4 +16,15 @@
             background: var(--dimming);
         }
     }
+
+    .colors {
+        display: flex;
+        align-items: center;
+
+        li {
+            width: 24px;
+            height: 24px;
+            border-radius: 5px;
+        }
+    }
 }

@@ -15,3 +15,12 @@
 .login .username:focus {
   background: var(--dimming);
 }
+.login .colors {
+  display: flex;
+  align-items: center;
+}
+.login .colors li {
+  width: 24px;
+  height: 24px;
+  border-radius: 5px;
+}
