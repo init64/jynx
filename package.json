@@ -11,5 +11,14 @@
   "dependencies": {
     "express": "^4.17.1",
     "socket.io": "^4.1.2"
+  },
+  "devDependencies": {
+    "browser-sync": "^2.27.5",
+    "gulp": "^4.0.2",
+    "gulp-notify": "^4.0.0",
+    "gulp-plumber": "^1.2.1",
+    "gulp-pug": "^5.0.0",
+    "gulp-sass": "^5.0.0",
+    "gulp-scss": "^1.4.0"
   }
 }
