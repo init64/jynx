@@ -1,0 +1,19 @@
+.login {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    .username {
+        padding: 10px 24px;
+        color: var(--color);
+        text-align: center;
+        border-bottom: 1px solid var(--C1);
+        background: var(--T);
+        transition: .2s;
+
+        &:focus {
+            background: var(--dimming);
+        }
+    }
+}

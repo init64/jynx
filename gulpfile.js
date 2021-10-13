@@ -40,7 +40,7 @@ const webServer = () => {
     },
     port: 9000,
     host: 'localhost',
-    notify: true
+    notify: false
   })
 }
 

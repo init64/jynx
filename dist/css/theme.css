@@ -1,0 +1,16 @@
+:root {
+  --C1: #7579ff;
+  --T: ;
+}
+
+html[theme=dark] {
+  --color: #e8e8e8;
+  --bg: #06070d;
+  --dimming: #ffffff25;
+}
+
+html[theme=light] {
+  --color: #06070d;
+  --bg: #e8e8e8;
+  --dimming: #00000025;
+}

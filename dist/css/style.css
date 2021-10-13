@@ -1,72 +1,66 @@
-@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap");
-* {
-  margin: 0;
-  padding: 0;
+:root {
+  --C1: #7579ff;
+  --T: ;
+}
+
+html[theme=dark] {
+  --color: #e8e8e8;
+  --bg: #06070d;
+  --dimming: #ffffff25;
+}
+
+html[theme=light] {
+  --color: #06070d;
+  --bg: #e8e8e8;
+  --dimming: #00000025;
+}
+
+.login {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.login .username {
+  padding: 10px 24px;
+  color: var(--color);
+  text-align: center;
+  border-bottom: 1px solid var(--C1);
+  background: var(--T);
+  transition: 0.2s;
+}
+.login .username:focus {
+  background: var(--dimming);
 }
 
 body {
-  position: relative;
-  background-color: #111;
-  color: #fff;
-  font-family: "Roboto", sans-serif;
+  margin: 0;
+  padding: 0;
+  color: var(--color);
+  font-family: "Open Sans", sans-serif;
+  background-color: var(--bg);
 }
 
-.messages {
-  background-color: #333;
-  border-radius: 5px;
-  width: 60vw;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  margin: 0 auto;
+ul, li {
+  list-style-type: none;
+  margin-block-start: 0;
+  margin-block-end: 0;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+  padding-inline-start: 0px;
 }
 
-.messages > li {
-  padding: 10px;
-  margin: 5px;
-  background-color: #00a2ff;
-  border-radius: 7px;
+a {
+  text-decoration: none;
 }
 
-.messages > li > span {
-  color: black;
-}
-
-/* Botbar */
-.botbar {
-  background: rgba(0, 0, 0, 0.5);
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: 10%;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-}
-
-.username {
-  padding: 5px;
-  border-radius: 6px;
-}
-
-.input {
+input, textarea {
   outline: none;
   border: none;
-  border-radius: 14px;
-  height: 40%;
-  width: 60%;
-  background-color: #000;
-  padding: 5px;
-  color: #fff;
 }
 
-.button {
-  color: #fff;
-  border-radius: 7px;
-  background-color: #00a2ff;
-  height: 50%;
-  width: 10%;
-  border: none;
+xmp {
+  font-family: "Open Sans", sans-serif;
+  white-space: pre;
+  margin: 0px;
 }
