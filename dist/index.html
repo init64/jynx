@@ -17,12 +17,15 @@
         </ul>
       </div>
       <div class="chat" v-if="login">
-        <div class="list-messages">
-          <div class="mesasge"></div>
-        </div>
-        <div class="bar">
-          <input type="text">
-          <div class="button"><i class="uil uil-message"></i></div>
+        <div class="bg" style="background-image: url('https://s.cafebazaar.ir/1/upload/screenshot/com.sadrooid15.Materialwallpapers5.jpg')"></div>
+        <div class="block">
+          <div class="list-messages">
+            <div class="message" v-for="message of messages" :key="message">1</div>
+          </div>
+          <div class="bar">
+            <input type="text">
+            <div class="button"><i class="uil uil-message"></i></div>
+          </div>
         </div>
       </div>
     </div>

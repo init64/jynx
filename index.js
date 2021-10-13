@@ -32,16 +32,6 @@ io.on('connection', socket => {
         socket.emit('user:loadUser', users[id])
     })
 
-    // socket.on('user:login', data => {
-    //     let users = getUsers();
-    //     let user = users[socket.userID]
-    //     if (user.username === data.username) return;
-    //         else {
-    //             user.username = data.username;
-    //             loadUsers(users);
-    //         }
-    // })
-
     socket.on('user:update', params => {
         let users = getUsers();
         let user = users[socket.userID]

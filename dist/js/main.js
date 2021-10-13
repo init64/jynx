@@ -4,7 +4,11 @@ const app = new Vue({
     el: '#app',
     data: {
         login: false,
-        user: {}
+        user: {},
+        messages: [
+            { message: { content: '123321', id: 'test' }, user: { username: 'Heito' } },
+            { message: { content: '321123', id: 'test' }, user: { username: 'Heito' } }
+        ]
     },
     methods: {
         buttonLogin() {
