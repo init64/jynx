@@ -1,4 +1,4 @@
 node_modules
 package-lock.json
-json/message.json
+json/messages.json
 json/users.json
