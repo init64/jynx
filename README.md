@@ -1,6 +1,6 @@
 # Dev branch
 
-# WebDxChat - OpenSource Web Application
+# AkiraProject - OpenSource Web Application
 
 ## Installation
 ```bash
@@ -9,3 +9,7 @@ cd Mirai
 npm i -tls
 node .
 ```
+
+## JSON Files
+> Create a file `users.json` and write data -> ` {} `
+> Create a file `messages.json` and write data -> ` [] `

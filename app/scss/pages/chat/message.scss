@@ -42,15 +42,22 @@
                 display: flex;
                 align-items: center;
 
+                .username {
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                    overflow: hidden;
+                }
+
                 .date {
                     margin: 0 8px;
                     color: var(--color-2);
                     font-size: 12px;
+                    white-space: nowrap;
                 }
             }
 
             .content {
-                padding: 8px;
+                padding: 4px 0;
                 color: var(--color-2);
             }
         }

@@ -1,7 +1,7 @@
 .message(v-for="message of messages", :key="message", :id="message.id")
     .user
-        .avatar
-            .image(:style="{ 'background-image': `url('${user.avatar}')` }")
+        .avatar(v-if="message.user.avatar")
+            .image(:style="{ 'background-image': `url('${message.user.avatar}')` }")
             //- .platform(:data-ui-title="message.user.platform")
             //-     i(:class="platforms[message.user.platform]")
     div

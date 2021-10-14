@@ -33,6 +33,18 @@ let onlineUsers = []
 
 io.on('connection', socket => {
 
+    // ? Functions
+    const emitLoadUsers = () => {
+        socket.on('chat:getUsers', () => {
+            let users = getUsers();
+            io.emit('chat:loadUsers', onlineUsers.map(x => {
+                x = users[x]
+                return x
+            }))
+        })
+    }
+
+
     // * System Events
     socket.emit('system:technicalWorks', getConfig().technicalWorks)
 
@@ -50,6 +62,7 @@ io.on('connection', socket => {
         socket.userID = id;
         if (!onlineUsers.find(f => f === socket.userID)) onlineUsers.push(socket.userID)
         socket.emit('user:loadUser', users[id])
+        emitLoadUsers()
     })
 
     socket.on('user:update', params => {
@@ -57,10 +70,12 @@ io.on('connection', socket => {
         let user = users[socket.userID]
         for (let param in params) user[param] = params[param];
         loadUsers(users)
+        emitLoadUsers()
     })
 
     socket.on('disconnect', () => {
         onlineUsers = onlineUsers.filter(f => f !== socket.userID)
+        emitLoadUsers()
     })
 
 
@@ -75,11 +90,7 @@ io.on('connection', socket => {
     })
 
     socket.on('chat:getUsers', () => {
-        let users = getUsers();
-        socket.emit('chat:loadUsers', onlineUsers.map(x => {
-            x = users[x]
-            return x
-        }))
+        emitLoadUsers()
     })
 
     socket.on('chat:sendMessage', message => {

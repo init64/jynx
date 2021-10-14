@@ -1,6 +1,6 @@
 .user(v-for="user of users", :key="user", :id="user.id")
     .user
-        .avatar
+        .avatar(v-if="user.avatar")
             .image(:style="{ 'background-image': `url('${user.avatar}')` }")
             //- .platform(:data-ui-title="user.platform")
             //-     i(:class="platforms[user.platform]")

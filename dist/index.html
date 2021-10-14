@@ -11,7 +11,13 @@
   <body> 
     <div id="app">
       <div class="login" v-if="page === 'login'">
-        <input class="username" type="text" placeholder="Username" @keyup.enter="buttonLogin()" v-model="user.username">
+        <input class="username" type="text" maxlength="36" placeholder="Username" @keyup.enter="buttonLogin()" v-model="mUser.username">
+        <ul class="colors">
+          <li v-for="color of colors" :key="color" :style="{ 'background': color }" :class="{ 'active': mUser.color === color }" @click="mUser.color = color"></li>
+          <label :style="{ 'background': mUser.color }">
+            <input type="color" v-model="mUser.color">
+          </label>
+        </ul>
         <div class="button" @click="buttonLogin()">Войти</div>
       </div>
       <div class="chat" v-if="page === 'chat'">
@@ -19,8 +25,8 @@
         <div class="chat-header">
           <div class="logo" style="background-image: url('https://e7.pngegg.com/pngimages/197/457/png-clipart-round-multicolored-logo-vanamo-logo-icons-logos-emojis-tech-companies.png');"></div>
           <div class="user" @click="profile.open = !profile.open">
-            <div class="avatar" :style="{ 'background-image': `url('${user.avatar}')` }"></div>
-            <div class="username">{{ user.username }}</div>
+            <div class="avatar" v-if="mUser.avatar" :style="{ 'background-image': `url('${mUser.avatar}')` }"></div>
+            <div class="username">{{ mUser.username }}</div>
             <ul class="buttons" :class="{ 'active': profile.open }">
               <li @click="exitUser()">Выйти</li>
             </ul>
@@ -32,9 +38,10 @@
         </div>
         <div class="block">
           <div class="users" v-if="panels.users">
+            <div class="c-title">Участники</div>
             <div class="user" v-for="user of users" :key="user" :id="user.id">
               <div class="user">
-                <div class="avatar">
+                <div class="avatar" v-if="user.avatar">
                   <div class="image" :style="{ 'background-image': `url('${user.avatar}')` }"></div>
                 </div>
               </div>
@@ -49,8 +56,8 @@
             <div class="list-messages">
               <div class="message" v-for="message of messages" :key="message" :id="message.id">
                 <div class="user">
-                  <div class="avatar">
-                    <div class="image" :style="{ 'background-image': `url('${user.avatar}')` }"></div>
+                  <div class="avatar" v-if="message.user.avatar">
+                    <div class="image" :style="{ 'background-image': `url('${message.user.avatar}')` }"></div>
                   </div>
                 </div>
                 <div>

@@ -135,12 +135,34 @@ html[theme=light] {
 }
 .login .colors {
   display: flex;
+  margin: 8px 0 0 0;
   align-items: center;
+  justify-content: center;
 }
 .login .colors li {
+  cursor: pointer;
+  margin: 0 4px;
   width: 24px;
   height: 24px;
   border-radius: 5px;
+  transition: 0.2s;
+}
+.login .colors li:hover, .login .colors li.active {
+  transform: scale(1.1);
+}
+.login .colors label {
+  cursor: pointer;
+  margin: 0 4px;
+  width: 24px;
+  height: 24px;
+  border-radius: 5px;
+}
+.login .colors label input {
+  padding: 0;
+  width: 0;
+  height: 0;
+  opacity: 0;
+  z-index: -1;
 }
 
 .chat .list-messages .message {
@@ -180,13 +202,19 @@ html[theme=light] {
   display: flex;
   align-items: center;
 }
+.chat .list-messages .message .header .username {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
 .chat .list-messages .message .header .date {
   margin: 0 8px;
   color: var(--color-2);
   font-size: 12px;
+  white-space: nowrap;
 }
 .chat .list-messages .message .content {
-  padding: 8px;
+  padding: 4px 0;
   color: var(--color-2);
 }
 
@@ -285,6 +313,12 @@ html[theme=light] {
   width: 256px;
   box-shadow: 10px 0px 25px -25px #000000;
   background: #00000035;
+}
+.chat .block .users .c-title {
+  margin: 8px 8px 0 8px;
+  color: var(--color-2);
+  font-size: 12px;
+  text-transform: uppercase;
 }
 .chat .block .users .user {
   display: flex;

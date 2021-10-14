@@ -3,8 +3,8 @@
     .chat-header
         .logo(style="background-image: url('https://e7.pngegg.com/pngimages/197/457/png-clipart-round-multicolored-logo-vanamo-logo-icons-logos-emojis-tech-companies.png');")
         .user(@click="profile.open = !profile.open")
-            .avatar(:style="{ 'background-image': `url('${user.avatar}')` }")
-            .username {{ user.username }}
+            .avatar(v-if="mUser.avatar", :style="{ 'background-image': `url('${mUser.avatar}')` }")
+            .username {{ mUser.username }}
             ul.buttons(:class="{ 'active': profile.open }")
                 li(@click="exitUser()") Выйти
         ul.menu
@@ -14,6 +14,7 @@
                 i.uil.uil-users-alt
     .block
         .users(v-if="panels.users")
+            .c-title Участники
             include chat/user.pug
         .channel
             .list-messages

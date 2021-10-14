@@ -122,6 +122,13 @@
             box-shadow: 10px 0px 25px -25px #000000;
             background: #00000035;
 
+            .c-title {
+                margin: 8px 8px 0 8px;
+                color: var(--color-2);
+                font-size: 12px;
+                text-transform: uppercase;
+            }
+
             .user {
                 display: flex;
                 margin: 4px;

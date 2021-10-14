@@ -35,13 +35,19 @@
   display: flex;
   align-items: center;
 }
+.chat .list-messages .message .header .username {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
 .chat .list-messages .message .header .date {
   margin: 0 8px;
   color: var(--color-2);
   font-size: 12px;
+  white-space: nowrap;
 }
 .chat .list-messages .message .content {
-  padding: 8px;
+  padding: 4px 0;
   color: var(--color-2);
 }
 
@@ -140,6 +146,12 @@
   width: 256px;
   box-shadow: 10px 0px 25px -25px #000000;
   background: #00000035;
+}
+.chat .block .users .c-title {
+  margin: 8px 8px 0 8px;
+  color: var(--color-2);
+  font-size: 12px;
+  text-transform: uppercase;
 }
 .chat .block .users .user {
   display: flex;

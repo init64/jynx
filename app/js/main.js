@@ -4,7 +4,7 @@ const app = new Vue({
     el: '#app',
     data: {
         page: 'login',
-        user: {},
+        mUser: {},
         messages: [],
         content: '',
         platforms: {
@@ -19,18 +19,23 @@ const app = new Vue({
         },
         profile: {
             open: false
-        }
+        },
+        colors: []
     },
     methods: {
         buttonLogin() {
-            socket.emit('user:update', { username: this.user.username })
-            this.page = 'chat';
+            if (this.mUser.username.trim() === '') return;
+            new Promise((res, rej) => {
+                socket.emit('user:update', { username: this.mUser.username, color: this.mUser.color })
+                this.page = 'chat';
+                res('end')
+            }).then(() => {
+                socket.emit('chat:getMessages')
+                socket.emit('chat:getUsers')
+            })
         },
         exitUser() {
             this.page = 'login';
-        },
-        setColor(color) {
-            socket.emit('user:update', { color })
         },
         sendMessage() {
             if (this.content.trim() === '') return
@@ -69,7 +74,12 @@ const app = new Vue({
             }
         },
         setChatDown() {
-            document.querySelector('.chat .list-messages').scrollTop = document.querySelector('.chat .list-messages').scrollHeight;
+            if (this.page === 'chat') document.querySelector('.chat .list-messages').scrollTop = document.querySelector('.chat .list-messages').scrollHeight;
+        },
+        randomHex(count) {
+            let array = []
+            for (let i = 0; i < count; i++) array.push('#' + Math.random().toString(16).substr(-6))
+            return array
         }
     },
     mounted() {
@@ -80,11 +90,11 @@ const app = new Vue({
 
         socket.emit('user:connect', localStorage['userID'])
 
+        this.colors = this.randomHex(5);
+
         socket.on('user:loadUser', user => {
-            this.user = user;
+            this.mUser = user;
             localStorage.setItem('userID', user.id)
-            socket.emit('chat:getMessages')
-            socket.emit('chat:getUsers')
         })
 
         socket.on('chat:loadMessages', messages => {
