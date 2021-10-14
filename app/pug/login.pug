@@ -1,4 +1,4 @@
-.login(v-if="!login")
+.login(v-if="page === 'login'")
     input.username(type="text", placeholder="Username", @keyup.enter="buttonLogin()", v-model="user.username")
     //- ul.colors
     //-     li(style="background: #7579ff;", @click="setColor('#7579ff')")

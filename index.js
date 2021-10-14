@@ -14,6 +14,8 @@ const { generat } = require('./q.js')
 
 app.use('/', express.static(path.join(__dirname + '/dist')))
 
+const getConfig = () => JSON.parse(fs.readFileSync('./json/config.json', 'utf-8'));
+
 const getUsers = () => JSON.parse(fs.readFileSync('./json/users.json', 'utf-8'));
 const loadUsers = data => fs.writeFile('./json/users.json', JSON.stringify(data), 'utf-8', err => err ? console.log(err) : '')
 
@@ -27,7 +29,13 @@ const getPlatform = pf => {
     if (/Linux/.test(pf)) return 'Linux'
 }
 
+let onlineUsers = []
+
 io.on('connection', socket => {
+
+    // * System Events
+    socket.emit('system:technicalWorks', getConfig().technicalWorks)
+
 
     // * User Events
     socket.on('user:connect', userID => {
@@ -40,6 +48,7 @@ io.on('connection', socket => {
         }
         users[id]['platform'] = getPlatform(socket.handshake.headers['user-agent'])
         socket.userID = id;
+        if (!onlineUsers.find(f => f === socket.userID)) onlineUsers.push(socket.userID)
         socket.emit('user:loadUser', users[id])
     })
 
@@ -50,6 +59,10 @@ io.on('connection', socket => {
         loadUsers(users)
     })
 
+    socket.on('disconnect', () => {
+        onlineUsers = onlineUsers.filter(f => f !== socket.userID)
+    })
+
 
     // * Chat Events
     socket.on('chat:getMessages', () => {
@@ -57,6 +70,14 @@ io.on('connection', socket => {
             users = getUsers();
         socket.emit('chat:loadMessages', messages.map(x => {
             x.user = users[x.user]
+            return x
+        }))
+    })
+
+    socket.on('chat:getUsers', () => {
+        let users = getUsers();
+        socket.emit('chat:loadUsers', onlineUsers.map(x => {
+            x = users[x]
             return x
         }))
     })

@@ -1,7 +1,10 @@
 .chat .list-messages .message {
   display: flex;
-  margin: 0 0 16px 0;
+  padding: 4px 16px;
   align-items: flex-start;
+}
+.chat .list-messages .message:hover {
+  background: var(--dimming);
 }
 .chat .list-messages .message .user {
   margin: 0 8px 0 0;

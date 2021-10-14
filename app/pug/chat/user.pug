@@ -1,0 +1,9 @@
+.user(v-for="user of users", :key="user", :id="user.id")
+    .user
+        .avatar
+            .image(:style="{ 'background-image': `url('https://gamebomb.ru/files/galleries/001/5/51/292836.jpg')` }")
+            //- .platform(:data-ui-title="user.platform")
+            //-     i(:class="platforms[user.platform]")
+    div
+        .header
+            .username(:style="{ color: user.color }") {{ user.username }}

@@ -1,9 +1,23 @@
-.chat(v-if="login")
+.chat(v-if="page === 'chat'")
     .bg(style="background-image: url('https://s.cafebazaar.ir/1/upload/screenshot/com.sadrooid15.Materialwallpapers5.jpg')")
+    .chat-header
+        .logo(style="background-image: url('https://e7.pngegg.com/pngimages/197/457/png-clipart-round-multicolored-logo-vanamo-logo-icons-logos-emojis-tech-companies.png');")
+        .user
+            .avatar(:style="{ 'background-image': `url('https://gamebomb.ru/files/galleries/001/5/51/292836.jpg')` }")
+            .username {{ user.username }}
+        .exit(@click="exitUser()") Выйти
+        ul.menu
+            li(data-ui-title="Настройки", uit-bottom)
+                i.uil.uil-setting
+            li(:data-ui-title="`Участники - ${panels.users ? 'Выкл.' : 'Вкл.'}`", uit-bottom, @click="panels.users = !panels.users")
+                i.uil.uil-users-alt
     .block
-        .list-messages
-            include chat/message.pug
-        .bar
-            input(type="text", placeholder="Ваше сообщение", @keyup.enter="sendMessage()", v-model="content")
-            .button(@click="sendMessage()")
-                i.uil.uil-message
+        .users(v-if="panels.users")
+            include chat/user.pug
+        .channel
+            .list-messages
+                include chat/message.pug
+            .bar
+                input(type="text", placeholder="Ваше сообщение", @keyup.enter="sendMessage()", v-model="content")
+                .button(@click="sendMessage()")
+                    i.uil.uil-message

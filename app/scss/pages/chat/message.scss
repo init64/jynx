@@ -2,8 +2,12 @@
     .list-messages {
         .message {
             display: flex;
-            margin: 0 0 16px 0;
+            padding: 4px 16px;
             align-items: flex-start;
+
+            &:hover {
+                background: var(--dimming);
+            }
 
             .user {
                 margin: 0 8px 0 0;

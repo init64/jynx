@@ -3,7 +3,7 @@ const socket = io();
 const app = new Vue({
     el: '#app',
     data: {
-        login: false,
+        page: 'chat',
         user: {},
         messages: [],
         content: '',
@@ -12,12 +12,19 @@ const app = new Vue({
             Linux: 'uil uil-linux',
             Android: 'uil uil-android-alt',
             iPhone: 'uil uil-apple-alt'
+        },
+        users: [],
+        panels: {
+            users: true
         }
     },
     methods: {
         buttonLogin() {
             socket.emit('user:update', { username: this.user.username })
-            this.login = true;
+            this.login = 'chat';
+        },
+        exitUser() {
+            this.page = 'login';
         },
         setColor(color) {
             socket.emit('user:update', { color })
@@ -58,23 +65,42 @@ const app = new Vue({
                 seconds   : seconds
             }
         },
+        setChatDown() {
+            document.querySelector('.chat .list-messages').scrollTop = document.querySelector('.chat .list-messages').scrollHeight;
+        }
     },
     mounted() {
+
+        socket.on('system:technicalWorks', data => {
+            console.log(data ? 'Works' : 'Chat');
+        })
+
         socket.emit('user:connect', localStorage['userID'])
 
         socket.on('user:loadUser', user => {
             this.user = user;
             localStorage.setItem('userID', user.id)
             socket.emit('chat:getMessages')
+            socket.emit('chat:getUsers')
         })
 
         socket.on('chat:loadMessages', messages => {
-            this.messages = messages;
+            new Promise((res, rej) => {
+                this.messages = messages;
+                res('end')
+            }).then(() => this.setChatDown())
+        })
+
+        socket.on('chat:loadUsers', users => {
+            this.users = users;
+            console.log(users);
         })
 
         socket.on('chat:addMessage', message => {
-            this.messages.push(message);
-            document.querySelector('.chat .list-messages').scrollTop = document.querySelector('.chat .list-messages').scrollHeight;
+            new Promise((res, rej) => {
+                this.messages.push(message);
+                res('end')
+            }).then(() => this.setChatDown())
         })
     }
 })
