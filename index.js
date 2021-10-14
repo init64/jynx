@@ -12,15 +12,15 @@ const io = require('socket.io')(http.listen(port, () => {
 
 const { generat } = require('./q.js')
 
+const _users = require('./json/users.json')
+const _messages = require('./json/messages.json')
+
 app.use('/', express.static(path.join(__dirname + '/dist')))
 
 const getConfig = () => JSON.parse(fs.readFileSync('./json/config.json', 'utf-8'));
 
-const getUsers = () => JSON.parse(fs.readFileSync('./json/users.json', 'utf-8'));
-const loadUsers = data => fs.writeFile('./json/users.json', JSON.stringify(data), 'utf-8', err => err ? console.log(err) : '')
-
-const getMessages = () => JSON.parse(fs.readFileSync('./json/messages.json', 'utf-8'));
-const loadMessages = data => fs.writeFile('./json/messages.json', JSON.stringify(data), 'utf-8', err => err ? console.log(err) : '')
+const loadUsers = data => fs.writeFile('./json/users.json', JSON.stringify(data), { encoding: 'utf-8' }, err => err ? console.log(err) : '')
+const loadMessages = data => fs.writeFile('./json/messages.json', JSON.stringify(data), { encoding: 'utf-8' }, err => err ? console.log(err) : '')
 
 const getPlatform = pf => {
     if (/Windows/.test(pf)) return 'Windows'
@@ -36,9 +36,8 @@ io.on('connection', socket => {
     // ? Functions
     const emitLoadUsers = () => {
         socket.on('chat:getUsers', () => {
-            let users = getUsers();
             io.emit('chat:loadUsers', onlineUsers.map(x => {
-                x = users[x]
+                x = _users[x]
                 return x
             }))
         })
@@ -51,25 +50,23 @@ io.on('connection', socket => {
 
     // * User Events
     socket.on('user:connect', userID => {
-        let users = getUsers();
         let id = userID;
-        if (!users[userID]) {
+        if (!_users[userID]) {
             id = generat({ type: 'All', length: 24 })
-            users[id] = { id, username: '', color: '#fff', avatar: '' }
-            loadUsers(users)
+            _users[id] = { id, username: '', color: '#fff', avatar: '' }
+            loadUsers(_users)
         }
-        users[id]['platform'] = getPlatform(socket.handshake.headers['user-agent'])
+        _users[id]['platform'] = getPlatform(socket.handshake.headers['user-agent'])
         socket.userID = id;
         if (!onlineUsers.find(f => f === socket.userID)) onlineUsers.push(socket.userID)
-        socket.emit('user:loadUser', users[id])
+        socket.emit('user:loadUser', _users[id])
         emitLoadUsers()
     })
 
     socket.on('user:update', params => {
-        let users = getUsers();
-        let user = users[socket.userID]
+        let user = _users[socket.userID]
         for (let param in params) user[param] = params[param];
-        loadUsers(users)
+        loadUsers(_users)
         emitLoadUsers()
     })
 
@@ -81,12 +78,9 @@ io.on('connection', socket => {
 
     // * Chat Events
     socket.on('chat:getMessages', () => {
-        let messages = getMessages(),
-            users = getUsers();
-        socket.emit('chat:loadMessages', messages.map(x => {
-            x.user = users[x.user]
-            return x
-        }))
+        let messages = [];
+        for (let message of _messages) messages.push({ ...message, user: _users[message.user] })
+        socket.emit('chat:loadMessages', messages)
     })
 
     socket.on('chat:getUsers', () => {
@@ -100,10 +94,8 @@ io.on('connection', socket => {
             user: socket.userID,
             date: Date.now()
         }
-        let messages = getMessages()
-        messages.push(data)
-        loadMessages(messages)
-        data.user = getUsers()[socket.userID]
-        io.emit('chat:addMessage', data)
+        _messages.push(data)
+        loadMessages(_messages)
+        io.emit('chat:addMessage', { ...data, user: _users[socket.userID] })
     })
 })
