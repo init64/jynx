@@ -10,6 +10,6 @@ npm i -tls
 node .
 ```
 
-## JSON Files
-> Create a file `users.json` and write data -> ` {} `
-> Create a file `messages.json` and write data -> ` [] `
+<h1 aling="center">## JSON Files</h1>
+- Create a file `json/users.json` and write data -> ` {} `
+- Create a file `json/messages.json` and write data -> ` [] `
