@@ -1,7 +1,7 @@
 .message(v-for="message of messages", :key="message", :id="message.id")
     .user
         .avatar
-            .image(:style="{ 'background-image': `url('https://gamebomb.ru/files/galleries/001/5/51/292836.jpg')` }")
+            .image(:style="{ 'background-image': `url('${user.avatar}')` }")
             //- .platform(:data-ui-title="message.user.platform")
             //-     i(:class="platforms[message.user.platform]")
     div

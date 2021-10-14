@@ -27,8 +27,11 @@
         }
 
         .user {
+            cursor: pointer;
             display: flex;
+            position: relative;
             align-items: center;
+            user-select: none;
 
             .avatar {
                 margin: 0 8px 0 0;
@@ -42,13 +45,36 @@
                 color: var(--color-2);
                 font-size: 14px;
             }
-        }
 
-        .exit {
-            cursor: pointer;
-            margin: 0 16px;
-            color: var(--C5);
-            font-size: 12px;
+            .buttons {
+                width: 128px;
+                position: absolute;
+                top: -100%;
+                left: 0;
+                border-radius: 5px;
+                background: var(--bg-2);
+                transition: .2s;
+                opacity: 0;
+                z-index: -1;
+
+                &.active {
+                    top: calc(100% + 4px);
+                    opacity: 1;
+                    z-index: auto;
+                }
+
+                li {
+                    cursor: pointer;
+                    padding: 8px 12px;
+                    color: var(--color-2);
+                    font-size: 14px;
+                    transition: .2s;
+
+                    &:hover {
+                        color: var(--color);
+                    }
+                }
+            }
         }
 
         .menu {
@@ -92,7 +118,7 @@
         overflow: hidden;
 
         .users {
-            width: 215px;
+            width: 256px;
             box-shadow: 10px 0px 25px -25px #000000;
             background: #00000035;
 

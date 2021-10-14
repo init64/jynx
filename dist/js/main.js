@@ -3,7 +3,7 @@ const socket = io();
 const app = new Vue({
     el: '#app',
     data: {
-        page: 'chat',
+        page: 'login',
         user: {},
         messages: [],
         content: '',
@@ -16,12 +16,15 @@ const app = new Vue({
         users: [],
         panels: {
             users: true
+        },
+        profile: {
+            open: false
         }
     },
     methods: {
         buttonLogin() {
             socket.emit('user:update', { username: this.user.username })
-            this.login = 'chat';
+            this.page = 'chat';
         },
         exitUser() {
             this.page = 'login';

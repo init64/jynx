@@ -13,8 +13,8 @@
   position: relative;
 }
 .chat .list-messages .message .user .avatar .image {
-  width: 48px;
-  height: 48px;
+  width: 42px;
+  height: 42px;
   border-radius: 50%;
   background-size: 100%;
 }

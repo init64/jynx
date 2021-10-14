@@ -18,11 +18,13 @@
         <div class="bg" style="background-image: url('https://s.cafebazaar.ir/1/upload/screenshot/com.sadrooid15.Materialwallpapers5.jpg')"></div>
         <div class="chat-header">
           <div class="logo" style="background-image: url('https://e7.pngegg.com/pngimages/197/457/png-clipart-round-multicolored-logo-vanamo-logo-icons-logos-emojis-tech-companies.png');"></div>
-          <div class="user">
-            <div class="avatar" :style="{ 'background-image': `url('https://gamebomb.ru/files/galleries/001/5/51/292836.jpg')` }"></div>
+          <div class="user" @click="profile.open = !profile.open">
+            <div class="avatar" :style="{ 'background-image': `url('${user.avatar}')` }"></div>
             <div class="username">{{ user.username }}</div>
+            <ul class="buttons" :class="{ 'active': profile.open }">
+              <li @click="exitUser()">Выйти</li>
+            </ul>
           </div>
-          <div class="exit" @click="exitUser()">Выйти</div>
           <ul class="menu">
             <li data-ui-title="Настройки" uit-bottom><i class="uil uil-setting"></i></li>
             <li :data-ui-title="`Участники - ${panels.users ? 'Выкл.' : 'Вкл.'}`" uit-bottom @click="panels.users = !panels.users"><i class="uil uil-users-alt"></i></li>
@@ -33,7 +35,7 @@
             <div class="user" v-for="user of users" :key="user" :id="user.id">
               <div class="user">
                 <div class="avatar">
-                  <div class="image" :style="{ 'background-image': `url('https://gamebomb.ru/files/galleries/001/5/51/292836.jpg')` }"></div>
+                  <div class="image" :style="{ 'background-image': `url('${user.avatar}')` }"></div>
                 </div>
               </div>
               <div>
@@ -48,7 +50,7 @@
               <div class="message" v-for="message of messages" :key="message" :id="message.id">
                 <div class="user">
                   <div class="avatar">
-                    <div class="image" :style="{ 'background-image': `url('https://gamebomb.ru/files/galleries/001/5/51/292836.jpg')` }"></div>
+                    <div class="image" :style="{ 'background-image': `url('${user.avatar}')` }"></div>
                   </div>
                 </div>
                 <div>
