@@ -1,7 +1,7 @@
 .login(v-if="page === 'login'")
     input.username(type="text", maxlength="36", placeholder="Username", @keyup.enter="buttonLogin()", v-model="mUser.username")
     ul.colors
-        li(v-for="color of colors", :key="color", :style="{ 'background': color }", :class="{ 'active': mUser.color === color }", @click="mUser.color = color")
+        li(v-for="(color) of colors", :key="color", :style="{ 'background': color }", :class="{ 'active': mUser.color === color }", @click="mUser.color = color")
         label(:style="{ 'background': mUser.color }")
             input(type="color", v-model="mUser.color")
     .button(@click="buttonLogin()") Войти

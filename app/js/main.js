@@ -29,8 +29,7 @@ const app = new Vue({
                 socket.emit('user:update', { username: this.mUser.username, color: this.mUser.color })
                 this.page = 'chat';
                 res('end')
-            })
-            .then(() => {
+            }).then(() => {
                 socket.emit('chat:getMessages')
                 socket.emit('chat:getUsers')
             })
