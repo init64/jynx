@@ -1,3 +1,5 @@
+/* ! Data Title */
+@import url("https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap");
 :root {
   --C1: #7579ff;
   --C1-alt: #7579ff20;
@@ -46,7 +48,6 @@ html[theme=light] {
   --dimming-4: #00000075;
 }
 
-/* ! Data Title */
 [data-ui-title]:hover:after {
   opacity: 1;
   visibility: visible;
@@ -110,6 +111,12 @@ html[theme=light] {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+.login .logo {
+  margin: 0 0 8px 0;
+  font-size: 24px;
+  font-family: Dancing Script;
+  text-align: center;
 }
 .login .username {
   padding: 10px 24px;
@@ -236,9 +243,10 @@ html[theme=light] {
   z-index: 2;
 }
 .chat .chat-header .logo {
-  margin: 0 16px 0 0;
-  width: 32px;
+  margin: 0 16px;
   height: 32px;
+  font-family: Dancing Script;
+  line-height: 32px;
   background-size: 100%;
 }
 .chat .chat-header .user {

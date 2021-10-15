@@ -1,7 +1,8 @@
 .chat(v-if="page === 'chat'")
     .bg(style="background-image: url('https://s.cafebazaar.ir/1/upload/screenshot/com.sadrooid15.Materialwallpapers5.jpg')")
     .chat-header
-        .logo(style="background-image: url('https://e7.pngegg.com/pngimages/197/457/png-clipart-round-multicolored-logo-vanamo-logo-icons-logos-emojis-tech-companies.png');")
+        //- .logo(style="background-image: url('https://e7.pngegg.com/pngimages/197/457/png-clipart-round-multicolored-logo-vanamo-logo-icons-logos-emojis-tech-companies.png');")
+        .logo Mirai
         .user(@click="profile.open = !profile.open")
             .avatar(v-if="mUser.avatar", :style="{ 'background-image': `url('${mUser.avatar}')` }")
             .username {{ mUser.username }}

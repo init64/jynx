@@ -4,6 +4,12 @@
   left: 50%;
   transform: translate(-50%, -50%);
 }
+.login .logo {
+  margin: 0 0 8px 0;
+  font-size: 24px;
+  font-family: Dancing Script;
+  text-align: center;
+}
 .login .username {
   padding: 10px 24px;
   color: var(--color);

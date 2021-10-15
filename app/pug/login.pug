@@ -1,4 +1,5 @@
 .login(v-if="page === 'login'")
+    .logo Mirai
     input.username(type="text", maxlength="36", placeholder="Username", @keyup.enter="buttonLogin()", v-model="mUser.username")
     ul.colors
         li(v-for="(color) of colors", :key="color", :style="{ 'background': color }", :class="{ 'active': mUser.color === color }", @click="mUser.color = color")

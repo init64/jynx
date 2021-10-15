@@ -11,6 +11,7 @@
   <body> 
     <div id="app">
       <div class="login" v-if="page === 'login'">
+        <div class="logo">Mirai</div>
         <input class="username" type="text" maxlength="36" placeholder="Username" @keyup.enter="buttonLogin()" v-model="mUser.username">
         <ul class="colors">
           <li v-for="(color) of colors" :key="color" :style="{ 'background': color }" :class="{ 'active': mUser.color === color }" @click="mUser.color = color"></li>
@@ -23,7 +24,7 @@
       <div class="chat" v-if="page === 'chat'">
         <div class="bg" style="background-image: url('https://s.cafebazaar.ir/1/upload/screenshot/com.sadrooid15.Materialwallpapers5.jpg')"></div>
         <div class="chat-header">
-          <div class="logo" style="background-image: url('https://e7.pngegg.com/pngimages/197/457/png-clipart-round-multicolored-logo-vanamo-logo-icons-logos-emojis-tech-companies.png');"></div>
+          <div class="logo">Mirai</div>
           <div class="user" @click="profile.open = !profile.open">
             <div class="avatar" v-if="mUser.avatar" :style="{ 'background-image': `url('${mUser.avatar}')` }"></div>
             <div class="username">{{ mUser.username }}</div>
