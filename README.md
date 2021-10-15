@@ -1,5 +1,3 @@
-# Dev branch
-
 # AkiraProject - OpenSource Web Application
 
 ## Installation
