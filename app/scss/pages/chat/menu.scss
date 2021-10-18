@@ -1,0 +1,117 @@
+.menu {
+    width: 196px;
+    min-width: 196px;
+    height: 100%;
+    border-right: 1px solid var(--bg-2);
+    transition: all .2s;
+    z-index: 2;
+    // box-shadow: 5px 0px 5px -5px var(--dimming);
+    // background: var(--dimming);
+
+    &.mini {
+        width: 46px;
+        min-width: 46px;
+        overflow: hidden;
+
+        .title {
+            // height: 0;
+            opacity: 0;
+        }
+
+        ul.buttons {
+            li {
+
+                // &:hover span {
+                //     opacity: 1;
+                //     z-index: auto;
+                // }
+                span {
+                    // margin: 0 0 0 12px;
+                    // padding: 4px 6px;
+                    // border-radius: 5px;
+                    // background: var(--bg-2-alt);
+                    opacity: 0;
+                }
+            }
+        }
+    }
+
+    .title {
+        margin: 4px 12px;
+        font-size: 12px;
+        font-weight: 600;
+        text-transform: uppercase;
+        transition: .2s;
+    }
+
+    ul.buttons {
+        margin: 8px 0;
+
+        li {
+            cursor: pointer;
+            display: flex;
+            margin: 5px 8px;
+            color: var(--color-3);
+            font-size: 14px;
+            align-items: center;
+            transition: .2s;
+            
+            div {
+                margin: 0 8px 0 0;
+                min-width: 28px;
+                min-height: 28px;
+                text-align: center;
+                line-height: 28px;
+                // box-shadow: 0px 0px 10px 2px var(--color-3);
+                // background: var(--bg-2-alt);
+                transition: .2s;
+
+                i {
+                    color: var(--color);
+                    transition: .2s;
+                }
+
+                span {
+                    transition: .2s;
+                }
+            }
+
+            &.active div, &:not(.active):hover div {
+                border-radius: 5px;
+                box-shadow: 0px 0px 5px 2px var(--dimming);
+                i { color: var(--C1); }
+            }
+
+            &.active span {
+                color: var(--C1);
+            }
+        }
+    }
+
+    ul.list {
+        li {
+            cursor: pointer;
+            display: flex;
+            margin: 4px;
+            font-size: 14px;
+            align-items: center;
+
+            img {
+                margin: 0 8px 0 0;
+                width: 36px;
+                height: 36px;
+            }
+
+            div {
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                overflow: hidden;
+            }
+            
+            span {
+                color: var(--color-3);
+                font-size: 13px;
+            }
+        }
+    }
+}

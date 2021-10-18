@@ -1,26 +1,20 @@
 .chat(v-if="page === 'chat'")
-    .bg(style="background-image: url('https://s.cafebazaar.ir/1/upload/screenshot/com.sadrooid15.Materialwallpapers5.jpg')")
-    .chat-header
-        //- .logo(style="background-image: url('https://e7.pngegg.com/pngimages/197/457/png-clipart-round-multicolored-logo-vanamo-logo-icons-logos-emojis-tech-companies.png');")
-        .logo Mirai
-        .user(@click="profile.open = !profile.open")
-            .avatar(v-if="mUser.avatar", :style="{ 'background-image': `url('${mUser.avatar}')` }")
-            .username {{ mUser.username }}
-            ul.buttons(:class="{ 'active': profile.open }")
-                li(@click="exitUser()") Выйти
-        ul.menu
-            li(data-ui-title="Настройки", uit-bottom)
-                i.uil.uil-setting
-            li(:data-ui-title="`Участники - ${panels.users ? 'Выкл.' : 'Вкл.'}`", uit-bottom, @click="panels.users = !panels.users")
-                i.uil.uil-users-alt
+    //- .bg(style="background-image: url('https://s.cafebazaar.ir/1/upload/screenshot/com.sadrooid15.Materialwallpapers5.jpg')")
+    include header.pug
     .block
-        .users(v-if="panels.users")
-            .c-title Участники
-            include chat/user.pug
-        .channel
-            .list-messages
-                include chat/message.pug
-            .bar
-                input(type="text", placeholder="Ваше сообщение", @keyup.enter="sendMessage()", v-model="content")
-                .button(@click="sendMessage()")
-                    i.uil.uil-message
+        include chat/menu.pug
+        include chat/channel.pug
+        include chat/users.pug
+        include setting.pug
+        include profile.pug
+        include groups.pug
+        //- .users(v-if="panels.users")
+        //-     .c-title Участники
+        //-     include chat/user.pug
+        //- .channel
+        //-     .list-messages
+        //-         include chat/message.pug
+        //-     .bar
+        //-         input(type="text", placeholder="Ваше сообщение", @keyup.enter="sendMessage()", v-model="content")
+        //-         .button(@click="sendMessage()")
+        //-             i.uil.uil-message

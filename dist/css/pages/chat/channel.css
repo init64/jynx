@@ -1,0 +1,166 @@
+.channel {
+  width: 100%;
+  position: relative;
+}
+.channel .list-messages {
+  height: calc(100% - 64px);
+  overflow: auto;
+}
+.channel .list-messages .message {
+  display: flex;
+  padding: 8px 16px;
+  align-items: flex-start;
+}
+.channel .list-messages .message:hover {
+  background: #00000010;
+}
+.channel .list-messages .message:hover .header .message-menu {
+  opacity: 1;
+  z-index: auto;
+}
+.channel .list-messages .message .user {
+  margin: 0 8px 0 0;
+}
+.channel .list-messages .message .user .image {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background-size: 100%;
+}
+.channel .list-messages .message .user .platform {
+  width: 18px;
+  height: 18px;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  color: var(--C2);
+  font-size: 12px;
+  text-align: center;
+  line-height: 18px;
+  border-radius: 50%;
+  background: var(--bg);
+}
+.channel .list-messages .message .header {
+  display: flex;
+  align-items: center;
+}
+.channel .list-messages .message .header .username {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.channel .list-messages .message .header .i {
+  margin: 0 4px;
+  padding: 2px 6px;
+  color: var(--C1);
+  font-size: 10px;
+  text-transform: uppercase;
+  border-radius: 3px;
+  background: var(--bg-2-alt);
+}
+.channel .list-messages .message .header .date {
+  margin: 0 4px;
+  color: var(--color-3);
+  font-size: 12px;
+  white-space: nowrap;
+}
+.channel .list-messages .message .header .message-menu {
+  margin: 0 4px;
+  position: relative;
+  transition: 0.2s;
+  opacity: 0;
+  z-index: -1;
+}
+.channel .list-messages .message .header .message-menu div {
+  cursor: pointer;
+  padding: 0 2px;
+  font-size: 11px;
+  border-radius: 3px;
+}
+.channel .list-messages .message .header .message-menu div:hover {
+  color: #fff;
+  background: var(--C1);
+}
+.channel .list-messages .message .header .message-menu ul {
+  min-width: 128px;
+  position: absolute;
+  top: calc(100% - 16px);
+  left: 0;
+  border-radius: 5px;
+  box-shadow: 0 0 5px 0 var(--dimming);
+  background: var(--bg);
+  overflow: hidden;
+  opacity: 0;
+  z-index: -1;
+}
+.channel .list-messages .message .header .message-menu ul.active {
+  top: calc(100% + 4px);
+  transition: 0.2s;
+  opacity: 1;
+  z-index: auto;
+}
+.channel .list-messages .message .header .message-menu ul li {
+  cursor: pointer;
+  display: flex;
+  padding: 4px 8px;
+  font-size: 13px;
+  align-items: center;
+  transition: 0.2s;
+}
+.channel .list-messages .message .header .message-menu ul li:hover {
+  background: var(--dimming);
+}
+.channel .list-messages .message .header .message-menu ul li i {
+  margin: 0 4px 0 0;
+}
+.channel .list-messages .message .header .message-menu ul li.delete:hover {
+  color: var(--C5);
+}
+.channel .list-messages .message .content .text {
+  padding: 4px 0;
+  font-size: 14px;
+  color: var(--color-2);
+}
+.channel .add-sticker {
+  position: absolute;
+  bottom: -100%;
+  transition: 0.2s;
+}
+.channel .add-sticker.active {
+  bottom: 56px;
+}
+.channel .add-sticker .name-sticker {
+  margin: 0 8px 0 0;
+  width: 300px;
+}
+.channel .chat-input, .channel .add-sticker {
+  display: flex;
+  margin: 8px;
+  padding: 8px;
+  width: calc(100% - 32px);
+  align-items: center;
+  border-radius: 7px;
+  background: var(--bg-2-alt);
+}
+.channel .chat-input input, .channel .add-sticker input {
+  padding: 8px 14px;
+  width: 100%;
+  color: var(--color);
+  border-radius: 7px;
+  background: var(--bg);
+}
+.channel .chat-input .stickers, .channel .chat-input .send, .channel .chat-input .sticker-add, .channel .chat-input .button-add, .channel .add-sticker .stickers, .channel .add-sticker .send, .channel .add-sticker .sticker-add, .channel .add-sticker .button-add {
+  cursor: pointer;
+  margin: 0 6px;
+  min-width: 32px;
+  min-height: 32px;
+  text-align: center;
+  line-height: 32px;
+  border-radius: 7px;
+  transition: 0.2s;
+}
+.channel .chat-input .stickers:hover, .channel .chat-input .send:hover, .channel .chat-input .sticker-add:hover, .channel .chat-input .button-add:hover, .channel .add-sticker .stickers:hover, .channel .add-sticker .send:hover, .channel .add-sticker .sticker-add:hover, .channel .add-sticker .button-add:hover {
+  color: #fff;
+  box-shadow: 0 0 10px 0 var(--dimming-2);
+  background: var(--C1);
+}

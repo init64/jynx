@@ -1,24 +1,25 @@
-.chat .list-messages .message {
+.message {
   display: flex;
-  padding: 4px 16px;
+  padding: 8px 16px;
   align-items: flex-start;
 }
-.chat .list-messages .message:hover {
-  background: var(--dimming);
+.message:hover {
+  background: #00000010;
 }
-.chat .list-messages .message .user {
+.message:hover .header .message-menu {
+  opacity: 1;
+  z-index: auto;
+}
+.message .user {
   margin: 0 8px 0 0;
 }
-.chat .list-messages .message .user .avatar {
-  position: relative;
-}
-.chat .list-messages .message .user .avatar .image {
+.message .user .image {
   width: 42px;
   height: 42px;
   border-radius: 50%;
   background-size: 100%;
 }
-.chat .list-messages .message .user .avatar .platform {
+.message .user .platform {
   width: 18px;
   height: 18px;
   position: absolute;
@@ -31,22 +32,84 @@
   border-radius: 50%;
   background: var(--bg);
 }
-.chat .list-messages .message .header {
+.message .header {
   display: flex;
   align-items: center;
 }
-.chat .list-messages .message .header .username {
+.message .header .username {
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
 }
-.chat .list-messages .message .header .date {
-  margin: 0 8px;
-  color: var(--color-2);
+.message .header .i {
+  margin: 0 4px;
+  padding: 2px 6px;
+  color: var(--C1);
+  font-size: 10px;
+  text-transform: uppercase;
+  border-radius: 3px;
+  background: var(--bg-2-alt);
+}
+.message .header .date {
+  margin: 0 4px;
+  color: var(--color-3);
   font-size: 12px;
   white-space: nowrap;
 }
-.chat .list-messages .message .content {
+.message .header .message-menu {
+  margin: 0 4px;
+  position: relative;
+  transition: 0.2s;
+  opacity: 0;
+  z-index: -1;
+}
+.message .header .message-menu div {
+  cursor: pointer;
+  padding: 0 2px;
+  font-size: 11px;
+  border-radius: 3px;
+}
+.message .header .message-menu div:hover {
+  color: #fff;
+  background: var(--C1);
+}
+.message .header .message-menu ul {
+  min-width: 128px;
+  position: absolute;
+  top: calc(100% - 16px);
+  left: 0;
+  border-radius: 5px;
+  box-shadow: 0 0 5px 0 var(--dimming);
+  background: var(--bg);
+  overflow: hidden;
+  opacity: 0;
+  z-index: -1;
+}
+.message .header .message-menu ul.active {
+  top: calc(100% + 4px);
+  transition: 0.2s;
+  opacity: 1;
+  z-index: auto;
+}
+.message .header .message-menu ul li {
+  cursor: pointer;
+  display: flex;
+  padding: 4px 8px;
+  font-size: 13px;
+  align-items: center;
+  transition: 0.2s;
+}
+.message .header .message-menu ul li:hover {
+  background: var(--dimming);
+}
+.message .header .message-menu ul li i {
+  margin: 0 4px 0 0;
+}
+.message .header .message-menu ul li.delete:hover {
+  color: var(--C5);
+}
+.message .content .text {
   padding: 4px 0;
+  font-size: 14px;
   color: var(--color-2);
 }

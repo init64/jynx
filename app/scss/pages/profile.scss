@@ -1,0 +1,82 @@
+.profile {
+    width: 100%;
+    position: relative;
+
+    .subtitle {
+        margin: 8px;
+        color: var(--color-2);
+        font-size: 12px;
+        font-weight: 600;
+    }
+
+    .avatar {
+        display: flex;
+        width: 320px;
+        flex-direction: column;
+
+        img {
+            margin: 0 8px 8px 8px;
+            width: 128px;
+            height: 128px;
+            border-radius: 50%;
+        }
+    }
+
+    input[type="text"] {
+        margin: 0 8px;
+        padding: 8px 14px;
+        min-width: 320px;
+        color: var(--color);
+        border-radius: 7px;
+        background: var(--bg-2-alt);
+    }
+
+    label.color {
+        position: relative;
+        
+        input[type="color"] {
+            position: absolute;
+            opacity: 0;
+            z-index: -1;
+        }
+        
+        div {
+            margin: 0 8px;
+            padding: 8px 14px;
+            width: 320px;
+            height: 16px;
+            border-radius: 7px;
+        }
+    }
+
+    ul.buttons {
+        display: flex;
+        margin: 8px;
+        align-items: center;
+
+        li {
+            cursor: pointer;
+            margin: 0 4px;
+            padding: 8px 12px;
+            font-size: 14px;
+            border-radius: 7px;
+            transition: .2s;
+
+            &.save {
+                background: var(--C2-alt);
+
+                &:hover { background: var(--C2); }
+            }
+
+            &.delete {
+                background: var(--C5-alt);
+
+                &:hover {
+                    color: #e8e8e8;
+                    background: var(--C5);
+                }
+            }
+        }
+    }
+
+}

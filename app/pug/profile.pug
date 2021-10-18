@@ -1,0 +1,17 @@
+.profile(v-if="category === 'profile'")
+    .subtitle Ваш ID: {{ mUser.id }}
+    .subtitle Аватарка пользователя
+    .avatar
+        img(src="https://sun9-84.userapi.com/impg/-yvadSwbQ_bXzRL5jfdXYmrTrQJTXGXkxdK6lQ/jUdxxi1M4Js.jpg?size=331x331&quality=96&sign=372a1b6f271c8e96942950b57286cbc3&type=album")
+        input(type="text", placeholder="Ссылка на картинку")
+    .subtitle Имя пользователя
+    input(type="text", v-model="mUser.username")
+    .subtitle Цвет ника
+    label.color
+        input(type="color", v-model="mUser.color")
+        div(:style="{ 'background': mUser.color }")
+    .subtitle Статус пользователя
+    input(type="text", v-model="mUser.status")
+    ul.buttons 
+        li.save Сохранить
+        li.delete Удалить аккаунт

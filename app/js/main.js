@@ -3,24 +3,38 @@ const socket = io();
 const app = new Vue({
     el: '#app',
     data: {
-        page: 'login',
+        theme: localStorage['theme'] === 'dark' ? true : false || false,
+        page: 'chat',
+        category: 'channel',
+        categories: {
+            profile: ['Профель', 'uil uil-user'],
+            channel: ['Канал', 'uil uil-comment-alt'],
+            groups: ['Группы', 'uil uil-users-alt'],
+            setting: ['Настройки', 'uil uil-setting']
+        },
         mUser: {},
         messages: [],
         content: '',
+        addSticker: {
+            open: false,
+            url: '',
+            name: '',
+        },
         platforms: {
             Windows: 'uil uil-windows',
             Linux: 'uil uil-linux',
             Android: 'uil uil-android-alt',
             iPhone: 'uil uil-apple-alt'
         },
+        messageFun: false,
         users: [],
         panels: {
-            users: true
+            users: true,
+            menu: false
         },
         profile: {
             open: false
-        },
-        colors: []
+        }
     },
     methods: {
         buttonLogin() {
@@ -80,6 +94,15 @@ const app = new Vue({
             let array = []
             for (let i = 0; i < count; i++) array.push('#' + Math.random().toString(16).substr(-6))
             return array
+        },
+        setTheme() {
+            let theme = this.theme ? 'light' : 'dark';
+            console.log(theme);
+            localStorage.setItem('theme', theme)
+            document.querySelector('html').setAttribute('theme', theme)
+        },
+        setBg(url) {
+            document.querySelector('.chat .bg').setAttribute('style', `background-image: linear-gradient(to bottom, #00000099 0%,#00000099 100%), url('${url}');`)
         }
     },
     mounted() {
@@ -88,9 +111,9 @@ const app = new Vue({
             console.log(data ? 'Works' : 'Chat');
         })
 
-        socket.emit('user:connect', localStorage['userID'])
+        document.querySelector('html').setAttribute('theme', localStorage.getItem('theme'))
 
-        this.colors = this.randomHex(5);
+        socket.emit('user:connect', localStorage['userID'])
 
         socket.on('user:loadUser', user => {
             this.mUser = user;
@@ -118,29 +141,3 @@ const app = new Vue({
         })
     }
 })
-
-// const botBar = document.querySelector('.botbar');
-// const messages = document.querySelector('.messages');
-// const input = document.querySelector('.input');
-// const button = document.querySelector('.button');
-// const username = document.querySelector('.username');
-
-// username.innerHTML = prompt('Your name?')
-
-// button.addEventListener('click', event => {
-//     console.log('done');
-//     event.preventDefault();
-//     input.value ?
-//         socket.emit('chatMessage', {
-//             name: username.innerHTML,
-//             message: input.value
-//         }) : null;
-//     input.value = '';
-// })
-
-// let logMessages = '';
-
-// socket.on('chatMessage', data => {
-//     logMessages += `<li><span>${data.name}:</span> ${data.message}</li>`;
-//     messages.innerHTML = logMessages;
-// })

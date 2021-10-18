@@ -1,0 +1,57 @@
+.groups {
+  margin: 8px;
+  width: 100%;
+  position: relative;
+}
+.groups ul.buttons {
+  display: flex;
+  margin: 8px 0;
+  align-items: center;
+}
+.groups ul.buttons li {
+  cursor: pointer;
+  display: flex;
+  padding: 6px 10px;
+  font-size: 14px;
+  border-radius: 7px;
+  align-items: center;
+  transition: 0.2s;
+}
+.groups ul.buttons li:hover {
+  background: var(--C2);
+}
+.groups ul.buttons li i {
+  margin: 0 8px 0 0;
+}
+.groups .title {
+  font-size: 18px;
+  font-weight: 600;
+}
+.groups .list {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+.groups .group {
+  cursor: pointer;
+  display: flex;
+  margin: 8px;
+  padding: 8px;
+  font-size: 14px;
+  align-items: center;
+  background: var(--bg-2-alt);
+  transition: 0.2s;
+}
+.groups .group:hover {
+  box-shadow: 0 5px 5px -5px var(--color);
+  background: var(--bg-2);
+  transform: translateY(-4px);
+}
+.groups .group img {
+  margin: 0 8px 0 0;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+}
+.groups .group .info .users {
+  font-size: 10px;
+}

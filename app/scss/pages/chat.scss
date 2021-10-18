@@ -1,216 +1,35 @@
-@import 'chat/message';
-
 .chat {
     .bg {
         width: 100%;
         height: 100vh;
         background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
         background-attachment: fixed;
     }
 
-    .chat-header {
-        display: flex;
-        width: 100%;
-        height: 32px;
-        position: fixed;
-        top: 0;
-        left: 0;
-        align-items: center;
-        background: var(--bg-2);
-        z-index: 2;
-
-        .logo {
-            margin: 0 16px;
-            height: 32px;
-            font-family: Dancing Script;
-            line-height: 32px;
-            background-size: 100%;
-        }
-
-        .user {
-            cursor: pointer;
-            display: flex;
-            position: relative;
-            align-items: center;
-            user-select: none;
-
-            .avatar {
-                margin: 0 8px 0 0;
-                width: 28px;
-                height: 28px;
-                border-radius: 50%;
-                background-size: 100%;
-            }
-            
-            .username {
-                color: var(--color-2);
-                font-size: 14px;
-            }
-
-            .buttons {
-                width: 128px;
-                position: absolute;
-                top: -100%;
-                left: 0;
-                border-radius: 5px;
-                background: var(--bg-2);
-                transition: .2s;
-                opacity: 0;
-                z-index: -1;
-
-                &.active {
-                    top: calc(100% + 4px);
-                    opacity: 1;
-                    z-index: auto;
-                }
-
-                li {
-                    cursor: pointer;
-                    padding: 8px 12px;
-                    color: var(--color-2);
-                    font-size: 14px;
-                    transition: .2s;
-
-                    &:hover {
-                        color: var(--color);
-                    }
-                }
-            }
-        }
-
-        .menu {
-            display: flex;
-            margin: 0 4px;
-            align-items: center;
-
-            li {
-                cursor: pointer;
-                margin: 0 4px;
-                color: var(--color-2);
-                transition: .2s;
-                
-                &:hover {
-                    color: var(--color);
-                }
-            }
-        }
-    }
+    @import 'chat/header';
 
     .block {
-        // * v1
-        // padding: 32px 32px 16px 32px;
-        // width: 70%;
-        // height: 80vh;
-        // position: absolute;
-        // left: 50%;
-        // bottom: 0px;
-        // border-radius: 35px 35px 0 0;
-        // background: linear-gradient(45deg, #151518d2, #000000d2);
-        // transform: translateX(-50%);
-        // * v2
         display: flex;
-        // padding: 16px;
         width: 100%;
-        height: calc(100vh - 32px);
+        height: calc(100% - 36px);
         position: absolute;
-        top: 32px;
+        top: 36px;
         left: 0;
-        background: linear-gradient(45deg, #151518d2, #000000d2);
+        // background: linear-gradient(45deg, #151518d2, #000000d2);
         overflow: hidden;
 
-        .users {
-            width: 256px;
-            box-shadow: 10px 0px 25px -25px #000000;
-            background: #00000035;
+        @import 'chat/menu';
 
-            .c-title {
-                margin: 8px 8px 0 8px;
-                color: var(--color-2);
-                font-size: 12px;
-                text-transform: uppercase;
-            }
+        @import 'chat/channel';
 
-            .user {
-                display: flex;
-                margin: 4px;
-                padding: 4px;
-                align-items: center;
-                border-radius: 5px;
-    
-                .user {
-                    margin: 0 8px 0 0;
-    
-                    .avatar {
-                        position: relative;
-    
-                        .image {
-                            width: 36px;
-                            height: 36px;
-                            border-radius: 50%;
-                            background-size: 100%;
-                        }
-    
-                        .platform {
-                            width: 18px;
-                            height: 18px;
-                            position: absolute;
-                            right: 0;
-                            bottom: 0;
-                            color: var(--C2);
-                            font-size: 12px;
-                            text-align: center;
-                            line-height: 18px;
-                            border-radius: 50%;
-                            background: var(--bg);
-                        }
-                    }
-                }
-    
-                .header {
-                    display: flex;
-                    align-items: center;
-                }
-            }
-        }
+        @import 'chat/users';
 
-        .channel {
-            width: 100%;
-            .list-messages {
-                margin: 0 0 8px 0;
-                // padding: 16px;
-                height: calc(100% - 48px);
-                overflow: auto;
-            }
-    
-            .bar {
-                display: flex;
-                padding: 0 16px;
-                align-items: center;
-    
-                input {
-                    padding: 8px 16px;
-                    width: 100%;
-                    color: var(--color);
-                    border-bottom: 1px solid var(--C1);
-                    background: var(--T);
-                    transition: .2s;
-                }
-    
-                .button {
-                    cursor: pointer;
-                    margin: 0 0 0 16px;
-                    width: 32px;
-                    height: 32px;
-                    font-size: 14px;
-                    text-align: center;
-                    line-height: 32px;
-                    background: var(--C1);
-    
-                    &:active {
-                        transform: scale(.9);
-                    }
-                }
-            }
-        }
+        @import 'setting';
+
+        @import 'profile';
+
+        @import 'groups';
     }
 }

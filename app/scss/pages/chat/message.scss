@@ -1,65 +1,137 @@
-.chat {
-    .list-messages {
-        .message {
-            display: flex;
-            padding: 4px 16px;
-            align-items: flex-start;
+.message {
+    display: flex;
+    padding: 8px 16px;
+    align-items: flex-start;
 
-            &:hover {
-                background: var(--dimming);
+    &:hover {
+        background: #00000010;
+    }
+    &:hover .header .message-menu {
+        opacity: 1;
+        z-index: auto;
+    }
+
+    .user {
+        margin: 0 8px 0 0;
+
+        .image {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background-size: 100%;
+        }
+
+        .platform {
+            width: 18px;
+            height: 18px;
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            color: var(--C2);
+            font-size: 12px;
+            text-align: center;
+            line-height: 18px;
+            border-radius: 50%;
+            background: var(--bg);
+        }
+    }
+
+    .header {
+        display: flex;
+        align-items: center;
+
+        .username {
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+
+        .i {
+            margin: 0 4px;
+            padding: 2px 6px;
+            color: var(--C1);
+            font-size: 10px;
+            text-transform: uppercase;
+            border-radius: 3px;
+            background: var(--bg-2-alt);
+        }
+
+        .date {
+            margin: 0 4px;
+            color: var(--color-3);
+            font-size: 12px;
+            white-space: nowrap;
+        }
+
+        .message-menu {
+            margin: 0 4px;
+            position: relative;
+            transition: .2s;
+            opacity: 0;
+            z-index: -1;
+            
+            div {
+                cursor: pointer;
+                padding: 0 2px;
+                font-size: 11px;
+                border-radius: 3px;
+
+                &:hover {
+                    color: #fff;
+                    background: var(--C1);
+                }
             }
 
-            .user {
-                margin: 0 8px 0 0;
+            ul {
+                min-width: 128px;
+                position: absolute;
+                top: calc(100% - 16px);
+                left: 0;
+                border-radius: 5px;
+                box-shadow: 0 0 5px 0 var(--dimming);
+                background: var(--bg);
+                overflow: hidden;
+                opacity: 0;
+                z-index: -1;
 
-                .avatar {
-                    position: relative;
+                &.active {
+                    top: calc(100% + 4px);
+                    transition: .2s;
+                    opacity: 1;
+                    z-index: auto;
+                }
 
-                    .image {
-                        width: 42px;
-                        height: 42px;
-                        border-radius: 50%;
-                        background-size: 100%;
+                li {
+                    cursor: pointer;
+                    display: flex;
+                    padding: 4px 8px;
+                    font-size: 13px;
+                    align-items: center;
+                    transition: .2s;
+
+                    &:hover {
+                        background: var(--dimming);
+                    }
+                    
+                    i {
+                        margin: 0 4px 0 0;
                     }
 
-                    .platform {
-                        width: 18px;
-                        height: 18px;
-                        position: absolute;
-                        right: 0;
-                        bottom: 0;
-                        color: var(--C2);
-                        font-size: 12px;
-                        text-align: center;
-                        line-height: 18px;
-                        border-radius: 50%;
-                        background: var(--bg);
+                    // span {
+                    //     color: var(--color-3);
+                    // }
+
+                    &.delete:hover {
+                        color: var(--C5);
                     }
                 }
-            }
-
-            .header {
-                display: flex;
-                align-items: center;
-
-                .username {
-                    text-overflow: ellipsis;
-                    white-space: nowrap;
-                    overflow: hidden;
-                }
-
-                .date {
-                    margin: 0 8px;
-                    color: var(--color-2);
-                    font-size: 12px;
-                    white-space: nowrap;
-                }
-            }
-
-            .content {
-                padding: 4px 0;
-                color: var(--color-2);
             }
         }
+    }
+
+    .content .text {
+        padding: 4px 0;
+        font-size: 14px;
+        color: var(--color-2);
     }
 }

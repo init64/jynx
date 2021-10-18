@@ -1,0 +1,14 @@
+.setting(v-if="category === 'setting'")
+    .title Внешний вид
+    .option
+        .info
+            .header Темная тема
+            .text Побереги свои глазки, для того чтобы в будущем у тебя было хорошое зрение :P
+        label.check
+            input(type="checkbox", @click="setTheme()", v-model="theme")
+            span
+    //- ul.items
+    //-     .info
+    //-         .header Задний фон
+    //-         .text Поставь задний фон если так сильно не нравится фон темы :(
+    //-     li.bg-item(style="background-image: url('https://wallpaper-mania.com/wp-content/uploads/2018/09/High_resolution_wallpaper_background_ID_77700374871.jpg');", @click="setBg('https://wallpaper-mania.com/wp-content/uploads/2018/09/High_resolution_wallpaper_background_ID_77700374871.jpg')")

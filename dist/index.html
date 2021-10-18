@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html theme="dark">
+<html theme="light">
   <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -10,69 +10,167 @@
   </head>
   <body> 
     <div id="app">
-      <div class="login" v-if="page === 'login'">
-        <div class="logo">Mirai</div>
-        <input class="username" type="text" maxlength="36" placeholder="Username" @keyup.enter="buttonLogin()" v-model="mUser.username">
-        <ul class="colors">
-          <li v-for="(color) of colors" :key="color" :style="{ 'background': color }" :class="{ 'active': mUser.color === color }" @click="mUser.color = color"></li>
-          <label :style="{ 'background': mUser.color }">
-            <input type="color" v-model="mUser.color">
-          </label>
-        </ul>
-        <div class="button" @click="buttonLogin()">Войти</div>
+      <div class="login" v-if="page === 'login' &amp;&amp; category === 'auth'">
+        <div class="logo">Mirai / Authorization</div>
+        <div class="subtitle">Username</div>
+        <input type="text" maxlength="36">
+        <div class="subtitle">Password</div>
+        <input type="password" maxlength="128">
+        <div class="subbutton" @click="category = 'reg'">Зарегистрироваться</div>
+        <div class="button">Войти</div>
+        <div class="subbutton" @click="category = 'forgot'">Забыл пароль?</div>
+      </div>
+      <div class="login" v-if="page === 'login' &amp;&amp; category === 'reg'">
+        <div class="logo">Mirai / Registration</div>
+        <div class="subtitle">Username</div>
+        <input type="text" maxlength="36">
+        <div class="subtitle">E-mail</div>
+        <input type="email" maxlength="128">
+        <div class="subtitle">Password</div>
+        <input type="password" maxlength="128">
+        <div class="button">Создать аккаунт</div>
+        <div class="subbutton" @click="category = 'auth'">Войти</div>
+      </div>
+      <div class="login" v-if="page === 'login' &amp;&amp; category === 'forgot'">
+        <div class="logo">Mirai / Recovery</div>
+        <div class="subtitle">E-mail</div>
+        <input type="email" maxlength="128">
+        <div class="button">Отправить</div>
+        <div class="subbutton" @click="category = 'auth'">Войти</div>
       </div>
       <div class="chat" v-if="page === 'chat'">
-        <div class="bg" style="background-image: url('https://s.cafebazaar.ir/1/upload/screenshot/com.sadrooid15.Materialwallpapers5.jpg')"></div>
         <div class="chat-header">
           <div class="logo">Mirai</div>
-          <div class="user" @click="profile.open = !profile.open">
-            <div class="avatar" v-if="mUser.avatar" :style="{ 'background-image': `url('${mUser.avatar}')` }"></div>
-            <div class="username">{{ mUser.username }}</div>
-            <ul class="buttons" :class="{ 'active': profile.open }">
-              <li @click="exitUser()">Выйти</li>
-            </ul>
-          </div>
           <ul class="menu">
-            <li data-ui-title="Настройки" uit-bottom><i class="uil uil-setting"></i></li>
-            <li :data-ui-title="`Участники - ${panels.users ? 'Выкл.' : 'Вкл.'}`" uit-bottom @click="panels.users = !panels.users"><i class="uil uil-users-alt"></i></li>
+            <li v-if="category === 'channel'" :data-ui-title="`Участники - ${panels.users ? 'Выкл.' : 'Вкл.'}`" uit-bottom @click="panels.users = !panels.users"><i class="uil uil-users-alt"></i></li>
+            <li :data-ui-title="panels.menu ? 'Мини меню' : 'Меню'" uit-bottom @click="panels.menu = !panels.menu"><i class="uil uil-draggabledots"></i></li>
+            <div class="user" @click="profile.open = !profile.open">
+              <div class="username">{{ mUser.username }}</div>
+              <div class="avatar" :style="{ 'background-image': `url('https://sun9-84.userapi.com/impg/-yvadSwbQ_bXzRL5jfdXYmrTrQJTXGXkxdK6lQ/jUdxxi1M4Js.jpg?size=331x331&amp;quality=96&amp;sign=372a1b6f271c8e96942950b57286cbc3&amp;type=album')` }"></div>
+              <ul class="buttons" :class="{ 'active': profile.open }">
+                <li @click="exitUser()">Выйти</li>
+              </ul>
+            </div>
           </ul>
         </div>
         <div class="block">
-          <div class="users" v-if="panels.users">
-            <div class="c-title">Участники</div>
-            <div class="user" v-for="(user, index) of users" :key="index" :id="user.id">
-              <div class="user">
-                <div class="avatar" v-if="user.avatar">
-                  <div class="image" :style="{ 'background-image': `url('${user.avatar}')` }"></div>
+          <div class="menu" :class="{ 'mini': panels.menu }">
+            <div class="title">Меню</div>
+            <ul class="buttons">
+              <li v-for="(name, ct) in categories" :key="ct" @click="category = ct" :class="{ 'active': category === ct }">
+                <div><i :class="name[1]"></i></div><span>{{ name[0] }}</span>
+              </li>
+            </ul>
+            <div class="title">Комнаты</div>
+            <ul class="list">
+              <li><img src="https://social.wxcafe.net/system/media_attachments/files/000/001/541/original/b7f17be84c44a680.png">
+                <div>
+                  <div>Coffee</div><span>23 участника</span>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <div class="channel" v-if="category === 'channel'">
+            <div class="list-messages">
+              <div class="message" v-for="(message, index) of new Array(50)" :key="index" @mouseleave="messageFun = false">
+                <div class="user">
+                  <div class="image" :style="{ 'background-image': `url('https://sun9-84.userapi.com/impg/-yvadSwbQ_bXzRL5jfdXYmrTrQJTXGXkxdK6lQ/jUdxxi1M4Js.jpg?size=331x331&amp;quality=96&amp;sign=372a1b6f271c8e96942950b57286cbc3&amp;type=album')` }"></div>
+                </div>
+                <div class="content"> 
+                  <div class="header">
+                    <div class="username" :style="{ color: '#7579ff' }">Heito</div>
+                    <div class="i">Вы</div>
+                    <div class="date">{{ unix().day }} {{ unix().month_name }} {{ unix().year }}</div>
+                    <div class="message-menu">
+                      <div @click="messageFun = !messageFun"><i class="uil uil-ellipsis-h"></i></div>
+                      <ul :class="{ 'active': messageFun }">
+                        <li><i class="uil uil-comment-alt"></i><span>Ответить</span></li>
+                        <li><i class="uil uil-pen"></i><span>Изменить</span></li>
+                        <li class="delete"><i class="uil uil-trash"></i><span>Удалить</span></li>
+                      </ul>
+                    </div>
+                  </div>
+                  <div class="text">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Porro quo animi aspernatur excepturi vitae quidem quod assumenda nulla placeat, aut similique harum magnam totam minus?</div>
                 </div>
               </div>
-              <div>
-                <div class="header">
-                  <div class="username" :style="{ color: user.color }">{{ user.username }}</div>
-                </div>
+            </div>
+            <div class="add-sticker" :class="{ 'active': addSticker.open }">
+              <input class="name-sticker" type="text" placeholder="Название стикера" v-model="addSticker.name">
+              <input class="url-sticker" type="text" placeholder="Сслыка на картинку" v-model="addSticker.url">
+              <div class="button-add"> <i class="uil uil-plus"></i></div>
+            </div>
+            <div class="chat-input">
+              <input type="text" placeholder="Написать сообщение...">
+              <div class="stickers" data-ui-title="Стикеры"><i class="uil uil-image"></i></div>
+              <div class="sticker-add" data-ui-title="Добавить стикер" @click="addSticker.open = !addSticker.open"><i class="uil uil-image-plus"></i></div>
+              <div class="send" data-ui-title="Отправить"><i class="uil uil-message"></i></div>
+            </div>
+          </div>
+          <div class="users" v-if="category === 'channel' &amp;&amp; panels.users">
+            <div class="title">Учасники</div>
+            <div class="user" v-for="(user, index) of new Array(25)" :key="index">
+              <div class="image" :style="{ 'background-image': `url('https://sun9-84.userapi.com/impg/-yvadSwbQ_bXzRL5jfdXYmrTrQJTXGXkxdK6lQ/jUdxxi1M4Js.jpg?size=331x331&amp;quality=96&amp;sign=372a1b6f271c8e96942950b57286cbc3&amp;type=album')` }">
+                <div class="platform" data-ui-title="Android"><i :class="platforms['Android']" :style="{ 'color': 'var(--C2)' }"></i></div>
+              </div>
+              <div class="header">
+                <div class="username" :style="{ color: '#7579ff' }">Heito</div>
+                <div class="status">Test</div>
               </div>
             </div>
           </div>
-          <div class="channel">
-            <div class="list-messages">
-              <div class="message" v-for="(message, index) in messages" :key="index" :id="message.id">
-                <div class="user">
-                  <div class="avatar" v-if="message.user.avatar">
-                    <div class="image" :style="{ 'background-image': `url('${message.user.avatar}')` }"></div>
-                  </div>
-                </div>
-                <div>
-                  <div class="header">
-                    <div class="username" :style="{ color: message.user.color }">{{ message.user.username }}</div>
-                    <div class="date">{{ unix(message.date).day }} {{ unix(message.date).month_name }} {{ unix(message.date).year }}</div>
-                  </div>
-                  <div class="content">{{ message.content }}</div>
-                </div>
+          <div class="setting" v-if="category === 'setting'">
+            <div class="title">Внешний вид</div>
+            <div class="option">
+              <div class="info">
+                <div class="header">Темная тема</div>
+                <div class="text">Побереги свои глазки, для того чтобы в будущем у тебя было хорошое зрение :P</div>
+              </div>
+              <label class="check">
+                <input type="checkbox" @click="setTheme()" v-model="theme"><span></span>
+              </label>
+            </div>
+          </div>
+          <div class="profile" v-if="category === 'profile'">
+            <div class="subtitle">Ваш ID: {{ mUser.id }}</div>
+            <div class="subtitle">Аватарка пользователя</div>
+            <div class="avatar"><img src="https://sun9-84.userapi.com/impg/-yvadSwbQ_bXzRL5jfdXYmrTrQJTXGXkxdK6lQ/jUdxxi1M4Js.jpg?size=331x331&amp;quality=96&amp;sign=372a1b6f271c8e96942950b57286cbc3&amp;type=album">
+              <input type="text" placeholder="Ссылка на картинку">
+            </div>
+            <div class="subtitle">Имя пользователя</div>
+            <input type="text" v-model="mUser.username">
+            <div class="subtitle">Цвет ника</div>
+            <label class="color">
+              <input type="color" v-model="mUser.color">
+              <div :style="{ 'background': mUser.color }"></div>
+            </label>
+            <div class="subtitle">Статус пользователя</div>
+            <input type="text" v-model="mUser.status">
+            <ul class="buttons"> 
+              <li class="save">Сохранить</li>
+              <li class="delete">Удалить аккаунт</li>
+            </ul>
+          </div>
+          <div class="groups" v-if="category === 'groups'">
+            <ul class="buttons">
+              <li><i class="uil uil-plus"></i><span>Добавить</span></li>
+            </ul>
+            <div class="title">Ваши группы</div>
+            <div class="list">
+              <div class="group" v-for="(group, index) of new Array(10)" :key="index" data-ui-title="Нажмите чтобы присоединиться"><img src="https://i.pinimg.com/originals/a8/ef/de/a8efde698e1c299387ab40c5833c3236.jpg">
+                                <div class="info"> 
+                                  <div class="name">Neon</div>
+                                  <div class="users">23 участника</div>
+                                </div>
               </div>
             </div>
-            <div class="bar">
-              <input type="text" placeholder="Ваше сообщение" @keyup.enter="sendMessage()" v-model="content">
-              <div class="button" @click="sendMessage()"><i class="uil uil-message"></i></div>
+            <div class="title">Открытые группы</div>
+            <div class="list">
+              <div class="group" v-for="(group, index) of new Array(20)" :key="index" data-ui-title="Нажмите чтобы присоединиться"><img src="https://i.pinimg.com/originals/a8/ef/de/a8efde698e1c299387ab40c5833c3236.jpg">
+                                <div class="info"> 
+                                  <div class="name">Test</div>
+                                  <div class="users">230 участника</div>
+                                </div>
+              </div>
             </div>
           </div>
         </div>

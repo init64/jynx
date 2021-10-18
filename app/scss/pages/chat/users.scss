@@ -1,0 +1,15 @@
+.users {
+    min-width: 196px;
+    height: 100%;
+    border-left: 1px solid var(--bg-2);
+    overflow: auto;
+
+    .title {
+        margin: 4px 12px;
+        font-size: 12px;
+        font-weight: 600;
+        text-transform: uppercase;
+    }
+
+    @import 'user';
+}

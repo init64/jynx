@@ -1,8 +1,25 @@
-.login(v-if="page === 'login'")
-    .logo Mirai
-    input.username(type="text", maxlength="36", placeholder="Username", @keyup.enter="buttonLogin()", v-model="mUser.username")
-    ul.colors
-        li(v-for="(color) of colors", :key="color", :style="{ 'background': color }", :class="{ 'active': mUser.color === color }", @click="mUser.color = color")
-        label(:style="{ 'background': mUser.color }")
-            input(type="color", v-model="mUser.color")
-    .button(@click="buttonLogin()") Войти
+.login(v-if="page === 'login' && category === 'auth'")
+    .logo Mirai / Authorization
+    .subtitle Username
+    input(type="text", maxlength="36")
+    .subtitle Password
+    input(type="password", maxlength="128")
+    .subbutton(@click="category = 'reg'") Зарегистрироваться
+    .button() Войти
+    .subbutton(@click="category = 'forgot'") Забыл пароль?
+.login(v-if="page === 'login' && category === 'reg'")
+    .logo Mirai / Registration
+    .subtitle Username
+    input(type="text", maxlength="36")
+    .subtitle E-mail
+    input(type="email", maxlength="128")
+    .subtitle Password
+    input(type="password", maxlength="128")
+    .button() Создать аккаунт
+    .subbutton(@click="category = 'auth'") Войти
+.login(v-if="page === 'login' && category === 'forgot'")
+    .logo Mirai / Recovery
+    .subtitle E-mail
+    input(type="email", maxlength="128")
+    .button() Отправить
+    .subbutton(@click="category = 'auth'") Войти
