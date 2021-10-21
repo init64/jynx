@@ -29,8 +29,8 @@ const app = new Vue({
         messageFun: false,
         users: [],
         panels: {
-            users: true,
-            menu: false
+            users: false,
+            menu: true
         },
         profile: {
             open: false

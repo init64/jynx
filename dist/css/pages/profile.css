@@ -22,7 +22,8 @@
 .profile input[type=text] {
   margin: 0 8px;
   padding: 8px 14px;
-  min-width: 320px;
+  width: 100%;
+  max-width: 320px;
   color: var(--color);
   border-radius: 7px;
   background: var(--bg-2-alt);
@@ -38,7 +39,8 @@
 .profile label.color div {
   margin: 0 8px;
   padding: 8px 14px;
-  width: 320px;
+  width: 100%;
+  max-width: 320px;
   height: 16px;
   border-radius: 7px;
 }
@@ -67,4 +69,14 @@
 .profile ul.buttons li.delete:hover {
   color: #e8e8e8;
   background: var(--C5);
+}
+
+@media (max-width: 480px) {
+  input[type=text] {
+    max-width: 215px !important;
+  }
+
+  label.color div {
+    max-width: 215px !important;
+  }
 }

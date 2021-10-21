@@ -13,3 +13,13 @@
 
     @import 'user';
 }
+
+@media (max-width: 480px) {
+    .users {
+        position: absolute;
+        top: 0;
+        right: 0;
+        z-index: 1;
+        background: var(--bg);
+    }
+}

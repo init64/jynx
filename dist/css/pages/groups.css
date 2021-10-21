@@ -52,6 +52,17 @@
   height: 42px;
   border-radius: 50%;
 }
-.groups .group .info .users {
+.groups .group .info .count-users {
   font-size: 10px;
+}
+
+@media (max-width: 800px) {
+  .groups .list {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+@media (max-width: 540px) {
+  .groups .list {
+    grid-template-columns: 1fr;
+  }
 }

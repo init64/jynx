@@ -3,8 +3,7 @@
   min-width: 196px;
   height: 100%;
   border-right: 1px solid var(--bg-2);
-  transition: all 0.2s;
-  z-index: 2;
+  z-index: 1;
 }
 .menu.mini {
   width: 46px;
@@ -81,4 +80,16 @@
 .menu ul.list li span {
   color: var(--color-3);
   font-size: 13px;
+}
+
+@media (max-width: 480px) {
+  .menu:not(.mini) {
+    position: absolute;
+    z-index: 1;
+    background: var(--bg);
+  }
+
+  .menu:not(.mini) + .channel {
+    margin-left: 47px;
+  }
 }

@@ -25,7 +25,8 @@
     input[type="text"] {
         margin: 0 8px;
         padding: 8px 14px;
-        min-width: 320px;
+        width: 100%;
+        max-width: 320px;
         color: var(--color);
         border-radius: 7px;
         background: var(--bg-2-alt);
@@ -43,7 +44,8 @@
         div {
             margin: 0 8px;
             padding: 8px 14px;
-            width: 320px;
+            width: 100%;
+            max-width: 320px;
             height: 16px;
             border-radius: 7px;
         }
@@ -79,4 +81,15 @@
         }
     }
 
+}
+
+@media (max-width: 480px) {
+    input[type="text"] {
+        max-width: 215px !important;
+    }
+    label.color {
+        div {
+            max-width: 215px !important;
+        }
+    }
 }
