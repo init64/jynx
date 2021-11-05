@@ -1,25 +1,25 @@
-.login(v-if="page === 'login' && category === 'auth'")
+.login(v-if="page === 'login'")
     .logo Mirai / Authorization
-    .subtitle Username
-    input(type="text", maxlength="36")
-    .subtitle Password
-    input(type="password", maxlength="128")
-    .subbutton(@click="category = 'reg'") Зарегистрироваться
-    .button() Войти
-    .subbutton(@click="category = 'forgot'") Забыл пароль?
-.login(v-if="page === 'login' && category === 'reg'")
-    .logo Mirai / Registration
-    .subtitle Username
-    input(type="text", maxlength="36")
-    .subtitle E-mail
-    input(type="email", maxlength="128")
-    .subtitle Password
-    input(type="password", maxlength="128")
-    .button() Создать аккаунт
-    .subbutton(@click="category = 'auth'") Войти
-.login(v-if="page === 'login' && category === 'forgot'")
-    .logo Mirai / Recovery
-    .subtitle E-mail
-    input(type="email", maxlength="128")
-    .button() Отправить
-    .subbutton(@click="category = 'auth'") Войти
+    .subtitle User Token
+    input(type="text", maxlength="36", :value="mUser.token")
+    //- .subtitle Password
+    //- input(type="password", maxlength="128")
+    //- .subbutton(@click="category = 'reg'") Зарегистрироваться
+    .button(@click="buttonLogin()") Войти
+    //- .subbutton(@click="category = 'forgot'") Забыл пароль?
+//- .login(v-if="page === 'login' && category === 'reg'")
+//-     .logo Mirai / Registration
+//-     .subtitle Username
+//-     input(type="text", maxlength="36")
+//-     .subtitle E-mail
+//-     input(type="email", maxlength="128")
+//-     .subtitle Password
+//-     input(type="password", maxlength="128")
+//-     .button() Создать аккаунт
+//-     .subbutton(@click="category = 'auth'") Войти
+//- .login(v-if="page === 'login' && category === 'forgot'")
+//-     .logo Mirai / Recovery
+//-     .subtitle E-mail
+//-     input(type="email", maxlength="128")
+//-     .button() Отправить
+//-     .subbutton(@click="category = 'auth'") Войти

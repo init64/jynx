@@ -136,7 +136,7 @@ html[theme=light] {
   padding: 8px 14px;
   width: 196px;
   color: var(--color);
-  border-radius: 7px;
+  border-radius: 5px;
   border: 1px solid var(--T);
   background: var(--bg-2-alt);
   transition: 0.2s;
@@ -149,6 +149,7 @@ html[theme=light] {
   margin: 8px auto 0 auto;
   padding: 8px 12px;
   min-width: 96px;
+  color: #000;
   text-align: center;
   background: var(--C1);
   transition: 0.2s;

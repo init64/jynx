@@ -66,6 +66,10 @@ io.on('connection', socket => {
        // emitLoadUsers()
     })
 
+    socket.on('user:login', token => {
+        if (_users[token]) socket.emit('user:login', _users[token])
+    })
+
     socket.on('user:update', params => {
         let user = _users[socket.userID]
         for (let param in params) user[param] = params[param];

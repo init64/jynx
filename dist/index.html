@@ -10,33 +10,11 @@
   </head>
   <body> 
     <div id="app">
-      <div class="login" v-if="page === 'login' &amp;&amp; category === 'auth'">
+      <div class="login" v-if="page === 'login'">
         <div class="logo">Mirai / Authorization</div>
-        <div class="subtitle">Username</div>
-        <input type="text" maxlength="36">
-        <div class="subtitle">Password</div>
-        <input type="password" maxlength="128">
-        <div class="subbutton" @click="category = 'reg'">Зарегистрироваться</div>
-        <div class="button">Войти</div>
-        <div class="subbutton" @click="category = 'forgot'">Забыл пароль?</div>
-      </div>
-      <div class="login" v-if="page === 'login' &amp;&amp; category === 'reg'">
-        <div class="logo">Mirai / Registration</div>
-        <div class="subtitle">Username</div>
-        <input type="text" maxlength="36">
-        <div class="subtitle">E-mail</div>
-        <input type="email" maxlength="128">
-        <div class="subtitle">Password</div>
-        <input type="password" maxlength="128">
-        <div class="button">Создать аккаунт</div>
-        <div class="subbutton" @click="category = 'auth'">Войти</div>
-      </div>
-      <div class="login" v-if="page === 'login' &amp;&amp; category === 'forgot'">
-        <div class="logo">Mirai / Recovery</div>
-        <div class="subtitle">E-mail</div>
-        <input type="email" maxlength="128">
-        <div class="button">Отправить</div>
-        <div class="subbutton" @click="category = 'auth'">Войти</div>
+        <div class="subtitle">User Token</div>
+        <input type="text" maxlength="36" :value="mUser.token">
+        <div class="button" @click="buttonLogin()">Войти</div>
       </div>
       <div class="chat" v-if="page === 'chat'">
         <div class="chat-header">

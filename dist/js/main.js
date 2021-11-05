@@ -4,7 +4,7 @@ const app = new Vue({
     el: '#app',
     data: {
         theme: localStorage['theme'] === 'dark' ? true : false || false,
-        page: 'chat',
+        page: 'login',
         category: 'channel',
         categories: {
             profile: ['Профиль', 'uil uil-user'],
@@ -38,15 +38,9 @@ const app = new Vue({
     },
     methods: {
         buttonLogin() {
-            if (this.mUser.username.trim() === '') return;
-            new Promise((res, rej) => {
-                socket.emit('user:update', { username: this.mUser.username, color: this.mUser.color })
-                this.page = 'chat';
-                res('end')
-            }).then(() => {
-                socket.emit('chat:getMessages')
-                socket.emit('chat:getUsers')
-            })
+            // if (this.mUser.token.trim() === '') return;
+            console.log(this.mUser.token);
+            socket.emit('user:login', localStorage['token'])
         },
         exitUser() {
             this.page = 'login';
@@ -107,18 +101,28 @@ const app = new Vue({
     },
     mounted() {
 
+        const loadUser = (user, q) => {
+            this.mUser = user;
+            localStorage.setItem('token', user.token)
+            localStorage.setItem('userID', user.id)
+        }
+
         socket.on('system:technicalWorks', data => {
             console.log(data ? 'Works' : 'Chat');
         })
 
         document.querySelector('html').setAttribute('theme', localStorage.getItem('theme') || 'dark')
 
-        socket.emit('user:connect', {token: localStorage.getItem('token')})
-        console.log({token: localStorage['tokens']})
-        socket.on('user:loadUser', user => {
-            this.mUser = user;
-            localStorage.setItem('token', user.token)
-            localStorage.setItem('userID', user.id)
+        socket.emit('user:connect', { token: localStorage.getItem('token') })
+
+        socket.on('user:loadUser', user => loadUser(user))
+
+        socket.on('user:login', user => {
+            this.page = 'chat';
+            this.category = 'channel';
+            loadUser(user)
+            socket.emit('chat:getMessages')
+            socket.emit('chat:getUsers')
         })
 
         socket.on('chat:loadMessages', messages => {
