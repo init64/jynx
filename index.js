@@ -51,23 +51,29 @@ io.on('connection', socket => {
     // * User Events
     socket.on('user:connect', tokens => {
         console.log(tokens)
-        if (!_users[tokens?.token]) {
+        if (!_users[tokens?.token] || tokens?.token == null) {
             tokens = {
                 id: generat({ type: 'All', length: 24 }),
                 token: generat({ type: 'All', length: 24 })
             }
-            _users[tokens.token] = { id: tokens.id, token: tokens.token, username: '', color: '#fff', avatar: '' }
+            _users[tokens.token] = { id: tokens.id, token: tokens.token, username: `user#${Object.keys(_users).length + 1}`, color: '#fff', avatar: '' }
             loadUsers(_users)
-        }
-       // _users[id]['platform'] = getPlatform(socket.handshake.headers['user-agent'])
-       // socket.userID = id;
-       // if (!onlineUsers.find(f => f === socket.userID)) onlineUsers.push(socket.userID)
-        socket.emit('user:loadUser', _users[tokens.token])
-       // emitLoadUsers()
-    })
+            socket.emit('user:loadUser', _users[tokens.token])
+        } else {
+            // _users[id]['platform'] = getPlatform(socket.handshake.headers['user-agent'])
+            console.log(_users[tokens.token].username) 
+            // if (!onlineUsers.find(f => f === socket.userID)) onlineUsers.push(socket.userID)
+            socket.emit('user:loadUser', _users[tokens.token])
+            // emitLoadUsers()
+            }
+        })
 
     socket.on('user:login', token => {
-        if (_users[token]) socket.emit('user:login', _users[token])
+        if (_users[token]) {
+            console.log(_users[token])
+            socket.emit('user:login', _users[token])
+            socket.userID = _users[token].id
+        }
     })
 
     socket.on('user:update', params => {
@@ -86,7 +92,12 @@ io.on('connection', socket => {
     // * Chat Events
     socket.on('chat:getMessages', () => {
         let messages = [];
-        for (let message of _messages) messages.push({ ...message, user: _users[message.user] })
+        let users = Object.values(_users)
+        for (let message of _messages) {
+            let user = users.find(f => f.id === message.user)
+            message.token = null
+            messages.push({ ...message, user })
+        }
         socket.emit('chat:loadMessages', messages)
     })
 
@@ -95,14 +106,16 @@ io.on('connection', socket => {
     })
 
     socket.on('chat:sendMessage', message => {
+        let user = Object.values(_users).find(f => f.id === socket.userID);
         let data = {
             content: message,
             id: generat({ type: 'All', length: 18 }),
-            user: socket.userID,
+            user: user.id,
             date: Date.now()
         }
         _messages.push(data)
         loadMessages(_messages)
-        io.emit('chat:addMessage', { ...data, user: _users[socket.userID] })
+        console.log({ ...data, user })
+        io.emit('chat:addMessage', { ...data, user })
     })
 })

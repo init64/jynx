@@ -1,7 +1,7 @@
 .login(v-if="page === 'login'")
     .logo Mirai / Authorization
     .subtitle User Token
-    input(type="text", maxlength="36", :value="mUser.token")
+    input(type="text", maxlength="36", v-model="mUser.token")
     //- .subtitle Password
     //- input(type="password", maxlength="128")
     //- .subbutton(@click="category = 'reg'") Зарегистрироваться

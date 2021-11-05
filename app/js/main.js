@@ -9,7 +9,7 @@ const app = new Vue({
         categories: {
             profile: ['Профиль', 'uil uil-user'],
             channel: ['Канал', 'uil uil-comment-alt'],
-            groups: ['Группы', 'uil uil-users-alt'],
+            //groups: ['Группы', 'uil uil-users-alt'],
             setting: ['Настройки', 'uil uil-setting']
         },
         mUser: {},
@@ -30,7 +30,7 @@ const app = new Vue({
         users: [],
         panels: {
             users: false,
-            menu: true
+            menu: false
         },
         profile: {
             open: false
@@ -39,8 +39,8 @@ const app = new Vue({
     methods: {
         buttonLogin() {
             // if (this.mUser.token.trim() === '') return;
-            console.log(this.mUser.token);
-            socket.emit('user:login', localStorage['token'])
+            console.log(this.mUser);
+            socket.emit('user:login', this.mUser.token)
         },
         exitUser() {
             this.page = 'login';
@@ -99,8 +99,7 @@ const app = new Vue({
             document.querySelector('.chat .bg').setAttribute('style', `background-image: linear-gradient(to bottom, #00000099 0%,#00000099 100%), url('${url}');`)
         }
     },
-    mounted() {
-
+    mounted() { 
         const loadUser = (user, q) => {
             this.mUser = user;
             localStorage.setItem('token', user.token)
