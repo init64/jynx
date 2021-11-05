@@ -37,10 +37,16 @@ const app = new Vue({
         }
     },
     methods: {
+        syncHistory() {
+            socket.emit('chat:getMessages')
+        },
         buttonLogin() {
             // if (this.mUser.token.trim() === '') return;
             console.log(this.mUser);
             socket.emit('user:login', this.mUser.token)
+        },
+        setupSettings() {
+            socket.emit('user:update', this.mUser) 
         },
         exitUser() {
             this.page = 'login';
@@ -125,7 +131,6 @@ const app = new Vue({
         })
 
         socket.on('chat:loadMessages', messages => {
-            console.log(messages);
             new Promise((res, rej) => {
                 this.messages = messages;
                 res('end')

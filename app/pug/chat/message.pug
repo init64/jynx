@@ -1,6 +1,6 @@
 .message(v-for="(message, index) of messages", :key="index", @mouseleave="messageFun = false")
     .user
-        .image(:style="{ 'background-image': `url('message.user.avatar')` }")
+        .image(:style="{ 'background-image': `url('${message.user.avatar}')` }")
     .content 
         .header
             .username(:style="{ color: message.user.color }") {{ message.user.username }} 

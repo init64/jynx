@@ -60,11 +60,8 @@ io.on('connection', socket => {
             loadUsers(_users)
             socket.emit('user:loadUser', _users[tokens.token])
         } else {
-            // _users[id]['platform'] = getPlatform(socket.handshake.headers['user-agent'])
             console.log(_users[tokens.token].username) 
-            // if (!onlineUsers.find(f => f === socket.userID)) onlineUsers.push(socket.userID)
             socket.emit('user:loadUser', _users[tokens.token])
-            // emitLoadUsers()
             }
         })
 
@@ -77,10 +74,14 @@ io.on('connection', socket => {
     })
 
     socket.on('user:update', params => {
-        let user = _users[socket.userID]
-        for (let param in params) user[param] = params[param];
+        let user = _users[params.token]
+        for (let param in params) {
+            user[param] = params[param]
+            console.log(user[param], params[param])
+        }
         loadUsers(_users)
         emitLoadUsers()
+        console.log(_users[params.token])
     })
 
     socket.on('disconnect', () => {
@@ -107,6 +108,7 @@ io.on('connection', socket => {
 
     socket.on('chat:sendMessage', message => {
         let user = Object.values(_users).find(f => f.id === socket.userID);
+        console.log('chat:sendMessage' ,user)
         let data = {
             content: message,
             id: generat({ type: 'All', length: 18 }),

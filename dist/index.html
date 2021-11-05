@@ -35,7 +35,7 @@
           <div class="menu" :class="{ 'mini': panels.menu }">
             <div class="title">Меню</div>
             <ul class="buttons">
-              <li v-for="(name, ct) in categories" :key="ct" @click="category = ct" :class="{ 'active': category === ct }">
+              <li v-for="(name, ct) in categories" :key="ct" @click="category = ct; category == 'channel' ? syncHistory() : null " :class="{ 'active': category === ct }">
                 <div><i :class="name[1]"></i></div><span>{{ name[0] }}</span>
               </li>
             </ul>
@@ -44,7 +44,7 @@
             <div class="list-messages">
               <div class="message" v-for="(message, index) of messages" :key="index" @mouseleave="messageFun = false">
                 <div class="user">
-                  <div class="image" :style="{ 'background-image': `url('message.user.avatar')` }"></div>
+                  <div class="image" :style="{ 'background-image': `url('${message.user.avatar}')` }"></div>
                 </div>
                 <div class="content"> 
                   <div class="header">
@@ -103,8 +103,8 @@
           <div class="profile" v-if="category === 'profile'">
             <div class="subtitle">Ваш ID: {{ mUser.id }}</div>
             <div class="subtitle">Аватарка пользователя</div>
-            <div class="avatar"><img src="https://sun9-84.userapi.com/impg/-yvadSwbQ_bXzRL5jfdXYmrTrQJTXGXkxdK6lQ/jUdxxi1M4Js.jpg?size=331x331&amp;quality=96&amp;sign=372a1b6f271c8e96942950b57286cbc3&amp;type=album">
-              <input type="text" placeholder="Ссылка на картинку">
+            <div class="avatar"><img :src="mUser.avatar">
+              <input type="text" placeholder="Ссылка на картинку" v-model="mUser.avatar">
             </div>
             <div class="subtitle">Имя пользователя</div>
             <input type="text" v-model="mUser.username">
@@ -116,7 +116,7 @@
             <div class="subtitle">Статус пользователя</div>
             <input type="text" v-model="mUser.status">
             <ul class="buttons"> 
-              <li class="save">Сохранить</li>
+              <li class="save" @click="setupSettings()">Сохранить</li>
               <li class="delete">Удалить аккаунт</li>
             </ul>
           </div>

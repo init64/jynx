@@ -2,8 +2,8 @@
     .subtitle Ваш ID: {{ mUser.id }}
     .subtitle Аватарка пользователя
     .avatar
-        img(src="https://sun9-84.userapi.com/impg/-yvadSwbQ_bXzRL5jfdXYmrTrQJTXGXkxdK6lQ/jUdxxi1M4Js.jpg?size=331x331&quality=96&sign=372a1b6f271c8e96942950b57286cbc3&type=album")
-        input(type="text", placeholder="Ссылка на картинку")
+        img(:src="mUser.avatar")
+        input(type="text", placeholder="Ссылка на картинку", v-model="mUser.avatar")
     .subtitle Имя пользователя
     input(type="text", v-model="mUser.username")
     .subtitle Цвет ника
@@ -13,5 +13,5 @@
     .subtitle Статус пользователя
     input(type="text", v-model="mUser.status")
     ul.buttons 
-        li.save Сохранить
+        li.save(@click="setupSettings()") Сохранить
         li.delete Удалить аккаунт
