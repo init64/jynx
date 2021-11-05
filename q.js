@@ -21,7 +21,7 @@ function generat({type = `Numbers`, str = ``, length = 6}) {
             q = letters + numbers
             break;
         case "Numbers":
-            q = `0123456789`
+            q = numbers
             break;
         case "Letters":
             q = letters

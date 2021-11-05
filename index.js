@@ -49,18 +49,21 @@ io.on('connection', socket => {
 
 
     // * User Events
-    socket.on('user:connect', userID => {
-        let id = userID;
-        if (!_users[userID]) {
-            id = generat({ type: 'All', length: 24 })
-            _users[id] = { id, username: '', color: '#fff', avatar: '' }
+    socket.on('user:connect', tokens => {
+        console.log(tokens)
+        if (!_users[tokens?.token]) {
+            tokens = {
+                id: generat({ type: 'All', length: 24 }),
+                token: generat({ type: 'All', length: 24 })
+            }
+            _users[tokens.token] = { id: tokens.id, token: tokens.token, username: '', color: '#fff', avatar: '' }
             loadUsers(_users)
         }
-        _users[id]['platform'] = getPlatform(socket.handshake.headers['user-agent'])
-        socket.userID = id;
-        if (!onlineUsers.find(f => f === socket.userID)) onlineUsers.push(socket.userID)
-        socket.emit('user:loadUser', _users[id])
-        emitLoadUsers()
+       // _users[id]['platform'] = getPlatform(socket.handshake.headers['user-agent'])
+       // socket.userID = id;
+       // if (!onlineUsers.find(f => f === socket.userID)) onlineUsers.push(socket.userID)
+        socket.emit('user:loadUser', _users[tokens.token])
+       // emitLoadUsers()
     })
 
     socket.on('user:update', params => {

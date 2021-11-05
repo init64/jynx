@@ -7,7 +7,7 @@ const app = new Vue({
         page: 'chat',
         category: 'channel',
         categories: {
-            profile: ['Профель', 'uil uil-user'],
+            profile: ['Профиль', 'uil uil-user'],
             channel: ['Канал', 'uil uil-comment-alt'],
             groups: ['Группы', 'uil uil-users-alt'],
             setting: ['Настройки', 'uil uil-setting']
@@ -111,12 +111,13 @@ const app = new Vue({
             console.log(data ? 'Works' : 'Chat');
         })
 
-        document.querySelector('html').setAttribute('theme', localStorage.getItem('theme'))
+        document.querySelector('html').setAttribute('theme', localStorage.getItem('theme') || 'dark')
 
-        socket.emit('user:connect', localStorage['userID'])
-
+        socket.emit('user:connect', {token: localStorage.getItem('token')})
+        console.log({token: localStorage['tokens']})
         socket.on('user:loadUser', user => {
             this.mUser = user;
+            localStorage.setItem('token', user.token)
             localStorage.setItem('userID', user.id)
         })
 

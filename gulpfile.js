@@ -133,4 +133,4 @@ const imgTask = () => {
 }
 
 const start = gulp.series(pugTask, scssTask, jsTask, fontsTask, imgTask);
-exports.default = gulp.parallel(start, watchFiles, webServer)
+exports.default = gulp.parallel(start, watchFiles)
