@@ -52,7 +52,7 @@ export class MainServer {
             ['messages.json', '[]']
         ]);
 
-        this.app.use('/', express.static(path.join(__dirname + '/dist')));
+        this.app.use('/', express.static(path.join(__dirname, (process.env.DIST || '/dist'))));
 
         let server = this.app.listen(this.PORT, () => console.log(`[Jynx]: Start http://localhost:${this.PORT}`));
         this.socket = new Server(server);
