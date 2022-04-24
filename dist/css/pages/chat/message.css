@@ -22,10 +22,13 @@
 }
 .message .user .image .status {
   padding: 4px 8px;
+  max-width: 376px;
+  min-width: 256px;
   position: absolute;
   top: 24px;
   left: 48px;
   font-size: 14px;
+  word-break: break-all;
   border-radius: 5px;
   background: var(--bg-3);
   z-index: 100;
@@ -35,6 +38,10 @@
   font-size: 12px;
   font-weight: 700;
   text-transform: uppercase;
+}
+.message .user .image .status div:nth-child(2) {
+  max-height: 128px;
+  overflow-x: hidden;
 }
 .message .user .platform {
   width: 18px;

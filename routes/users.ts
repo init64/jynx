@@ -58,7 +58,7 @@ export default class Route {
         let user: User = Object.values(this.users).find(item => item.id === this.socket['userID']);
         this.users[this.fs.generate(64)] = {
             id: user.id,
-            username: 'Remote user',
+            username: 'Deleted user',
             avatar: 'https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/40ddfe2a-1ef5-41c2-a0ac-08100e6f4d5a/d7tdyll-73fa24eb-a1ff-4243-89b5-480f3ec676c7.gif?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwic3ViIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsImF1ZCI6WyJ1cm46c2VydmljZTpmaWxlLmRvd25sb2FkIl0sIm9iaiI6W1t7InBhdGgiOiIvZi80MGRkZmUyYS0xZWY1LTQxYzItYTBhYy0wODEwMGU2ZjRkNWEvZDd0ZHlsbC03M2ZhMjRlYi1hMWZmLTQyNDMtODliNS00ODBmM2VjNjc2YzcuZ2lmIn1dXX0.kybECIuUUOCPz4sZ2HD92RV8STFcU5CjcyGI9139mtQ',
             color: 'red',
         };

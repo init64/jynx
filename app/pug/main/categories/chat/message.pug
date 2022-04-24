@@ -9,17 +9,17 @@
             .username(:style="{ color: message.user.color }" @click="userStatus = userStatus[1] === message.id ? [] : [message.user.id, message.id]") {{ message.user.username }}
             .i(v-if="message.user.id === mUser.id") Вы
             .date {{ unix(message.date).day }} {{ unix(message.date).month_name }} {{ unix(message.date).year }}
-            .message-menu
-                div(@click="messageFun = !messageFun")
-                    i.uil.uil-ellipsis-h
-                ul(:class="{ 'active': messageFun }")
-                    li
-                        i.uil.uil-comment-alt
-                        span Ответить
-                    li(v-if="message.user.id === mUser.id")
-                        i.uil.uil-pen
-                        span Изменить
-                    li.delete(v-if="message.user.id === mUser.id")
-                        i.uil.uil-trash
-                        span Удалить
+            //- .message-menu
+            //-     div(@click="messageFun = !messageFun")
+            //-         i.uil.uil-ellipsis-h
+            //-     ul(:class="{ 'active': messageFun }")
+            //-         li
+            //-             i.uil.uil-comment-alt
+            //-             span Ответить
+            //-         li(v-if="message.user.id === mUser.id")
+            //-             i.uil.uil-pen
+            //-             span Изменить
+            //-         li.delete(v-if="message.user.id === mUser.id")
+            //-             i.uil.uil-trash
+            //-             span Удалить
         .text {{ message.content }} 

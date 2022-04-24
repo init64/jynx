@@ -55,14 +55,6 @@
                     <div class="username" :style="{ color: message.user.color }" @click="userStatus = userStatus[1] === message.id ? [] : [message.user.id, message.id]">{{ message.user.username }}</div>
                     <div class="i" v-if="message.user.id === mUser.id">Вы</div>
                     <div class="date">{{ unix(message.date).day }} {{ unix(message.date).month_name }} {{ unix(message.date).year }}</div>
-                    <div class="message-menu">
-                      <div @click="messageFun = !messageFun"><i class="uil uil-ellipsis-h"></i></div>
-                      <ul :class="{ 'active': messageFun }">
-                        <li><i class="uil uil-comment-alt"></i><span>Ответить</span></li>
-                        <li v-if="message.user.id === mUser.id"><i class="uil uil-pen"></i><span>Изменить</span></li>
-                        <li class="delete" v-if="message.user.id === mUser.id"><i class="uil uil-trash"></i><span>Удалить</span></li>
-                      </ul>
-                    </div>
                   </div>
                   <div class="text">{{ message.content }} </div>
                 </div>

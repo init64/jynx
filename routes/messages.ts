@@ -45,9 +45,9 @@ export default class Route {
         this.socket.emit('chat:loadMessages', messages);
     }
 
-    sendMessage(body: string) {
-        let user = Object.values(this.users).find(item => item.id === this.socket['userID']),
-            data: Message = {
+    async sendMessage(body: string) {
+        let user = await Object.values(this.users).find(item => item.id === this.socket['userID']);
+        let data: Message = {
             content: body,
             id: this.fs.generate(18),
             user: user.id,
