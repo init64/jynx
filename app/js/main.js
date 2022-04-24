@@ -4,6 +4,7 @@ const app = new Vue({
     el: '#app',
     data: {
         theme: localStorage['theme'] === 'light' ? true : false,
+        autoLogin: localStorage['autoLogin'] === 'true' ? true : false,
         page: 'login',
         category: 'channel',
         categories: {
@@ -27,6 +28,7 @@ const app = new Vue({
             iPhone: 'uil uil-apple-alt'
         },
         messageFun: false,
+        userStatus: [],
         users: [],
         panels: {
             users: false,
@@ -41,12 +43,15 @@ const app = new Vue({
             socket.emit('chat:getMessages')
         },
         buttonLogin() {
-            // if (this.mUser.token.trim() === '') return;
-            console.log(this.mUser);
-            socket.emit('user:login', this.mUser.token)
+            if (this.mUser.token.trim() === '') return;
+            socket.emit('user:login', this.mUser.token);
         },
         setupSettings() {
             socket.emit('user:update', this.mUser) 
+        },
+        deleteAccount() {
+            socket.emit('user:delete');
+            location.reload();
         },
         exitUser() {
             this.page = 'login';
@@ -101,6 +106,9 @@ const app = new Vue({
             localStorage.setItem('theme', theme)
             document.querySelector('html').setAttribute('theme', theme)
         },
+        setLocal(key, param) {
+            localStorage.setItem(key, param);
+        },
         setBg(url) {
             document.querySelector('.chat .bg').setAttribute('style', `background-image: linear-gradient(to bottom, #00000099 0%,#00000099 100%), url('${url}');`)
         }
@@ -118,7 +126,8 @@ const app = new Vue({
 
         document.querySelector('html').setAttribute('theme', localStorage.getItem('theme') || 'dark')
 
-        socket.emit('user:connect', { token: localStorage.getItem('token') })
+        socket.emit('user:connect', { token: localStorage.getItem('token') });
+        if (this.autoLogin) socket.emit('user:login', localStorage.getItem('token'));
 
         socket.on('user:loadUser', user => loadUser(user))
 
@@ -133,6 +142,7 @@ const app = new Vue({
         socket.on('chat:loadMessages', messages => {
             new Promise((res, rej) => {
                 this.messages = messages;
+                console.log(this.messages);
                 res('end')
             }).then(() => this.setChatDown())
         })

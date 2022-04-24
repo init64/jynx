@@ -1,9 +1,12 @@
 .message(v-for="(message, index) of messages", :key="index", @mouseleave="messageFun = false")
     .user
         .image(:style="{ 'background-image': `url('${message.user.avatar}')` }")
+            .status(v-if="message.user?.status && userStatus[0] === message.user.id && userStatus[1] === message.id")
+                div Статус
+                div {{ message.user.status }}
     .content 
         .header
-            .username(:style="{ color: message.user.color }") {{ message.user.username }} 
+            .username(:style="{ color: message.user.color }" @click="userStatus = userStatus[1] === message.id ? [] : [message.user.id, message.id]") {{ message.user.username }}
             .i(v-if="message.user.id === mUser.id") Вы
             .date {{ unix(message.date).day }} {{ unix(message.date).month_name }} {{ unix(message.date).year }}
             .message-menu

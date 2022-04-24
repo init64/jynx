@@ -17,8 +17,27 @@
         .image {
             width: 42px;
             height: 42px;
+            position: relative;
             border-radius: 50%;
             background-size: 100%;
+
+            .status {
+                padding: 4px 8px;
+                position: absolute;
+                top: 24px;
+                left: 48px;
+                font-size: 14px;
+                border-radius: 5px;
+                background: var(--bg-3);
+                z-index: 100;
+
+                div:nth-child(1) {
+                    color: var(--color-3);
+                    font-size: 12px;
+                    font-weight: 700;
+                    text-transform: uppercase;
+                }
+            }
         }
 
         .platform {
@@ -38,13 +57,20 @@
 
     .header {
         display: flex;
+        position: relative;
         max-width: calc(100% - 38px);
         align-items: center;
 
         .username {
+            position: relative;
             text-overflow: ellipsis;
             white-space: nowrap;
             overflow: hidden;
+
+            &:hover {
+                cursor: pointer;
+                text-decoration: underline;
+            }
         }
 
         .i {

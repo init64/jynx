@@ -7,6 +7,13 @@
         label.check
             input(type="checkbox", @click="setTheme()", v-model="theme")
             span
+    .option
+        .info
+            .header Автозаход
+            .text Авторизируйтесь сразу, а не напжимайте эту ****ную кнопку :#
+        label.check
+            input(type="checkbox", @click="setLocal('autoLogin', !autoLogin)", v-model="autoLogin")
+            span
     //- ul.items
     //-     .info
     //-         .header Задний фон

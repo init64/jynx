@@ -1,16 +1,11 @@
 # Dev branch
 
-# AkiraProject - OpenSource Web Application
+# Jynx - OpenSource Web Application
 
 ## Installation
 ```bash
-git clone https://github.com/Akira-Project/Mirai
-cd Mirai
+git clone https://github.com/dsxninja/jynx
+cd jynx
 npm i -tls
-node .
+ts-node index.ts
 ```
-
-## JSON Files
-
-* Create a file `json/users.json` and write data -> ` {} `
-* Create a file `json/messages.json` and write data -> ` [] `

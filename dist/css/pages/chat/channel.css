@@ -12,7 +12,7 @@
   align-items: flex-start;
 }
 .channel .list-messages .message:hover {
-  background: #00000010;
+  background: rgba(0, 0, 0, 0.062745098);
 }
 .channel .list-messages .message:hover .header .message-menu {
   opacity: 1;
@@ -24,8 +24,25 @@
 .channel .list-messages .message .user .image {
   width: 42px;
   height: 42px;
+  position: relative;
   border-radius: 50%;
   background-size: 100%;
+}
+.channel .list-messages .message .user .image .status {
+  padding: 4px 8px;
+  position: absolute;
+  top: 24px;
+  left: 48px;
+  font-size: 14px;
+  border-radius: 5px;
+  background: var(--bg-3);
+  z-index: 100;
+}
+.channel .list-messages .message .user .image .status div:nth-child(1) {
+  color: var(--color-3);
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
 }
 .channel .list-messages .message .user .platform {
   width: 18px;
@@ -42,13 +59,19 @@
 }
 .channel .list-messages .message .header {
   display: flex;
+  position: relative;
   max-width: calc(100% - 38px);
   align-items: center;
 }
 .channel .list-messages .message .header .username {
+  position: relative;
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
+}
+.channel .list-messages .message .header .username:hover {
+  cursor: pointer;
+  text-decoration: underline;
 }
 .channel .list-messages .message .header .i {
   margin: 0 4px;
