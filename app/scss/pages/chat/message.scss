@@ -38,6 +38,7 @@
 
     .header {
         display: flex;
+        max-width: calc(100% - 38px);
         align-items: center;
 
         .username {
@@ -131,10 +132,14 @@
         }
     }
 
-    .content .text {
-        padding: 4px 0;
-        font-size: 14px;
-        color: var(--color-2);
-        word-break: break-all;
+    .content {
+        width: 100%;
+
+        .text {
+            padding: 4px 0;
+            font-size: 14px;
+            color: var(--color-2);
+            word-break: break-all;
+        }
     }
 }

@@ -1,0 +1,15 @@
+.groups(v-if="category === 'groups'")
+    ul.buttons
+        li
+            i.uil.uil-plus
+            span Добавить
+    .title Ваши группы
+    .list
+        .group(v-for="(group, index) of new Array(10)", :key="index", data-ui-title="Нажмите чтобы присоединиться")
+            include groups/group.pug
+            +group-include('https://i.pinimg.com/originals/a8/ef/de/a8efde698e1c299387ab40c5833c3236.jpg', 'Neon', '23 участника')
+    .title Открытые группы
+    .list
+        .group(v-for="(group, index) of new Array(20)", :key="index", data-ui-title="Нажмите чтобы присоединиться")
+            include groups/group.pug
+            +group-include('https://i.pinimg.com/originals/a8/ef/de/a8efde698e1c299387ab40c5833c3236.jpg', 'Test', '230 участника')

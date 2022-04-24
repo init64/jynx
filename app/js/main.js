@@ -3,7 +3,7 @@ const socket = io();
 const app = new Vue({
     el: '#app',
     data: {
-        theme: localStorage['theme'] === 'dark' ? true : false || false,
+        theme: localStorage['theme'] === 'light' ? true : false,
         page: 'login',
         category: 'channel',
         categories: {
@@ -30,7 +30,7 @@ const app = new Vue({
         users: [],
         panels: {
             users: false,
-            menu: false
+            menu: window.screen.width < 480 ? true : false || false
         },
         profile: {
             open: false
@@ -96,7 +96,7 @@ const app = new Vue({
             return array
         },
         setTheme() {
-            let theme = this.theme ? 'light' : 'dark';
+            let theme = this.theme ? 'dark' : 'light';
             console.log(theme);
             localStorage.setItem('theme', theme)
             document.querySelector('html').setAttribute('theme', theme)

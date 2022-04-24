@@ -34,6 +34,7 @@
 }
 .message .header {
   display: flex;
+  max-width: calc(100% - 38px);
   align-items: center;
 }
 .message .header .username {
@@ -109,6 +110,9 @@
 }
 .message .header .message-menu ul li.delete:hover {
   color: var(--C5);
+}
+.message .content {
+  width: 100%;
 }
 .message .content .text {
   padding: 4px 0;

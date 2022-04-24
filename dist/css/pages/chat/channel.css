@@ -1,10 +1,10 @@
 .channel {
-  width: 100%;
+  width: calc(100% - 48px);
   position: relative;
 }
 .channel .list-messages {
   height: calc(100% - 64px);
-  overflow: auto;
+  overflow-x: hidden;
 }
 .channel .list-messages .message {
   display: flex;
@@ -42,6 +42,7 @@
 }
 .channel .list-messages .message .header {
   display: flex;
+  max-width: calc(100% - 38px);
   align-items: center;
 }
 .channel .list-messages .message .header .username {
@@ -118,6 +119,9 @@
 .channel .list-messages .message .header .message-menu ul li.delete:hover {
   color: var(--C5);
 }
+.channel .list-messages .message .content {
+  width: 100%;
+}
 .channel .list-messages .message .content .text {
   padding: 4px 0;
   font-size: 14px;
@@ -163,7 +167,29 @@
   transition: 0.2s;
 }
 .channel .chat-input .stickers:hover, .channel .chat-input .send:hover, .channel .chat-input .sticker-add:hover, .channel .chat-input .button-add:hover, .channel .add-sticker .stickers:hover, .channel .add-sticker .send:hover, .channel .add-sticker .sticker-add:hover, .channel .add-sticker .button-add:hover {
-  color: #fff;
+  color: #000;
   box-shadow: 0 0 10px 0 var(--dimming-2);
   background: var(--C1);
+}
+.channel .chat-input .button-add span, .channel .add-sticker .button-add span {
+  display: none;
+}
+
+@media (max-width: 480px) {
+  .channel .add-sticker {
+    display: block;
+  }
+  .channel .add-sticker input {
+    margin: 0 0 8px 0 !important;
+    max-width: calc(100% - 28px) !important;
+  }
+  .channel .add-sticker .button-add {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .channel .add-sticker .button-add span {
+    display: block;
+    margin: 0 0 0 8px;
+  }
 }

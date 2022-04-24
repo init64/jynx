@@ -398,12 +398,12 @@ html[theme=light] {
   }
 }
 .chat .block .channel {
-  width: 100%;
+  width: calc(100% - 48px);
   position: relative;
 }
 .chat .block .channel .list-messages {
   height: calc(100% - 64px);
-  overflow: auto;
+  overflow-x: hidden;
 }
 .chat .block .channel .list-messages .message {
   display: flex;
@@ -441,6 +441,7 @@ html[theme=light] {
 }
 .chat .block .channel .list-messages .message .header {
   display: flex;
+  max-width: calc(100% - 38px);
   align-items: center;
 }
 .chat .block .channel .list-messages .message .header .username {
@@ -517,6 +518,9 @@ html[theme=light] {
 .chat .block .channel .list-messages .message .header .message-menu ul li.delete:hover {
   color: var(--C5);
 }
+.chat .block .channel .list-messages .message .content {
+  width: 100%;
+}
 .chat .block .channel .list-messages .message .content .text {
   padding: 4px 0;
   font-size: 14px;
@@ -562,9 +566,30 @@ html[theme=light] {
   transition: 0.2s;
 }
 .chat .block .channel .chat-input .stickers:hover, .chat .block .channel .chat-input .send:hover, .chat .block .channel .chat-input .sticker-add:hover, .chat .block .channel .chat-input .button-add:hover, .chat .block .channel .add-sticker .stickers:hover, .chat .block .channel .add-sticker .send:hover, .chat .block .channel .add-sticker .sticker-add:hover, .chat .block .channel .add-sticker .button-add:hover {
-  color: #fff;
+  color: #000;
   box-shadow: 0 0 10px 0 var(--dimming-2);
   background: var(--C1);
+}
+.chat .block .channel .chat-input .button-add span, .chat .block .channel .add-sticker .button-add span {
+  display: none;
+}
+@media (max-width: 480px) {
+  .chat .block .channel .add-sticker {
+    display: block;
+  }
+  .chat .block .channel .add-sticker input {
+    margin: 0 0 8px 0 !important;
+    max-width: calc(100% - 28px) !important;
+  }
+  .chat .block .channel .add-sticker .button-add {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .chat .block .channel .add-sticker .button-add span {
+    display: block;
+    margin: 0 0 0 8px;
+  }
 }
 .chat .block .users {
   min-width: 196px;
