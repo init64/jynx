@@ -106,6 +106,139 @@ html[theme=light] {
   transform: translateX(-50%);
 }
 
+.main-menu {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  animation: ShowMenu 0.2s linear;
+  transition: 0.2s;
+  z-index: 100000;
+}
+.main-menu .bg {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  background: rgba(0, 0, 0, 0.2509803922);
+}
+.main-menu .block {
+  padding: 12px;
+  max-width: 512px;
+  min-width: 256px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  border-radius: 5px;
+  background: var(--bg);
+  transform: translate(-50%, -50%);
+}
+.main-menu .block .subtitle {
+  color: var(--color-2);
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+.main-menu .block .menu-user .header {
+  display: flex;
+  align-items: center;
+}
+.main-menu .block .menu-user .header img {
+  margin: 0 12px 0 0;
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: 50% 50%;
+}
+.main-menu .block .menu-user .header div .username {
+  font-size: 18px;
+  font-weight: 600;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.main-menu .block .menu-user .header div .id {
+  color: var(--color-3);
+  font-size: 12px;
+}
+.main-menu .block .menu-user .header div .id span {
+  color: var(--color-2);
+}
+.main-menu .block .menu-user .status div:not(.subtitle) {
+  word-break: break-all;
+  max-height: 40vh;
+  overflow-x: hidden;
+}
+
+@keyframes ShowMenu {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.context-menu {
+  position: fixed;
+  z-index: 10000000;
+  border-radius: 5px;
+  background: var(--bg-2);
+  transition: all 0.2s;
+  overflow: hidden;
+}
+.context-menu ul {
+  padding: 8px;
+}
+.context-menu ul li {
+  cursor: pointer;
+  padding: 8px 16px;
+  transition: 0.2s;
+}
+.context-menu ul li:hover {
+  border-radius: 5px;
+  background: rgba(0, 0, 0, 0.1450980392);
+}
+.context-menu ul li:hover span {
+  color: var(--color);
+}
+.context-menu ul li span {
+  color: var(--color-2);
+  font-size: 14px;
+  transition: 0.2s;
+}
+
+.context-menu {
+  position: fixed;
+  z-index: 10000000;
+  border-radius: 5px;
+  background: var(--bg-2);
+  transition: all 0.2s;
+  overflow: hidden;
+}
+.context-menu ul {
+  padding: 8px;
+}
+.context-menu ul li {
+  cursor: pointer;
+  padding: 8px 16px;
+  transition: 0.2s;
+}
+.context-menu ul li:hover {
+  border-radius: 5px;
+  background: rgba(0, 0, 0, 0.1450980392);
+}
+.context-menu ul li:hover span {
+  color: var(--color);
+}
+.context-menu ul li span {
+  color: var(--color-2);
+  font-size: 14px;
+  transition: 0.2s;
+}
+
 .login {
   display: flex;
   position: absolute;
@@ -221,13 +354,12 @@ html[theme=light] {
 .chat .chat-header {
   display: flex;
   width: 100%;
-  height: 36px;
+  height: 48px;
   position: fixed;
   top: 0;
   left: 0;
   align-items: center;
   justify-content: space-between;
-  box-shadow: 0px 5px 5px -5px var(--dimming-3);
   background: var(--bg-2);
   z-index: 2;
 }
@@ -298,9 +430,9 @@ html[theme=light] {
 .chat .block {
   display: flex;
   width: 100%;
-  height: calc(100% - 36px);
+  height: calc(100% - 48px);
   position: absolute;
-  top: 36px;
+  top: 48px;
   left: 0;
   overflow: hidden;
 }

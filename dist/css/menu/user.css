@@ -1,0 +1,31 @@
+.menu-user .header {
+  display: flex;
+  align-items: center;
+}
+.menu-user .header img {
+  margin: 0 12px 0 0;
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: 50% 50%;
+}
+.menu-user .header div .username {
+  font-size: 18px;
+  font-weight: 600;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.menu-user .header div .id {
+  color: var(--color-3);
+  font-size: 12px;
+}
+.menu-user .header div .id span {
+  color: var(--color-2);
+}
+.menu-user .status div:not(.subtitle) {
+  word-break: break-all;
+  max-height: 40vh;
+  overflow-x: hidden;
+}

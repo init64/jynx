@@ -34,14 +34,19 @@ export class MainServer {
             const messages = new Messages(socket, this.socket);
 
             // ? Users
-            socket.on('user:connect', (data: any) => users.connect(data));
+            // socket.on('user:connect', (data: any) => users.connect(data));
+            socket.on('user:create', () => users.create());
             socket.on('user:login', (data: any) => users.login(data));
             socket.on('user:update', (data: any) => users.update(data));
+            socket.on('user:get', (userId: string) => users.get(userId));
             socket.on('user:delete', () => users.delete());
 
             // ? Chat
             socket.on('chat:getMessages', () => messages.list());
             socket.on('chat:sendMessage', (data: any) => messages.sendMessage(data));
+
+            // ? Message
+            socket.on('message:delete', (messageId: String) => messages.deleteMessage(messageId));
         });
     }
 

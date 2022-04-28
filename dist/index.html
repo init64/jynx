@@ -4,21 +4,44 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mirai</title>
+    <title>Jynx</title>
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
     <link rel="stylesheet" href="css/style.css">
   </head>
   <body> 
     <div id="app">
+      <div class="main-menu" v-if="mainMenu?.isActive">
+        <div class="bg" @click="setMenu({ type: '', data, isActive: false })"></div>
+        <div class="block" v-if="mainMenu?.type === 'user'">
+          <div class="menu-user">
+            <div class="header"> <img :src="mainMenu?.data.avatar">
+              <div>
+                <div class="username" :style="{ color: mainMenu.data.color }">{{ mainMenu.data.username }}</div>
+                <div class="id">ID:<span>{{ mainMenu.data.id }}</span></div>
+              </div>
+            </div>
+            <div class="status" v-if="mainMenu?.data?.status">
+              <div class="subtitle">Статус</div>
+              <div>{{ mainMenu.data.status }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="context-menu" v-if="contextMenu.isActive" :style="{ top: `${contextMenu.y}px`, left: `${contextMenu.x}px` }">
+        <ul> 
+          <li v-for="(btn, idx) of contextMenu.items" :key="(btn, idx)" @click="btn.click ? btn.click() : null"><span>{{ btn.label }}</span></li>
+        </ul>
+      </div>
       <div class="login" v-if="page === 'login'">
         <div class="logo">Mirai / Authorization</div>
         <div class="subtitle">User Token</div>
         <input type="text" maxlength="36" v-model="mUser.token">
+        <div class="subbutton" @click="createAccount()">Нет аккаунта?</div>
         <div class="button" @click="buttonLogin()">Войти</div>
       </div>
       <div class="chat" v-if="page === 'chat'">
         <div class="chat-header">
-          <div class="logo">Mirai</div>
+          <div class="logo">Jynx</div>
           <ul class="menu">
             <li :data-ui-title="panels.menu ? 'Мини меню' : 'Меню'" uit-bottom @click="panels.menu = !panels.menu"><i class="uil uil-draggabledots"></i></li>
             <div class="user" @click="profile.open = !profile.open">
@@ -41,22 +64,22 @@
           </div>
           <div class="channel" v-if="category === 'channel'">
             <div class="list-messages">
-              <div class="message" v-for="(message, index) of messages" :key="index" @mouseleave="messageFun = false">
+              <div class="message" v-for="(msg, index) of messages" :key="index" @click.right="msg.user.id === mUser.id ? setContextMenu($event, [ { label: 'Удалить сообщение', click: () =&gt; messageDelete(msg.id) }]) : null">
                 <div class="user">
-                  <div class="image" :style="{ 'background-image': `url('${message.user.avatar}')` }">
-                    <div class="status" v-if="message.user?.status &amp;&amp; userStatus[0] === message.user.id &amp;&amp; userStatus[1] === message.id">
+                  <div class="image" :style="{ 'background-image': `url('${msg.user.avatar}')` }">
+                    <div class="status" v-if="msg.user?.status &amp;&amp; userStatus[0] === msg.user.id &amp;&amp; userStatus[1] === msg.id">
                       <div>Статус</div>
-                      <div>{{ message.user.status }}</div>
+                      <div>{{ msg.user.status }}</div>
                     </div>
                   </div>
                 </div>
                 <div class="content"> 
                   <div class="header">
-                    <div class="username" :style="{ color: message.user.color }" @click="userStatus = userStatus[1] === message.id ? [] : [message.user.id, message.id]">{{ message.user.username }}</div>
-                    <div class="i" v-if="message.user.id === mUser.id">Вы</div>
-                    <div class="date">{{ unix(message.date).day }} {{ unix(message.date).month_name }} {{ unix(message.date).year }}</div>
+                    <div class="username" :style="{ color: msg.user.color }" @click="getUser(msg.user.id)">{{ msg.user.username }}</div>
+                    <div class="i" v-if="msg.user.id === mUser.id">Вы</div>
+                    <div class="date">{{ timeago(msg.date) }}</div>
                   </div>
-                  <div class="text">{{ message.content }} </div>
+                  <div class="text">{{ msg.content }} </div>
                 </div>
               </div>
             </div>
@@ -111,6 +134,11 @@
     </div>
     <script src="/socket.io/socket.io.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script src="js/functions.js"></script>
+    <script src="js/user.js"></script>
+    <script src="js/chat.js"></script>
+    <script src="js/contextMenu.js"></script>
+    <script src="js/main.js"></script>
     <script src="js/main.js"></script>
   </body>
 </html>

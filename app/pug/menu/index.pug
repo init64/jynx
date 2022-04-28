@@ -1,0 +1,4 @@
+.main-menu(v-if="mainMenu?.isActive")
+    .bg(@click="setMenu({ type: '', data, isActive: false })")
+    .block(v-if="mainMenu?.type === 'user'")
+        include user.pug

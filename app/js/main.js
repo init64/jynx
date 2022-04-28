@@ -1,10 +1,26 @@
-const socket = io();
+const
+    socket = io(location.origin),
+    // Classes
+    User = new ModelUser(socket),
+    Chat = new ModelChat(socket);
 
 const app = new Vue({
     el: '#app',
     data: {
+        socket,
         theme: localStorage['theme'] === 'light' ? true : false,
         autoLogin: localStorage['autoLogin'] === 'true' ? true : false,
+        mainMenu: {
+            type: '',
+            data: null,
+            isActive: false
+        },
+        contextMenu: {
+            x: 0,
+            y: 0,
+            items: [],
+            isActive: false
+        },
         page: 'login',
         category: 'channel',
         categories: {
@@ -13,7 +29,9 @@ const app = new Vue({
             //groups: ['Группы', 'uil uil-users-alt'],
             setting: ['Настройки', 'uil uil-setting']
         },
-        mUser: {},
+        mUser: {
+            token: ''
+        },
         messages: [],
         content: '',
         addSticker: {
@@ -39,20 +57,24 @@ const app = new Vue({
         }
     },
     methods: {
-        syncHistory() {
-            socket.emit('chat:getMessages')
+        unix, timeago, uts,
+        setMenu(data) {
+            this.mainMenu = data;
         },
+        syncHistory: () => Chat.history(),
         buttonLogin() {
-            if (this.mUser.token.trim() === '') return;
-            socket.emit('user:login', this.mUser.token);
+            return User.login(this.mUser.token || '');
         },
         setupSettings() {
-            socket.emit('user:update', this.mUser) 
+            return User.update(this.mUser);
         },
-        deleteAccount() {
-            socket.emit('user:delete');
-            location.reload();
+        createAccount() {
+            socket.emit('user:create');
         },
+        getUser(userId) {
+            return User.get(userId);
+        },
+        deleteAccount: () => User.delete(),
         exitUser() {
             this.page = 'login';
         },
@@ -61,102 +83,79 @@ const app = new Vue({
             socket.emit('chat:sendMessage', this.content)
             return this.content = ''
         },
-        unix(unix = Date.now()) {
-            const Months_name = [ "января", "февраля", "марта", "апреля", "мая", "июня", "июля", "августа", "сентября", "октября", "ноября", "декабря" ];
-        
-            let date = new Date(unix),
-                year = date.getFullYear(),
-                day = date.getDate(),
-                month = date.getMonth(),
-                hours = date.getHours(),
-                minutes = date.getMinutes(),
-                seconds = date.getSeconds();
-        
-            if (month < 10) month = `0${ month }`;
-            if (day < 10) day = `0${ day }`;
-            if (hours < 10) hours = `0${ hours }`;
-            if (hours >= 24) hours = `0${ hours - new Number(24) }`;
-            if (minutes < 10) minutes = `0${ minutes }`;
-            if (minutes >= 60) minutes = `0${ minutes - new Number(60) }`;
-            if (seconds < 10) seconds = `0${ seconds }`;
-            if (seconds >= 60) seconds = `0${ seconds - new Number(60) }`;
-        
-        
-            return {
-                year      : year,
-                day       : day,
-                month     : month,
-                month_name: Months_name[Number(month)],
-                hours     : hours,
-                minutes   : minutes,
-                seconds   : seconds
-            }
-        },
         setChatDown() {
             if (this.page === 'chat') document.querySelector('.chat .list-messages').scrollTop = document.querySelector('.chat .list-messages').scrollHeight;
         },
-        randomHex(count) {
-            let array = []
-            for (let i = 0; i < count; i++) array.push('#' + Math.random().toString(16).substr(-6))
-            return array
-        },
-        setTheme() {
-            let theme = this.theme ? 'dark' : 'light';
-            console.log(theme);
-            localStorage.setItem('theme', theme)
-            document.querySelector('html').setAttribute('theme', theme)
+        setTheme(type = this.theme) {
+            let theme = type ? 'dark' : 'light';
+            localStorage.setItem('theme', theme);
+            document.querySelector('html').setAttribute('theme', theme);
         },
         setLocal(key, param) {
             localStorage.setItem(key, param);
         },
-        setBg(url) {
-            document.querySelector('.chat .bg').setAttribute('style', `background-image: linear-gradient(to bottom, #00000099 0%,#00000099 100%), url('${url}');`)
+        setContextMenu(event, items) {
+            this.contextMenu = { x: event.clientX, y: event.clientY, items, isActive: true }
+
+            setTimeout(() => {
+                window.addEventListener('click', () => {
+                    this.contextMenu = { x: 0, y: 0, items: [], isActive: false }
+                }, { once: true });
+            }, 10);
+        },
+        messageDelete(messageId) {
+            socket.emit('message:delete', messageId);
+        },
+        log(e) {
+            console.log(e);
         }
     },
     mounted() { 
-        const loadUser = (user, q) => {
+        const loadUser = (user) => {
             this.mUser = user;
-            localStorage.setItem('token', user.token)
-            localStorage.setItem('userID', user.id)
+            localStorage.setItem('token', user.token);
+            localStorage.setItem('userID', user.id);
         }
 
-        socket.on('system:technicalWorks', data => {
-            console.log(data ? 'Works' : 'Chat');
-        })
+        document.querySelector('html').setAttribute('theme', localStorage.getItem('theme') || 'dark');
 
-        document.querySelector('html').setAttribute('theme', localStorage.getItem('theme') || 'dark')
+        this.mUser['token'] = localStorage.getItem('token') || '';
+        if (this.autoLogin) User.login(localStorage.getItem('token'));
 
-        socket.emit('user:connect', { token: localStorage.getItem('token') });
-        if (this.autoLogin) socket.emit('user:login', localStorage.getItem('token'));
-
-        socket.on('user:loadUser', user => loadUser(user))
+        socket.on('user:loadUser', user => loadUser(user));
 
         socket.on('user:login', user => {
             this.page = 'chat';
             this.category = 'channel';
-            loadUser(user)
-            socket.emit('chat:getMessages')
-            socket.emit('chat:getUsers')
-        })
+            loadUser(user);
+            socket.emit('chat:getMessages');
+            socket.emit('chat:getUsers');
+        });
 
         socket.on('chat:loadMessages', messages => {
             new Promise((res, rej) => {
                 this.messages = messages;
-                console.log(this.messages);
-                res('end')
-            }).then(() => this.setChatDown())
-        })
+                res('end');
+            }).then(() => this.setChatDown());
+        });
 
         socket.on('chat:loadUsers', users => {
             this.users = users;
-            console.log(users);
-        })
+        });
 
         socket.on('chat:addMessage', message => {
             new Promise((res, rej) => {
                 this.messages.push(message);
-                res('end')
-            }).then(() => this.setChatDown())
-        })
+                res('end');
+            }).then(() => this.setChatDown());
+        });
+
+        socket.on('user:get', data => this.setMenu({ type: 'user', data, isActive: true }));
+
+        socket.on('message:delete', messageId => this.messages = this.messages.filter(item => item.id !== messageId));
     }
-})
+});
+
+window.addEventListener('contextmenu', e => {
+    e.preventDefault();
+});

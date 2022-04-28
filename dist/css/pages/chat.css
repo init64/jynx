@@ -9,13 +9,12 @@
 .chat .chat-header {
   display: flex;
   width: 100%;
-  height: 36px;
+  height: 48px;
   position: fixed;
   top: 0;
   left: 0;
   align-items: center;
   justify-content: space-between;
-  box-shadow: 0px 5px 5px -5px var(--dimming-3);
   background: var(--bg-2);
   z-index: 2;
 }
@@ -86,9 +85,9 @@
 .chat .block {
   display: flex;
   width: 100%;
-  height: calc(100% - 36px);
+  height: calc(100% - 48px);
   position: absolute;
-  top: 36px;
+  top: 48px;
   left: 0;
   overflow: hidden;
 }

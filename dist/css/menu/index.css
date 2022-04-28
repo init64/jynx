@@ -1,0 +1,75 @@
+.main-menu {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  animation: ShowMenu 0.2s linear;
+  transition: 0.2s;
+  z-index: 100000;
+}
+.main-menu .bg {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  background: rgba(0, 0, 0, 0.2509803922);
+}
+.main-menu .block {
+  padding: 12px;
+  max-width: 512px;
+  min-width: 256px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  border-radius: 5px;
+  background: var(--bg);
+  transform: translate(-50%, -50%);
+}
+.main-menu .block .subtitle {
+  color: var(--color-2);
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+.main-menu .block .menu-user .header {
+  display: flex;
+  align-items: center;
+}
+.main-menu .block .menu-user .header img {
+  margin: 0 12px 0 0;
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: 50% 50%;
+}
+.main-menu .block .menu-user .header div .username {
+  font-size: 18px;
+  font-weight: 600;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.main-menu .block .menu-user .header div .id {
+  color: var(--color-3);
+  font-size: 12px;
+}
+.main-menu .block .menu-user .header div .id span {
+  color: var(--color-2);
+}
+.main-menu .block .menu-user .status div:not(.subtitle) {
+  word-break: break-all;
+  max-height: 40vh;
+  overflow-x: hidden;
+}
+
+@keyframes ShowMenu {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

@@ -1,25 +1,14 @@
-.message(v-for="(message, index) of messages", :key="index", @mouseleave="messageFun = false")
+.message(v-for="(msg, index) of messages", :key="index",
+    @click.right="msg.user.id === mUser.id ? setContextMenu($event, [ { label: 'Удалить сообщение', click: () => messageDelete(msg.id) }]) : null"
+)
     .user
-        .image(:style="{ 'background-image': `url('${message.user.avatar}')` }")
-            .status(v-if="message.user?.status && userStatus[0] === message.user.id && userStatus[1] === message.id")
+        .image(:style="{ 'background-image': `url('${msg.user.avatar}')` }")
+            .status(v-if="msg.user?.status && userStatus[0] === msg.user.id && userStatus[1] === msg.id")
                 div Статус
-                div {{ message.user.status }}
+                div {{ msg.user.status }}
     .content 
         .header
-            .username(:style="{ color: message.user.color }" @click="userStatus = userStatus[1] === message.id ? [] : [message.user.id, message.id]") {{ message.user.username }}
-            .i(v-if="message.user.id === mUser.id") Вы
-            .date {{ unix(message.date).day }} {{ unix(message.date).month_name }} {{ unix(message.date).year }}
-            //- .message-menu
-            //-     div(@click="messageFun = !messageFun")
-            //-         i.uil.uil-ellipsis-h
-            //-     ul(:class="{ 'active': messageFun }")
-            //-         li
-            //-             i.uil.uil-comment-alt
-            //-             span Ответить
-            //-         li(v-if="message.user.id === mUser.id")
-            //-             i.uil.uil-pen
-            //-             span Изменить
-            //-         li.delete(v-if="message.user.id === mUser.id")
-            //-             i.uil.uil-trash
-            //-             span Удалить
-        .text {{ message.content }} 
+            .username(:style="{ color: msg.user.color }" @click="getUser(msg.user.id)") {{ msg.user.username }}
+            .i(v-if="msg.user.id === mUser.id") Вы
+            .date {{ timeago(msg.date) }}
+        .text {{ msg.content }} 

@@ -1,0 +1,33 @@
+.context-menu {
+    position: fixed;
+    z-index: 10000000;
+    border-radius: 5px;
+    background: var(--bg-2);
+    transition: all .2s;
+    overflow: hidden;
+
+    ul {
+        padding: 8px;
+
+        li {
+            cursor: pointer;
+            padding: 8px 16px;
+            transition: .2s;
+
+            &:hover {
+                border-radius: 5px;
+                background: #00000025;
+
+                span {
+                    color: var(--color);
+                }
+            }
+
+            span {
+                color: var(--color-2);
+                font-size: 14px;
+                transition: .2s;
+            }
+        }
+    }
+}

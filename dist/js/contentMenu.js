@@ -1,0 +1,3 @@
+class ContextMenu {
+    constructor() {}
+}

@@ -34,6 +34,14 @@ export default class Route {
         this.users = this.fs.get('users');
     }
 
+    getMessage(messageId: String) {
+        return this.messages.find(item => item.id === messageId);
+    }
+
+    getUser(userId: String) {
+        return Object.values(this.users).find(item => item.id === userId);
+    } 
+
     list() {
         let messages: Message[] = [],
             users = Object.values(this.users);
@@ -46,7 +54,7 @@ export default class Route {
     }
 
     async sendMessage(body: string) {
-        let user = await Object.values(this.users).find(item => item.id === this.socket['userID']);
+        let user = await this.getUser(this.socket['userID']);
         let data: Message = {
             content: body,
             id: this.fs.generate(18),
@@ -56,5 +64,14 @@ export default class Route {
         this.messages.push(data);
         this.fs.update('messages', this.messages);
         this.io.emit('chat:addMessage', { ...data, user });
+    }
+
+    deleteMessage(messageId: String) {
+        let message: Message = this.getMessage(messageId);
+        if (!message?.id) return { status: 404 };
+        if (message.user !== this.socket['userID']) return { status: 401 };
+        this.messages = this.messages.filter(item => item.id !== message.id);
+        this.fs.update('messages', this.messages);
+        this.io.emit('message:delete', message.id);
     }
 }
