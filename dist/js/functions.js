@@ -34,13 +34,11 @@ const rules = [
     [ /\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" class="link" target="_blank">$1</a>' ],
 
     // * Lists
-    // [ /([^\n]+)(\+)([^\n]+)/g, "<ul><li>$3</li></ul>" ],
-    // [ /([^\n]+)(\*)([^\n]+)/g, "<ul><li>$3</li></ul>" ],
     [ /(\*|\+|\-)(.*)/g, `<ul><li>$2</li></ul>` ],
 
     // * Warning, Error
-    [ /!!!{1}\s?([^\n]+)/g, `<div class="error">$1</div>` ],
-    [ /!!{1}\s?([^\n]+)/g, `<div class="warning">$1</div>` ]
+    [ /\n!!!{1}\s?([^\n]+)/g, `<div class="error">$1</div>` ],
+    [ /\n!!{1}\s?([^\n]+)/g, `<div class="warning">$1</div>` ]
 ];
 
 const uts = (UT, one, two, five) => {
