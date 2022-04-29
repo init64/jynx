@@ -2,7 +2,8 @@
     position: fixed;
     z-index: 10000000;
     border-radius: 5px;
-    background: var(--bg-2);
+    border: 1px solid var(--dimming);
+    background: var(--bg-3);
     transition: all .2s;
     overflow: hidden;
 

@@ -1,0 +1,6 @@
+.login(v-if="page === 'login'")
+    .logo Jynx / Authorization
+    .subtitle User Token
+    input(type="text", maxlength="36", v-model="mUser.token")
+    .subbutton(@click="createAccount()") Нет аккаунта?
+    .button(@click="buttonLogin()") Войти

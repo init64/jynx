@@ -1,11 +1,11 @@
-.chat-header
+.main-header
     .logo Jynx
     ul.menu
         //- li(v-if="category === 'channel'", :data-ui-title="`Участники - ${panels.users ? 'Выкл.' : 'Вкл.'}`", uit-bottom, @click="panels.users = !panels.users")
         //-     i.uil.uil-users-alt
         li(:data-ui-title="panels.menu ? 'Мини меню' : 'Меню'", uit-bottom, @click="panels.menu = !panels.menu")
             i.uil.uil-draggabledots
-        .user(@click="profile.open = !profile.open")
+        .profile(@click="profile.open = !profile.open")
             .username {{ mUser.username }}
             .avatar(:style="{ 'background-image': `url('${mUser.avatar}')` }")
             ul.buttons(:class="{ 'active': profile.open }")

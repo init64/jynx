@@ -1,0 +1,82 @@
+.profile {
+  width: 100%;
+  position: relative;
+}
+.profile .subtitle {
+  margin: 8px;
+  color: var(--color-2);
+  font-size: 12px;
+  font-weight: 600;
+}
+.profile .avatar {
+  display: flex;
+  width: 320px;
+  flex-direction: column;
+}
+.profile .avatar img {
+  margin: 0 8px 8px 8px;
+  width: 128px;
+  height: 128px;
+  border-radius: 50%;
+}
+.profile input[type=text] {
+  margin: 0 8px;
+  padding: 8px 14px;
+  width: 100%;
+  max-width: 320px;
+  color: var(--color);
+  border-radius: 7px;
+  background: var(--bg-2-alt);
+}
+.profile label.color {
+  position: relative;
+}
+.profile label.color input[type=color] {
+  position: absolute;
+  opacity: 0;
+  z-index: -1;
+}
+.profile label.color div {
+  margin: 0 8px;
+  padding: 8px 14px;
+  width: 100%;
+  max-width: 320px;
+  height: 16px;
+  border-radius: 7px;
+}
+.profile ul.buttons {
+  display: flex;
+  margin: 8px;
+  align-items: center;
+}
+.profile ul.buttons li {
+  cursor: pointer;
+  margin: 0 4px;
+  padding: 8px 12px;
+  font-size: 14px;
+  border-radius: 7px;
+  transition: 0.2s;
+}
+.profile ul.buttons li.save {
+  background: var(--C2-alt);
+}
+.profile ul.buttons li.save:hover {
+  background: var(--C2);
+}
+.profile ul.buttons li.delete {
+  background: var(--C5-alt);
+}
+.profile ul.buttons li.delete:hover {
+  color: #e8e8e8;
+  background: var(--C5);
+}
+
+@media (max-width: 480px) {
+  input[type=text] {
+    max-width: 215px !important;
+  }
+
+  label.color div {
+    max-width: 215px !important;
+  }
+}

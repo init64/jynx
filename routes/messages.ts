@@ -1,22 +1,5 @@
 import { Server } from "socket.io";
-import FileSystem from "../lib/FileSystem";
-
-interface User {
-    id: string,
-    token: string,
-    username: string,
-    color: string,
-    avatar: string
-}
-
-interface Message {
-    content: string,
-    id: string,
-    user: User | string,
-    date: number
-}
-
-
+import FileSystem, { User, Message } from "../lib/FileSystem";
 
 export default class Route {
     private socket: Server;
@@ -34,11 +17,11 @@ export default class Route {
         this.users = this.fs.get('users');
     }
 
-    getMessage(messageId: String) {
+    getMessage(messageId: string) {
         return this.messages.find(item => item.id === messageId);
     }
 
-    getUser(userId: String) {
+    getUser(userId: string) {
         return Object.values(this.users).find(item => item.id === userId);
     } 
 
@@ -53,11 +36,12 @@ export default class Route {
         this.socket.emit('chat:loadMessages', messages);
     }
 
-    async sendMessage(body: string) {
+    async sendMessage(body: string, type: string = 'message') {
         let user = await this.getUser(this.socket['userID']);
         let data: Message = {
             content: body,
             id: this.fs.generate(18),
+            type,
             user: user.id,
             date: Date.now()
         }
@@ -66,7 +50,17 @@ export default class Route {
         this.io.emit('chat:addMessage', { ...data, user });
     }
 
-    deleteMessage(messageId: String) {
+    updateMessage(messageId: string, content: string) {
+        let message: Message = this.getMessage(messageId);
+        if (!message?.id) return { status: 404 };
+        if (message.user !== this.socket['userID']) return { status: 401 };
+        message['content'] = content;
+        message['edited'] = true;
+        this.fs.update('messages', this.messages);
+        this.io.emit('message:update', message);
+    }
+
+    deleteMessage(messageId: string) {
         let message: Message = this.getMessage(messageId);
         if (!message?.id) return { status: 404 };
         if (message.user !== this.socket['userID']) return { status: 401 };

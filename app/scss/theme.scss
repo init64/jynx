@@ -20,10 +20,13 @@
 }
 
 html[theme="dark"] {
-    --bg: #191A19;
-    --bg-2: #1d1d1d;
+    // --bg: #191A19;
+    // --bg: #0d1017;
+    --bg: #16141b;
+    // --bg-2: #1d1d1d;
+    --bg-2: #3d3e4d;
     --bg-2-alt: #222222;
-    --bg-3: #161a1f;
+    --bg-3: #1c1d26;
     --bg-4: #14151b;
 
     // --bg: #06070d;
@@ -36,8 +39,8 @@ html[theme="dark"] {
     --color-2: #969696;
     --color-3: #636363;
 
-    --dimming: #ffffff15;
-    --dimming-2: #ffffff25;
+    --dimming: #212329;
+    --dimming-2: #252b3a;
     --dimming-3: #ffffff45;
     --dimming-4: #ffffff75;
 }

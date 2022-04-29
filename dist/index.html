@@ -8,8 +8,15 @@
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
     <link rel="stylesheet" href="css/style.css">
   </head>
-  <body> 
+  <body>
     <div id="app">
+      <div class="login" v-if="page === 'login'">
+        <div class="logo">Jynx / Authorization</div>
+        <div class="subtitle">User Token</div>
+        <input type="text" maxlength="36" v-model="mUser.token">
+        <div class="subbutton" @click="createAccount()">Нет аккаунта?</div>
+        <div class="button" @click="buttonLogin()">Войти</div>
+      </div>
       <div class="main-menu" v-if="mainMenu?.isActive">
         <div class="bg" @click="setMenu({ type: '', data, isActive: false })"></div>
         <div class="block" v-if="mainMenu?.type === 'user'">
@@ -32,102 +39,88 @@
           <li v-for="(btn, idx) of contextMenu.items" :key="(btn, idx)" @click="btn.click ? btn.click() : null"><span>{{ btn.label }}</span></li>
         </ul>
       </div>
-      <div class="login" v-if="page === 'login'">
-        <div class="logo">Mirai / Authorization</div>
-        <div class="subtitle">User Token</div>
-        <input type="text" maxlength="36" v-model="mUser.token">
-        <div class="subbutton" @click="createAccount()">Нет аккаунта?</div>
-        <div class="button" @click="buttonLogin()">Войти</div>
+      <div class="main-sidebar">
+        <ul class="menu"> 
+          <div> <img :src="mUser.avatar"></div>
+          <li :class="{ active: page === 'chat' }" @click="page = 'chat'; setChatDown()"><i class="uil uil-chat"></i></li>
+          <li :class="{ active: page === 'profile' }" @click="page = 'profile'"><i class="uil uil-user"></i></li>
+          <li :class="{ active: page === 'settings' }" @click="page = 'settings'"><i class="uil uil-setting"></i></li>
+        </ul>
       </div>
-      <div class="chat" v-if="page === 'chat'">
-        <div class="chat-header">
-          <div class="logo">Jynx</div>
-          <ul class="menu">
-            <li :data-ui-title="panels.menu ? 'Мини меню' : 'Меню'" uit-bottom @click="panels.menu = !panels.menu"><i class="uil uil-draggabledots"></i></li>
-            <div class="user" @click="profile.open = !profile.open">
-              <div class="username">{{ mUser.username }}</div>
-              <div class="avatar" :style="{ 'background-image': `url('${mUser.avatar}')` }"></div>
-              <ul class="buttons" :class="{ 'active': profile.open }">
-                <li @click="exitUser()">Выйти</li>
-              </ul>
+      <div class="page">
+        <div class="chat" v-if="page === 'chat'">
+          <div class="list-messages">
+            <div class="message" v-for="(msg, index) of messages" :key="index" :class="{ selected: selectedMessages.find(item =&gt; item === msg.id) }" @click.right="msg.user.id === mUser.id ? setContextMenu($event, [ { label: 'Изменить сообщение', click: () =&gt; content = { mode: 'edit', text: msg.content, messageId: msg.id } }, { label: 'Удалить сообщение', click: () =&gt; messageDelete(msg.id) } ]) : null">
+              <div class="user">
+                <div class="image" :style="{ 'background-image': `url('${msg.user.avatar}')` }"></div>
+              </div>
+              <div class="content"> 
+                <div class="header">
+                  <div class="username" :style="{ color: msg.user.color }" @click="getUser(msg.user.id)">{{ msg.user.username }}</div>
+                  <div class="i" v-if="msg.user.id === mUser.id">Вы</div>
+                  <div class="date">{{ timeago(msg.date) }}</div>
+                </div>
+                <div class="text" v-html="getContent(msg.content)" v-if="msg?.type !== 'sticker'" :class="{ edited: msg.edited }"></div>
+                <div class="sticker" v-if="msg?.type === 'sticker'"><img :src="msg.content"></div>
+              </div>
             </div>
+          </div>
+          <div class="chat-input">
+            <div class="block">
+              <div class="stickers" v-if="panel.stickers">
+                <ul class="list">
+                  <li v-for="(sticker, idx) of stickers" :key="idx" @click="sendMessage('sticker', sticker.url)"><img :src="sticker.url"></li>
+                </ul>
+                <div class="add">
+                  <input type="text" placeholder="Ссылка на изображение" v-model="sticker.url" @keyup.enter="addSticker()">
+                  <div class="btn" data-ui-title="Добавить стикер" @click="addSticker()"><i class="uil uil-image-plus"></i></div>
+                </div>
+              </div>
+            </div>
+            <textarea placeholder="Написать сообщение..." rows="1" v-model="content.text" @keyup.shift.enter.exact="setRows($event)" @keyup.enter.exact="sendMessage(); $event.target.setAttribute('rows', 1)" required></textarea>
+            <div class="btn stickers" data-ui-title="Стикеры" @click="panel.stickers ? panel.stickers = false : getStickers()"><i class="uil uil-image"></i></div>
+            <div class="btn send" data-ui-title="Отправить" @click="sendMessage()"><i class="uil uil-message"></i></div>
+          </div>
+        </div>
+        <div class="profile" v-if="page === 'profile'">
+          <div class="subtitle">Ваш ID: {{ mUser.id }}</div>
+          <div class="subtitle">Аватарка пользователя</div>
+          <div class="avatar"><img :src="mUser.avatar">
+            <input type="text" placeholder="Ссылка на картинку" v-model="mUser.avatar">
+          </div>
+          <div class="subtitle">Имя пользователя</div>
+          <input type="text" v-model="mUser.username">
+          <div class="subtitle">Цвет ника</div>
+          <label class="color">
+            <input type="color" v-model="mUser.color">
+            <div :style="{ 'background': mUser.color }"></div>
+          </label>
+          <div class="subtitle">Статус пользователя</div>
+          <input type="text" v-model="mUser.status">
+          <ul class="buttons"> 
+            <li class="save" @click="setupSettings()">Сохранить</li>
+            <li class="delete" @click="deleteAccount()">Удалить аккаунт</li>
           </ul>
         </div>
-        <div class="block">
-          <div class="menu" :class="{ 'mini': panels.menu }">
-            <div class="title">Меню</div>
-            <ul class="buttons">
-              <li v-for="(name, ct) in categories" :key="ct" @click="category = ct; category == 'channel' ? syncHistory() : null " :class="{ 'active': category === ct }">
-                <div><i :class="name[1]"></i></div><span>{{ name[0] }}</span>
-              </li>
-            </ul>
-          </div>
-          <div class="channel" v-if="category === 'channel'">
-            <div class="list-messages">
-              <div class="message" v-for="(msg, index) of messages" :key="index" @click.right="msg.user.id === mUser.id ? setContextMenu($event, [ { label: 'Удалить сообщение', click: () =&gt; messageDelete(msg.id) }]) : null">
-                <div class="user">
-                  <div class="image" :style="{ 'background-image': `url('${msg.user.avatar}')` }">
-                    <div class="status" v-if="msg.user?.status &amp;&amp; userStatus[0] === msg.user.id &amp;&amp; userStatus[1] === msg.id">
-                      <div>Статус</div>
-                      <div>{{ msg.user.status }}</div>
-                    </div>
-                  </div>
-                </div>
-                <div class="content"> 
-                  <div class="header">
-                    <div class="username" :style="{ color: msg.user.color }" @click="getUser(msg.user.id)">{{ msg.user.username }}</div>
-                    <div class="i" v-if="msg.user.id === mUser.id">Вы</div>
-                    <div class="date">{{ timeago(msg.date) }}</div>
-                  </div>
-                  <div class="text">{{ msg.content }} </div>
-                </div>
-              </div>
+        <div class="setting" v-if="page === 'settings'">
+          <div class="title">Внешний вид</div>
+          <div class="option">
+            <div class="info">
+              <div class="header">Светлая тема</div>
+              <div class="text">Побереги свои глазки, для того чтобы в будущем у тебя было хорошое зрение :P</div>
             </div>
-            <div class="chat-input">
-              <input type="text" placeholder="Написать сообщение..." v-model="content" @keyup.enter="sendMessage()">
-              <div class="send" data-ui-title="Отправить" @click="sendMessage()"><i class="uil uil-message"></i></div>
-            </div>
-          </div>
-          <div class="setting" v-if="category === 'setting'">
-            <div class="title">Внешний вид</div>
-            <div class="option">
-              <div class="info">
-                <div class="header">Светлая тема</div>
-                <div class="text">Побереги свои глазки, для того чтобы в будущем у тебя было хорошое зрение :P</div>
-              </div>
-              <label class="check">
-                <input type="checkbox" @click="setTheme()" v-model="theme"><span></span>
-              </label>
-            </div>
-            <div class="option">
-              <div class="info">
-                <div class="header">Автозаход</div>
-                <div class="text">Авторизируйтесь сразу, а не напжимайте эту ****ную кнопку :#</div>
-              </div>
-              <label class="check">
-                <input type="checkbox" @click="setLocal('autoLogin', !autoLogin)" v-model="autoLogin"><span></span>
-              </label>
-            </div>
-          </div>
-          <div class="profile" v-if="category === 'profile'">
-            <div class="subtitle">Ваш ID: {{ mUser.id }}</div>
-            <div class="subtitle">Аватарка пользователя</div>
-            <div class="avatar"><img :src="mUser.avatar">
-              <input type="text" placeholder="Ссылка на картинку" v-model="mUser.avatar">
-            </div>
-            <div class="subtitle">Имя пользователя</div>
-            <input type="text" v-model="mUser.username">
-            <div class="subtitle">Цвет ника</div>
-            <label class="color">
-              <input type="color" v-model="mUser.color">
-              <div :style="{ 'background': mUser.color }"></div>
+            <label class="check">
+              <input type="checkbox" @click="setTheme()" v-model="theme"><span></span>
             </label>
-            <div class="subtitle">Статус пользователя</div>
-            <input type="text" v-model="mUser.status">
-            <ul class="buttons"> 
-              <li class="save" @click="setupSettings()">Сохранить</li>
-              <li class="delete" @click="deleteAccount()">Удалить аккаунт</li>
-            </ul>
+          </div>
+          <div class="option">
+            <div class="info">
+              <div class="header">Автозаход</div>
+              <div class="text">Авторизируйтесь сразу, а не напжимайте эту ****ную кнопку :#</div>
+            </div>
+            <label class="check">
+              <input type="checkbox" @click="setLocal('autoLogin', !autoLogin)" v-model="autoLogin"><span></span>
+            </label>
           </div>
         </div>
       </div>

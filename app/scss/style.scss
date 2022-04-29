@@ -2,7 +2,7 @@
 
 @import 'data-title';
 
-@import 'menu/index.scss', 'contextMenu/index.scss', 'contextMenu/index.scss', 'pages/login', 'pages/chat';
+@import 'auth/index.scss', 'main/index.scss', 'menu/index.scss', 'contextMenu/index.scss';
 
 @import url('https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap');
 
@@ -13,6 +13,7 @@ body {
     font-family: 'Open Sans', sans-serif;
     // font-family: 'Roboto', sans-serif;
     background-color: var(--bg);
+    overflow: hidden;
 }
 
 ul, li {

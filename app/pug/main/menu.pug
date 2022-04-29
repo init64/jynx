@@ -1,8 +1,0 @@
-.menu(:class="{ 'mini': panels.menu }")
-    .title Меню
-    ul.buttons
-        li(v-for="(name, ct) in categories", :key="ct", @click="category = ct; category == 'channel' ? syncHistory() : null ", :class="{ 'active': category === ct }")
-            div
-                i(:class="name[1]")
-            span {{ name[0] }}
-

@@ -24,7 +24,7 @@
   top: 50%;
   left: 50%;
   border-radius: 5px;
-  background: var(--bg);
+  background: var(--dimming);
   transform: translate(-50%, -50%);
 }
 .main-menu .block .subtitle {

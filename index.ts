@@ -10,6 +10,7 @@ import FileSystem from './lib/FileSystem';
 // * Routes
 import Users from './routes/users';
 import Messages from './routes/messages';
+import Stickers from './routes/stickers';
 
 export class MainServer {
     app: express.Express;
@@ -30,8 +31,10 @@ export class MainServer {
     
     loadSocket() {
         this.socket.on('connection', socket => {
-            const users = new Users(socket);
-            const messages = new Messages(socket, this.socket);
+            const
+                users = new Users(socket),
+                messages = new Messages(socket, this.socket),
+                stickers = new Stickers(socket, this.socket);
 
             // ? Users
             // socket.on('user:connect', (data: any) => users.connect(data));
@@ -43,10 +46,16 @@ export class MainServer {
 
             // ? Chat
             socket.on('chat:getMessages', () => messages.list());
-            socket.on('chat:sendMessage', (data: any) => messages.sendMessage(data));
+            socket.on('chat:sendMessage', (content: any, type: string) => messages.sendMessage(content, type));
 
-            // ? Message
-            socket.on('message:delete', (messageId: String) => messages.deleteMessage(messageId));
+            // ? Messages
+            socket.on('message:update', (messageId: string, content: string) => messages.updateMessage(messageId, content));
+            socket.on('message:delete', (messageId: string) => messages.deleteMessage(messageId));
+
+            // ? Stickers
+            socket.on('sticker:add', (url: string) => stickers.add(url));
+            socket.on('stickers:get', () => stickers.list());
+            socket.on('sticker:remove', (stickerId: string) => stickers.remove(stickerId));
         });
     }
 
@@ -54,7 +63,8 @@ export class MainServer {
         this.FS.isFolders(['json']);
         this.FS.isFiles([
             ['users.json', '{}'],
-            ['messages.json', '[]']
+            ['messages.json', '[]'],
+            ['stickers.json', '[]']
         ]);
 
         this.app.use('/', express.static(path.join(__dirname, (process.env.DIST || '/dist'))));

@@ -1,0 +1,103 @@
+.login {
+  display: flex;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  flex-direction: column;
+  transform: translate(-50%, -50%);
+}
+.login .logo {
+  margin: 0 0 8px 0;
+  font-size: 24px;
+  font-family: Dancing Script;
+  text-align: center;
+}
+.login .title {
+  margin: 8px 0;
+  font-weight: 600;
+  text-align: center;
+}
+.login .subtitle {
+  margin: 0 8px;
+  color: var(--color-2);
+  font-size: 12px;
+  font-weight: 600;
+}
+.login input {
+  margin: 4px 8px;
+  padding: 8px 14px;
+  width: 196px;
+  color: var(--color);
+  border-radius: 5px;
+  border: 1px solid var(--T);
+  background: var(--bg-2-alt);
+  transition: 0.2s;
+}
+.login input:focus {
+  border: 1px solid var(--C1);
+}
+.login .button {
+  cursor: pointer;
+  margin: 8px auto 0 auto;
+  padding: 8px 12px;
+  min-width: 96px;
+  color: #000;
+  text-align: center;
+  background: var(--C1);
+  transition: 0.2s;
+  user-select: none;
+}
+.login .button:hover {
+  box-shadow: 0 5px 5px -5px var(--dimming-3);
+  transform: translateY(-4px);
+}
+.login .button:active {
+  background: var(--C1-alt);
+  transform: scale(0.9);
+}
+.login .subbutton {
+  cursor: pointer;
+  margin: 4px 0;
+  color: var(--color-2);
+  font-size: 12px;
+  text-align: center;
+  transition: 0.2s;
+  user-select: none;
+}
+.login .subbutton:hover {
+  color: var(--C7);
+}
+.login .subbutton:active {
+  color: var(--color);
+}
+.login .colors {
+  display: flex;
+  margin: 8px 0 0 0;
+  align-items: center;
+  justify-content: center;
+}
+.login .colors li {
+  cursor: pointer;
+  margin: 0 4px;
+  width: 24px;
+  height: 24px;
+  border-radius: 5px;
+  transition: 0.2s;
+}
+.login .colors li:hover, .login .colors li.active {
+  transform: scale(1.1);
+}
+.login .colors label {
+  cursor: pointer;
+  margin: 0 4px;
+  width: 24px;
+  height: 24px;
+  border-radius: 5px;
+}
+.login .colors label input {
+  padding: 0;
+  width: 0;
+  height: 0;
+  opacity: 0;
+  z-index: -1;
+}

@@ -1,0 +1,10 @@
+.main-sidebar
+    ul.menu 
+        div 
+            img(:src="mUser.avatar")
+        li(:class="{ active: page === 'chat' }", @click="page = 'chat'; setChatDown()")
+            i.uil.uil-chat
+        li(:class="{ active: page === 'profile' }", @click="page = 'profile'")
+            i.uil.uil-user
+        li(:class="{ active: page === 'settings' }", @click="page = 'settings'")
+            i.uil.uil-setting

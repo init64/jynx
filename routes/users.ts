@@ -1,17 +1,5 @@
 import { Server } from "socket.io";
-import FileSystem from "../lib/FileSystem";
-
-interface ConnectData {
-    token: string
-}
-
-interface User {
-    id: string,
-    token: string,
-    username: string,
-    color: string,
-    avatar: string
-}
+import FileSystem, { ConnectData, User } from "../lib/FileSystem";
 
 export default class Route {
     private socket: Server;

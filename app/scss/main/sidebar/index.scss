@@ -1,0 +1,52 @@
+.main-sidebar {
+    display: flex;
+    width: 64px;
+    height: 100vh;
+    position: relative;
+    border-right: 1px solid var(--dimming);
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: column;
+
+    ul.menu {
+        div {
+            margin: 8px 0 0 0;
+            width: 48px;
+            height: 48px;
+
+            img {
+                width: 100%;
+                height: 100%;
+                border-radius: 50%;
+                object-fit: cover;
+                object-position: 50% 50%;
+            }
+        }
+
+        li {
+            cursor: pointer;
+            margin: 8px 0 0 0;
+            width: 48px;
+            height: 48px;
+            text-align: center;
+            line-height: 48px;
+            border-radius: 5px;
+            background: var(--dimming);
+            transition: .2s;
+            user-select: none;
+
+            &:hover {
+                box-shadow: 0 0 5px -1px var(--color);
+            }
+
+            &:active {
+                transform: scale(.8);
+            }
+
+            &.active {
+                color: var(--bg);
+                background: var(--color);
+            }
+        }
+    }
+}

@@ -1,6 +1,36 @@
 import * as fs from 'fs';
 import { join } from 'path';
 
+
+export interface ConnectData {
+    token: string
+}
+
+export interface User {
+    id: string,
+    token: string,
+    username: string,
+    color: string,
+    avatar: string
+}
+
+export interface Message {
+    content: string,
+    id: string,
+    type: string,
+    user: User | string,
+    date: number,
+    edited?: boolean
+}
+
+export interface Sticker {
+    id: string,
+    url: string,
+    ownerId: string,
+    date: number
+}
+
+
 export default class FileSystem {
     constructor() {}
 

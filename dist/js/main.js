@@ -10,6 +10,7 @@ const app = new Vue({
         socket,
         theme: localStorage['theme'] === 'light' ? true : false,
         autoLogin: localStorage['autoLogin'] === 'true' ? true : false,
+        login: false,
         mainMenu: {
             type: '',
             data: null,
@@ -22,38 +23,23 @@ const app = new Vue({
             isActive: false
         },
         page: 'login',
-        category: 'channel',
-        categories: {
-            profile: ['Профиль', 'uil uil-user'],
-            channel: ['Канал', 'uil uil-comment-alt'],
-            //groups: ['Группы', 'uil uil-users-alt'],
-            setting: ['Настройки', 'uil uil-setting']
-        },
-        mUser: {
-            token: ''
-        },
+        mUser: { token: '' },
         messages: [],
-        content: '',
-        addSticker: {
-            open: false,
-            url: '',
-            name: '',
-        },
-        platforms: {
-            Windows: 'uil uil-windows',
-            Linux: 'uil uil-linux',
-            Android: 'uil uil-android-alt',
-            iPhone: 'uil uil-apple-alt'
-        },
-        messageFun: false,
-        userStatus: [],
-        users: [],
-        panels: {
-            users: false,
-            menu: window.screen.width < 480 ? true : false || false
+        stickers: [],
+        selectedMessages: [],
+        content: {
+            mode: 'send',
+            text: '',
+            messageId: ''
         },
         profile: {
             open: false
+        },
+        panel: {
+            stickers: false
+        },
+        sticker: {
+            url: ''
         }
     },
     methods: {
@@ -78,13 +64,23 @@ const app = new Vue({
         exitUser() {
             this.page = 'login';
         },
-        sendMessage() {
-            if (this.content.trim() === '') return
-            socket.emit('chat:sendMessage', this.content)
-            return this.content = ''
+        sendMessage(type = this.content.mode, content = '') {
+            if (this.content.text.trim() === '' && type !== 'sticker') return
+            switch(type) {
+                case "send":
+                    socket.emit('chat:sendMessage', this.content.text);
+                    break;
+                case "edit":
+                    socket.emit('message:update', this.content.messageId, this.content.text);
+                    break;
+                case "sticker":
+                    socket.emit('chat:sendMessage', content, type);
+                    break;
+            }
+            return this.content.text = ''
         },
         setChatDown() {
-            if (this.page === 'chat') document.querySelector('.chat .list-messages').scrollTop = document.querySelector('.chat .list-messages').scrollHeight;
+            if (this.page === 'chat') setTimeout(() => document.querySelector('.chat .list-messages').scrollTop = document.querySelector('.chat .list-messages').scrollHeight, 10);
         },
         setTheme(type = this.theme) {
             let theme = type ? 'dark' : 'light';
@@ -106,13 +102,27 @@ const app = new Vue({
         messageDelete(messageId) {
             socket.emit('message:delete', messageId);
         },
-        log(e) {
-            console.log(e);
+        getContent(content) {
+            return content.replace(/\n/g, '<br>')
+        },
+        setRows({ target }, max = 4) {
+            let rows = Math.floor(target.getAttribute('rows'));
+            target.setAttribute('rows', rows > max ? max : rows + 1);
+        },
+        getStickers() {
+            this.panel.stickers = true;
+            socket.emit('stickers:get');
+        },
+        addSticker() {
+            let img = new Image();
+            img.src = this.sticker.url;
+            img.onload = () => socket.emit('sticker:add', this.sticker.url);
         }
     },
     mounted() { 
         const loadUser = (user) => {
             this.mUser = user;
+            this.login = true;
             localStorage.setItem('token', user.token);
             localStorage.setItem('userID', user.id);
         }
@@ -152,7 +162,15 @@ const app = new Vue({
 
         socket.on('user:get', data => this.setMenu({ type: 'user', data, isActive: true }));
 
+        socket.on('message:update', newMessage => {
+            let oldMessage = this.messages.find(item => item.id === newMessage.id);
+            for (let param in newMessage)
+                if (param !== 'user') oldMessage[param] = newMessage[param];
+        });
+
         socket.on('message:delete', messageId => this.messages = this.messages.filter(item => item.id !== messageId));
+
+        socket.on('stickers:list', list => this.stickers = list);
     }
 });
 

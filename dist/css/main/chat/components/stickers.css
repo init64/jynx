@@ -1,0 +1,30 @@
+.stickers {
+  padding: 12px;
+  border-radius: 5px;
+  background: var(--bg-3);
+}
+.stickers .list {
+  display: flex;
+  max-height: 256px;
+  flex-wrap: wrap;
+  align-items: center;
+  column-gap: 12px;
+  overflow-x: hidden;
+}
+.stickers .list img {
+  cursor: pointer;
+  width: 128px;
+  height: 128px;
+  border-radius: 5px;
+  object-fit: cover;
+  object-position: 50% 50%;
+  transition: 0.2s;
+}
+.stickers .list img:active {
+  transform: scale(0.8);
+}
+.stickers .add {
+  display: flex;
+  margin: 8px 0 0 0;
+  align-items: center;
+}
