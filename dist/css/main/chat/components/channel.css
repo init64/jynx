@@ -172,6 +172,16 @@
   border-radius: 50%;
   background: var(--C1);
 }
+.channel .list-messages .message .content .text p {
+  margin: 0;
+  padding: 0;
+}
+.channel .list-messages .message .content .text a {
+  color: var(--C1);
+}
+.channel .list-messages .message .content .text a:hover {
+  text-decoration: underline;
+}
 .channel .list-messages .message .content .sticker img {
   width: 256px;
   height: 256px;

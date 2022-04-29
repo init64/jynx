@@ -440,6 +440,16 @@ html[theme=light] {
   border-radius: 50%;
   background: var(--C1);
 }
+#app .page .chat .list-messages .message .content .text p {
+  margin: 0;
+  padding: 0;
+}
+#app .page .chat .list-messages .message .content .text a {
+  color: var(--C1);
+}
+#app .page .chat .list-messages .message .content .text a:hover {
+  text-decoration: underline;
+}
 #app .page .chat .list-messages .message .content .sticker img {
   width: 256px;
   height: 256px;
@@ -820,6 +830,55 @@ html[theme=light] {
   color: var(--color-2);
   font-size: 14px;
   transition: 0.2s;
+}
+
+.markdown-content h1, .markdown-content h2, .markdown-content h3, .markdown-content h4, .markdown-content h5, .markdown-content h6 {
+  margin: 0;
+}
+.markdown-content .monospace {
+  padding: 2px 4px;
+  border-radius: 5px;
+  background: var(--dimming);
+}
+.markdown-content pre {
+  margin: 0;
+  padding: 12px;
+  border-radius: 10px;
+  background: var(--dimming);
+}
+.markdown-content ul li {
+  list-style-type: disc;
+  margin-inline-start: 16px;
+}
+.markdown-content .blockquote {
+  padding: 8px 12px;
+  color: var(--color);
+  font-weight: 600;
+  border-left: 4px solid var(--dimming);
+}
+.markdown-content p {
+  margin: 0;
+  padding: 0;
+}
+.markdown-content input[type=checkbox] {
+  margin: 4px 8px 4px 0;
+}
+.markdown-content .warning, .markdown-content .error {
+  padding: 16px;
+  border-radius: 7px;
+  border-left: 5px solid var(--T);
+  transition: 0.2s;
+  box-sizing: border-box;
+}
+.markdown-content .warning {
+  color: var(--C6);
+  border-left-color: var(--C6);
+  background: var(--C6-alt);
+}
+.markdown-content .error {
+  color: var(--C5);
+  border-left-color: var(--C5);
+  background: var(--C5-alt);
 }
 
 body {

@@ -192,6 +192,19 @@
                     background: var(--C1);
                 }
             }
+
+            p {
+                margin: 0;
+                padding: 0;
+            }
+
+            a {
+                color: var(--C1);
+
+                &:hover {
+                    text-decoration: underline;
+                }
+            }
         }
 
         .sticker {

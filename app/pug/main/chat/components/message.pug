@@ -8,6 +8,6 @@
             .username(:style="{ color: msg.user.color }" @click="getUser(msg.user.id)") {{ msg.user.username }}
             .i(v-if="msg.user.id === mUser.id") Вы
             .date {{ timeago(msg.date) }}
-        .text(v-html="getContent(msg.content)", v-if="msg?.type !== 'sticker'",  :class="{ edited: msg.edited }")
+        .markdown-content.text(v-html="md(msg.content)", v-if="msg?.type !== 'sticker'",  :class="{ edited: msg.edited }")
         .sticker(v-if="msg?.type === 'sticker'")
             img(:src="msg.content")

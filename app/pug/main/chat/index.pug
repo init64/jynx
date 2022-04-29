@@ -4,10 +4,8 @@
     .chat-input
         .block
             include components/stickers.pug
-        textarea(placeholder="Написать сообщение...", rows="1", v-model="content.text", @keyup.shift.enter.exact="setRows($event)", @keyup.enter.exact="sendMessage(); $event.target.setAttribute('rows', 1)", required)
+        textarea(placeholder="Написать сообщение...", rows="1", v-model="content.text", @keyup.shift.enter.exact="setRows($event)", @keydown.enter.exact.prevent, @keyup.enter.exact="sendMessage(); $event.target.setAttribute('rows', 1)", required)
         .btn.stickers(data-ui-title="Стикеры" @click="panel.stickers ? panel.stickers = false : getStickers()")
             i.uil.uil-image
-        //- .sticker-add(data-ui-title="Добавить стикер", @click="addSticker.open = !addSticker.open")
-        //-     i.uil.uil-image-plus
         .btn.send(data-ui-title="Отправить", @click="sendMessage()")
             i.uil.uil-message

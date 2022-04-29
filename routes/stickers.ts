@@ -15,6 +15,10 @@ export default class Route {
         this.stickers = this.fs.get('stickers');
     }
 
+    get(stickerId: string) {
+        return this.stickers.find(item => item.id === stickerId);
+    }
+
     list() {
         this.socket.emit('stickers:list', this.stickers);
     }
@@ -31,6 +35,10 @@ export default class Route {
     }
 
     remove(stickerId: string) {
-
+        let sticker: Sticker = this.get(stickerId);
+        if (!sticker?.id) return { status: 404 };
+        if (sticker.ownerId !== this.socket['userID']) return { status: 401 };
+        this.stickers = this.stickers.filter(item => item.id !== sticker.id);
+        this.fs.update('stickers', this.stickers);
     }
 }

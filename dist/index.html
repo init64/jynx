@@ -60,7 +60,7 @@
                   <div class="i" v-if="msg.user.id === mUser.id">Вы</div>
                   <div class="date">{{ timeago(msg.date) }}</div>
                 </div>
-                <div class="text" v-html="getContent(msg.content)" v-if="msg?.type !== 'sticker'" :class="{ edited: msg.edited }"></div>
+                <div class="markdown-content text" v-html="md(msg.content)" v-if="msg?.type !== 'sticker'" :class="{ edited: msg.edited }"></div>
                 <div class="sticker" v-if="msg?.type === 'sticker'"><img :src="msg.content"></div>
               </div>
             </div>
@@ -69,7 +69,7 @@
             <div class="block">
               <div class="stickers" v-if="panel.stickers">
                 <ul class="list">
-                  <li v-for="(sticker, idx) of stickers" :key="idx" @click="sendMessage('sticker', sticker.url)"><img :src="sticker.url"></li>
+                  <li v-for="(sticker, idx) of stickers" :key="idx" @click="sendMessage('sticker', sticker.url)" @click.right="setContextMenu($event, [{ label: 'Удалить стикер', click: () =&gt; socket.emit('sticker:remove', sticker.id) }])"><img :src="sticker.url"></li>
                 </ul>
                 <div class="add">
                   <input type="text" placeholder="Ссылка на изображение" v-model="sticker.url" @keyup.enter="addSticker()">
@@ -77,7 +77,7 @@
                 </div>
               </div>
             </div>
-            <textarea placeholder="Написать сообщение..." rows="1" v-model="content.text" @keyup.shift.enter.exact="setRows($event)" @keyup.enter.exact="sendMessage(); $event.target.setAttribute('rows', 1)" required></textarea>
+            <textarea placeholder="Написать сообщение..." rows="1" v-model="content.text" @keyup.shift.enter.exact="setRows($event)" @keydown.enter.exact.prevent @keyup.enter.exact="sendMessage(); $event.target.setAttribute('rows', 1)" required></textarea>
             <div class="btn stickers" data-ui-title="Стикеры" @click="panel.stickers ? panel.stickers = false : getStickers()"><i class="uil uil-image"></i></div>
             <div class="btn send" data-ui-title="Отправить" @click="sendMessage()"><i class="uil uil-message"></i></div>
           </div>

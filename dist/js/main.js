@@ -43,7 +43,7 @@ const app = new Vue({
         }
     },
     methods: {
-        unix, timeago, uts,
+        unix, timeago, uts, md,
         setMenu(data) {
             this.mainMenu = data;
         },
@@ -72,6 +72,7 @@ const app = new Vue({
                     break;
                 case "edit":
                     socket.emit('message:update', this.content.messageId, this.content.text);
+                    this.content.mode = 'send';
                     break;
                 case "sticker":
                     socket.emit('chat:sendMessage', content, type);
