@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.ts",
   "scripts": {
-    "dev": "./dev.sh",
+    "dev": "concurrently \"ts-node ./index.ts\" \"gulp\"",
     "build": "tsc"
   },
   "author": "",
@@ -21,6 +21,7 @@
   },
   "devDependencies": {
     "browser-sync": "^2.27.5",
+    "concurrently": "^7.2.1",
     "gulp": "^4.0.2",
     "gulp-notify": "^4.0.0",
     "gulp-plumber": "^1.2.1",
