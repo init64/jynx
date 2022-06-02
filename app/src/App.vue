@@ -1,13 +1,14 @@
 <template>
   <router-view v-slot="{ Component }">
     <ContextMenu/>
-    <Transition>
-      <component class="router-view" :is="Component"/>
-    </Transition>
+    <component class="router-view" :is="Component"/>
   </router-view>
 </template>
 
 <script>
+
+// TODO
+// Добавить нормальную анимацию перехода роутов
 
 import ContextMenu from "./components/ContextMenu.js";
 

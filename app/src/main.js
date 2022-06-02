@@ -12,7 +12,8 @@ app.mixin({
     data() {
       return {
           socket,
-          listOfRoutes: router.options.routes
+          listOfRoutes: router.options.routes,
+          theme: "dark"
       }
     },
     methods: {
@@ -25,8 +26,18 @@ app.mixin({
             localStorage.setItem('token', user.token);
             localStorage.setItem('userID', user.id);
             this.router("/user");
+        },
+        setTheme(theme) {
+            this.theme = theme;
+            document.querySelector("html").setAttribute("theme", theme);
+            localStorage.setItem("theme", theme)
         }
     },
+    mounted() {
+        if (localStorage.getItem("theme")) {
+            this.setTheme(localStorage.getItem("theme"))
+        }
+    }
 })
 
 app.mount("#app");
