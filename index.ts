@@ -18,7 +18,7 @@ export class MainServer {
     socket: Server;
     fs: any;
     FS: any;
-    
+
     constructor() {
         this.app = express();
         this.PORT = process.env.PORT || '7000';
@@ -28,7 +28,7 @@ export class MainServer {
 
         this.socket;
     }
-    
+
     loadSocket() {
         this.socket.on('connection', socket => {
             const

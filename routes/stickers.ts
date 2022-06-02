@@ -6,11 +6,11 @@ export default class Route {
     private io: Server;
     private fs: any;
     stickers: Sticker[];
-    
+
     constructor(socket, io) {
         this.socket = socket;
         this.io = io;
-        
+
         this.fs = new FileSystem();
         this.stickers = this.fs.get('stickers');
     }

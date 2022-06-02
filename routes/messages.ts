@@ -7,11 +7,11 @@ export default class Route {
     private fs: any;
     messages: Message[];
     private users: Object;
-    
+
     constructor(socket, io) {
         this.socket = socket;
         this.io = io;
-        
+
         this.fs = new FileSystem();
         this.messages = this.fs.get('messages');
         this.users = this.fs.get('users');
@@ -23,7 +23,7 @@ export default class Route {
 
     getUser(userId: string) {
         return Object.values(this.users).find(item => item.id === userId);
-    } 
+    }
 
     list() {
         let messages: Message[] = [],

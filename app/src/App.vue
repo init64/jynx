@@ -1,7 +1,7 @@
 <template>
-  <router-view v-slot="{ Component }">
-    <ContextMenu/>
-    <component class="router-view" :is="Component"/>
+  <router-view v-slot='{ Component }'>
+    <ContextMenu />
+    <component :is='Component' class='router-view' />
   </router-view>
 </template>
 
@@ -10,20 +10,20 @@
 // TODO
 // Добавить нормальную анимацию перехода роутов
 
-import ContextMenu from "./components/ContextMenu.js";
+import ContextMenu from './components/ContextMenu.js';
 
 export default {
-  name: "app",
-  components: {ContextMenu},
+  name: 'app',
+  components: { ContextMenu },
   mounted() {
     window.addEventListener('contextmenu', e => {
       e.preventDefault();
     });
-  }
-}
+  },
+};
 </script>
 
-<style scoped lang="scss">
+<style lang='scss' scoped>
 #app {
   position: fixed;
   height: 100%;

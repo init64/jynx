@@ -8,7 +8,7 @@ export default class Route {
 
     constructor(socket) {
         this.socket = socket;
-        
+
         this.fs = new FileSystem();
         this.users = this.fs.get('users');
     }

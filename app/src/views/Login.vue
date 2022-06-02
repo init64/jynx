@@ -1,48 +1,48 @@
 <template>
-  <div class="login-page">
-    <div class="container">
-      <span class="logo">JYNX</span>
+  <div class='login-page'>
+    <div class='container'>
+      <span class='logo'>JYNX</span>
       <div>
-        <input v-model="$store.state.user.token" type="text" class="token-input" placeholder="user token">
-        <button @click="createUser" class="register-button">Нет аккаунта?</button>
+        <input v-model='$store.state.user.token' class='token-input' placeholder='user token' type='text'>
+        <button class='register-button' @click='createUser'>Нет аккаунта?</button>
       </div>
-      <button @click="login" class="login-button">Войти</button>
+      <button class='login-button' @click='login'>Войти</button>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: "LoginPage",
+  name: 'LoginPage',
   data() {
     return {
-      tokenInput: this.$store.state.user.token
-    }
+      tokenInput: this.$store.state.user.token,
+    };
   },
   methods: {
     createUser() {
       this.socket.emit('user:create');
 
       this.socket.on('user:loadUser', user => {
-        this.loadUser(user)
+        this.loadUser(user);
       });
     },
     login() {
-      console.log("Login button handler")
-      let {token} = this.$store.state.user
+      console.log('Login button handler');
+      let { token } = this.$store.state.user;
       if (!token.trim()) return;
       this.socket.emit('user:login', token.trim());
 
       this.socket.on('user:login', user => {
-        console.log("LOGIN USER")
+        console.log('LOGIN USER');
         this.loadUser(user);
       });
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
-<style scoped lang="scss">
+<style lang='scss' scoped>
 .login-page {
   display: flex;
   align-items: center;

@@ -1,29 +1,32 @@
 <template>
-  <div class="option">
-    <div class="option__info">
-      <span class="option__header"> {{ data.header }} </span>
-      <span class="option__description"> {{ data.description }} </span>
+  <div class='option'>
+    <div class='option__info'>
+      <span class='option__header'> {{ data.header }} </span>
+      <span class='option__description'> {{ data.description }} </span>
     </div>
-    <label class="check">
-      <input type="checkbox" @click="data.handler">
-      <span/>
+    <label class='check'>
+      <input type='checkbox' v-model='data.vModel' @click='data.handler'>
+      <span />
     </label>
   </div>
 </template>
 
 <script>
 export default {
-  name: "OptionComponent",
+  name: 'OptionComponent',
   props: {
     data: {
       type: Object,
-      required: true
-    }
-  }
-}
+      required: true,
+    },
+  },
+  mounted() {
+    console.log(this.data);
+  },
+};
 </script>
 
-<style scoped lang="scss">
+<style lang='scss' scoped>
 
 .option {
   display: flex;

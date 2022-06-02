@@ -37,7 +37,7 @@ export default class FileSystem {
     generate = (length = 24) => new Array(length).fill(`0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz`).map(x => x[Math.floor(Math.random() * x.length)]).join('');
 
     get(name: String): any {
-        let data = fs.readFileSync(this.path(`../json/${name}.json`), { encoding: 'utf-8' });        
+        let data = fs.readFileSync(this.path(`../json/${name}.json`), { encoding: 'utf-8' });
         return JSON.parse(data);
     }
 

@@ -1,20 +1,20 @@
 <template>
-  <div class="context-menu">
-    <div class="user-avatar" :style="{backgroundImage: `url(${$store.state.user.avatar})`}"/>
-    <ul class="buttons">
-      <li v-if="!$store.state.user.authorized" :active="$route.path === '/login'" @click="router('/login')">
-        <i class="uil uil-user"></i>
+  <div class='context-menu'>
+    <div :style='{backgroundImage: `url(${$store.state.user.avatar})`}' class='user-avatar' />
+    <ul class='buttons'>
+      <li v-if='!$store.state.user.authorized' :active="$route.path === '/login'" @click="router('/login')">
+        <i class='uil uil-user'></i>
       </li>
-      <ul v-if="$store.state.user.authorized">
+      <ul v-if='$store.state.user.authorized'>
         <li :active="$route.path === '/user'" @click="router('/user')">
-          <i class="uil uil-user"></i>
+          <i class='uil uil-user'></i>
         </li>
         <li :active="$route.path === '/chat'" @click="router('/chat')">
-          <i class="uil uil-chat"></i>
+          <i class='uil uil-chat'></i>
         </li>
       </ul>
       <li :active="$route.path === '/settings'" @click="router('/settings')">
-        <i class="uil uil-setting"></i>
+        <i class='uil uil-setting'></i>
       </li>
     </ul>
   </div>
@@ -22,11 +22,11 @@
 
 <script>
 export default {
-  name: "ContextMenu"
-}
+  name: 'ContextMenu',
+};
 </script>
 
-<style scoped lang="scss">
+<style lang='scss' scoped>
 .context-menu {
   height: 100%;
   width: 5%;
