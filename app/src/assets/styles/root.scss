@@ -1,7 +1,11 @@
-@import "style";
-
 :root {
   --background-primary: #222;
   --text-primary: #fff;
   --font-primary: sans-serif;
+}
+
+body {
+  background-color: var(--background-primary);
+  color: var(--text-primary);
+  font-family: var(--font-primary);
 }

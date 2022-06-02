@@ -1,7 +1,9 @@
 <template>
-  <div class="app">
-    Hello world
-  </div>
+  <router-view v-slot="{ Component }">
+      <Transition>
+        <component :is="Component"/>
+      </Transition>
+  </router-view>
 </template>
 
 <script>
