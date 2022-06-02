@@ -1,4 +1,0 @@
-.context-menu(v-if="contextMenu.isActive", :style="{ top: `${contextMenu.y}px`, left: `${contextMenu.x}px` }")
-    ul 
-        li(v-for="(btn, idx) of contextMenu.items", :key="(btn, idx)", @click="btn.click ? btn.click() : null")
-            span {{ btn.label }}

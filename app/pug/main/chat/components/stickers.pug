@@ -1,8 +1,0 @@
-.stickers(v-if="panel.stickers")
-    ul.list
-        li(v-for="(sticker, idx) of stickers", :key="idx", @click="sendMessage('sticker', sticker.url)", @click.right="setContextMenu($event, [{ label: 'Удалить стикер', click: () => socket.emit('sticker:remove', sticker.id) }])")
-            img(:src="sticker.url")
-    .add
-        input(type="text", placeholder="Ссылка на изображение", v-model="sticker.url", @keyup.enter="addSticker()")
-        .btn(data-ui-title="Добавить стикер", @click="addSticker()")
-            i.uil.uil-image-plus

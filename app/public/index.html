@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="styles/root.css">
+    <script>
+        loadCss = function (config) {
+            let head = document.getElementsByTagName('head')[0];
+
+            if (config.content) {
+                let style = document.createElement('style');
+                style.type = 'text/css';
+
+                if (style.styleSheet)
+                    style.styleSheet.cssText = config.content;
+                else
+                    style.innerHTML = config.content;
+
+                head.appendChild(style);
+            } else if (config.url) {
+                let link = document.createElement('link');
+                link.href = config.url;
+                link.rel = 'stylesheet';
+                link.type = 'text/css';
+                head.appendChild(link);
+            }
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@3.2.36/dist/vue.global.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <title>Jynx</title>
+</head>
+<body>
+<div id="app">
+
+</div>
+</body>
+<script type="module" src="js/main.js"></script>
+</html>
