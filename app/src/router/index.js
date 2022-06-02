@@ -1,18 +1,11 @@
-import LoginPage from "../views/Login.js";
+import LoginPage from "../views/Login.js"
 
-const routes = [
-    {
-        path: "/login",
-        component: LoginPage,
-        meta: {
-            icon: "uil uil-user"
-        }
-    }
-]
-
-const router = VueRouter.createRouter({
+export default VueRouter.createRouter({
     history: VueRouter.createWebHistory(),
-    routes
+    routes: [
+        {
+            path: "/login",
+            component: LoginPage
+        }
+    ]
 })
-
-export default router

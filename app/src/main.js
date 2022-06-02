@@ -1,21 +1,16 @@
 import App from "./App.js";
-import router from "./router/index.js"
-
-
+import router from "./router/index.js";
+import store from "./store/index.js";
 
 const app = Vue.createApp(App);
 
 app.use(router);
-
-app.use(VueRouter);
+app.use(store);
 
 app.mixin({
     data() {
       return {
-          listOfRoutes: router.options.routes.filter(item => !item?.meta?.hide),
-          user: {
-              authorizated: false
-          }
+          listOfRoutes: router.options.routes
       }
     },
     methods: {

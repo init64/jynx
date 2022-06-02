@@ -2,19 +2,27 @@
   <div class="context-menu">
     <div class="user-avatar"/>
     <ul class="buttons">
-      <li :active="currentRoute == $route.path" @click="router(route.path)" :key="route.path" v-for="route in listOfRoutes">
-        <i :class="route.meta.icon"></i>
+      <li v-if="!$store.state.user.authorized" :active="$route.path === '/login'" @click="router('/login')">
+        <i class="uil uil-user"></i>
       </li>
+      <ul v-if="$store.state.user.authorized">
+        <li :active="$route.path === '/user'" @click="router('/user')">
+          <i class="uil uil-user"></i>
+        </li>
+        <li :active="$route.path === '/chat'" @click="router('/chat')">
+          <i class="uil uil-chat"></i>
+        </li>
+        <li :active="$route.path === '/settings'" @click="router('/settings')">
+          <i class="uil uil-setting"></i>
+        </li>
+      </ul>
     </ul>
   </div>
 </template>
 
 <script>
 export default {
-  name: "ContextMenu",
-  mounted() {
-    console.log(this.$route)
-  }
+  name: "ContextMenu"
 }
 </script>
 
@@ -41,10 +49,11 @@ export default {
 }
 
 .buttons {
-  margin-top: 20px;
+  margin-top: 13px;
 
   li {
     cursor: pointer;
+    margin-top: 7px;
     width: 48px;
     height: 48px;
     display: flex;
