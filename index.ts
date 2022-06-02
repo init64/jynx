@@ -67,7 +67,11 @@ export class MainServer {
             ['stickers.json', '[]']
         ]);
 
-        this.app.use('/', express.static(path.join(__dirname, (process.env.DIST || '/dist'))));
+        this.app.use(express.static(path.resolve("./") + "/dist"));
+
+        this.app.get('*', (req, res) => {
+            res.sendFile(path.resolve("./") + "/dist/index.html");
+        });
 
         let server = this.app.listen(this.PORT, () => console.log(`[Jynx]: Start http://localhost:${this.PORT}`));
         this.socket = new Server(server);

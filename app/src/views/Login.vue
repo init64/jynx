@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="login-page">
     Login page
   </div>
 </template>
@@ -10,6 +10,8 @@ export default {
 }
 </script>
 
-<style scoped>
-
+<style scoped lang="scss">
+.login-page {
+  /*background: #fff;*/
+}
 </style>
