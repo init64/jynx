@@ -1,6 +1,6 @@
 <template>
   <div class="context-menu">
-    <div class="user-avatar"/>
+    <div class="user-avatar" :style="{backgroundImage: `url(${$store.state.user.avatar})`}"/>
     <ul class="buttons">
       <li v-if="!$store.state.user.authorized" :active="$route.path === '/login'" @click="router('/login')">
         <i class="uil uil-user"></i>
@@ -12,10 +12,10 @@
         <li :active="$route.path === '/chat'" @click="router('/chat')">
           <i class="uil uil-chat"></i>
         </li>
-        <li :active="$route.path === '/settings'" @click="router('/settings')">
-          <i class="uil uil-setting"></i>
-        </li>
       </ul>
+      <li :active="$route.path === '/settings'" @click="router('/settings')">
+        <i class="uil uil-setting"></i>
+      </li>
     </ul>
   </div>
 </template>
@@ -41,7 +41,7 @@ export default {
   margin-top: 8px;
   width: 48px;
   height: 48px;
-  background-color: #fff;
+  border: 3px solid var(--background-secondary);
   background-position: 50%;
   background-size: cover;
   background-repeat: no-repeat;
