@@ -1,19 +1,30 @@
 import LoginPage from '../views/Login.js';
 import SettingsPage from '../views/Settings.js';
-
-// TODO
-// В будущем мб сделать динамические роуты (тоесть допустим если пользователь авторизован то для него не существует роута login)
+import UserPage from '../views/User.js';
+import ChatPage from '../views/Chat.js';
 
 export default VueRouter.createRouter({
   history: VueRouter.createWebHistory(),
   routes: [
     {
-      path: '/login',
-      component: LoginPage,
-    },
-    {
       path: '/settings',
       component: SettingsPage,
+      name: "SettingsPage"
+    },
+    {
+      path: "/login",
+      component: LoginPage,
+      name: "LoginPage"
+    },
+    {
+      path: "/user",
+      component: UserPage,
+      name: "UserPage"
+    },
+    {
+      path: "/chat",
+      component: ChatPage,
+      name: "ChatPage"
     },
   ],
 });

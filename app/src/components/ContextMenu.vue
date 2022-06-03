@@ -6,11 +6,11 @@
         <i class='uil uil-user'></i>
       </li>
       <ul v-if='$store.state.user.authorized'>
-        <li :active="$route.path === '/user'" @click="router('/user')">
-          <i class='uil uil-user'></i>
-        </li>
         <li :active="$route.path === '/chat'" @click="router('/chat')">
           <i class='uil uil-chat'></i>
+        </li>
+        <li :active="$route.path === '/user'" @click="router('/user')">
+          <i class='uil uil-user'></i>
         </li>
       </ul>
       <li :active="$route.path === '/settings'" @click="router('/settings')">

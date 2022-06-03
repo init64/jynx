@@ -1,8 +1,12 @@
 <template>
-  <router-view v-slot='{ Component }'>
-    <ContextMenu />
-    <component :is='Component' class='router-view' />
-  </router-view>
+  <div class='app'>
+    <router-view v-slot='{ Component }'>
+      <ContextMenu />
+      <div class='page'>
+        <component :is='Component' />
+      </div>
+    </router-view>
+  </div>
 </template>
 
 <script>
@@ -16,6 +20,16 @@ export default {
   name: 'app',
   components: { ContextMenu },
   mounted() {
+    if (localStorage.getItem('theme')) {
+      this.setTheme(localStorage.getItem('theme'));
+    }
+
+    if (this.autoLogin) {
+      this.login(localStorage.getItem('token'));
+    }
+
+    console.log('Application is mounted');
+
     window.addEventListener('contextmenu', e => {
       e.preventDefault();
     });
@@ -24,14 +38,14 @@ export default {
 </script>
 
 <style lang='scss' scoped>
-#app {
+.app {
   position: fixed;
   height: 100%;
   width: 100%;
   display: flex;
 }
 
-.router-view {
+.page {
   height: 100%;
   width: 100%;
 }

@@ -1,34 +1,26 @@
 <template>
   <div class='settings-page'>
-    <div class='appearance-block'>
+    <div class='settings-container'>
       <span class='title'>Настройки</span>
       <div class='options'>
-        <OptionComponent :vModel='option.vModel' v-for='option in options' :data='option' />
+        <Option v-for='option in options' :data='option' />
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import OptionComponent from '../components/Option.js';
 
 export default {
   name: 'SettingsPage',
-  components: { OptionComponent },
   data() {
     return {
-      appereanceOptions: [
-        // {
-        //   header: 'Светлая тема',
-        //   description: 'Побереги свои глазки, для того чтобы в будущем у тебя было хорошое зрение :P',
-        //   handler: this.setTheme,
-        //   vModel: this.theme
-        // },
+      options: [
         {
           header: 'Автозаход',
           description: 'Авторизируйтесь сразу, а не напжимайте эту ****ную кнопку :#',
-          handler: () => localStorage.setItem('autoLogin', !this.autoLogin),
-          vModel: this.autoLogin
+          handler: (state) => localStorage.setItem('autoLogin', state),
+          model: 'autoLogin',
         },
       ],
     };
@@ -40,12 +32,13 @@ export default {
 .settings-page {
   height: 100%;
   width: 100%;
-  display: flex;
+  //display: flex;
   padding: 20px;
-  flex-direction: column;
+  display: block;
+  //flex-direction: column;
 }
 
-.container {
+.settings-container {
   display: flex;
   flex-direction: column;
 
@@ -60,7 +53,6 @@ export default {
   }
 
   .options {
-    margin-top: 20px;
     display: flex;
     flex-direction: column;
   }

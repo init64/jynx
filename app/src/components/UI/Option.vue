@@ -5,7 +5,7 @@
       <span class='option__description'> {{ data.description }} </span>
     </div>
     <label class='check'>
-      <input type='checkbox' v-model='data.vModel' @click='data.handler'>
+      <input @input='inputHandler' :checked='this[data.model]' type='checkbox'>
       <span />
     </label>
   </div>
@@ -15,13 +15,15 @@
 export default {
   name: 'OptionComponent',
   props: {
-    data: {
-      type: Object,
-      required: true,
-    },
+    data: Object,
   },
-  mounted() {
-    console.log(this.data);
+  methods: {
+    inputHandler(e) {
+      this[this.data.model] = e.target.checked;
+      this.data.handler(e.target.checked);
+    }
+  },
+  computed: {
   },
 };
 </script>

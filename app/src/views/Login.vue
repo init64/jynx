@@ -1,42 +1,28 @@
 <template>
   <div class='login-page'>
-    <div class='container'>
+    <div class='login-container'>
       <span class='logo'>JYNX</span>
       <div>
-        <input v-model='$store.state.user.token' class='token-input' placeholder='user token' type='text'>
-        <button class='register-button' @click='createUser'>Нет аккаунта?</button>
+        <input v-model='this.user.token' class='token-input' placeholder='user token' type='text'>
+        <button class='register-button' @click='register'>Нет аккаунта?</button>
       </div>
-      <button class='login-button' @click='login'>Войти</button>
+      <button class='login-button' @click='login()'>Войти</button>
     </div>
   </div>
 </template>
 
 <script>
+import SettingsPage from './Settings.js';
+
 export default {
   name: 'LoginPage',
-  data() {
-    return {
-      tokenInput: this.$store.state.user.token,
-    };
-  },
-  methods: {
-    createUser() {
-      this.socket.emit('user:create');
-
-      this.socket.on('user:loadUser', user => {
-        this.loadUser(user);
-      });
-    },
-    login() {
-      console.log('Login button handler');
-      let { token } = this.$store.state.user;
-      if (!token.trim()) return;
-      this.socket.emit('user:login', token.trim());
-
-      this.socket.on('user:login', user => {
-        console.log('LOGIN USER');
-        this.loadUser(user);
-      });
+  computed: Vuex.mapState(['user']),
+  watch: {
+    user(newValue) {
+      if (newValue.authorized) {
+        this.addRoute({path: "/set", name: "SettingsSECPAge", component: SettingsPage})
+        this.router("/set")
+      }
     },
   },
 };
@@ -52,7 +38,7 @@ export default {
   height: 100%;
 }
 
-.container {
+.login-container {
   //background: #fff;
   //border: 1px solid white;
   text-align: left;
