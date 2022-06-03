@@ -9,22 +9,22 @@ export default VueRouter.createRouter({
     {
       path: '/settings',
       component: SettingsPage,
-      name: "SettingsPage"
+      name: 'SettingsPage',
     },
     {
-      path: "/login",
+      path: '/login',
       component: LoginPage,
-      name: "LoginPage"
+      name: 'LoginPage',
     },
     {
-      path: "/user",
+      path: '/user',
       component: UserPage,
-      name: "UserPage"
+      name: 'UserPage',
     },
     {
-      path: "/chat",
+      path: '/chat',
       component: ChatPage,
-      name: "ChatPage"
+      name: 'ChatPage',
     },
   ],
 });

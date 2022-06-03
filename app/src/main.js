@@ -1,7 +1,7 @@
 import App from './App.js';
 import router from './router/index.js';
 import store from './store/index.js';
-import UIComponents from "./components/UI/index.js";
+import UIComponents from './components/UI/index.js';
 
 const app = Vue.createApp(App);
 const socket = io(location.origin);
@@ -10,7 +10,7 @@ app.use(router);
 app.use(store);
 
 app.mixin({
-  components: {...UIComponents},
+  components: { ...UIComponents },
   data() {
     return {
       socket,
@@ -18,6 +18,9 @@ app.mixin({
       theme: 'dark',
       autoLogin: localStorage.getItem('autoLogin') === 'true',
     };
+  },
+  computed: {
+    ...Vuex.mapState(['user']),
   },
   methods: {
     router(path) {
@@ -48,7 +51,7 @@ app.mixin({
       this.socket.on('user:loadUser', user => {
         this.loadUser(user);
       });
-    }
+    },
   },
 });
 

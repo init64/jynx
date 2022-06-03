@@ -28,8 +28,6 @@ export default {
       this.login(localStorage.getItem('token'));
     }
 
-    console.log('Application is mounted');
-
     window.addEventListener('contextmenu', e => {
       e.preventDefault();
     });

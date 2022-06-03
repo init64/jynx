@@ -19,7 +19,9 @@ export default {
         {
           header: 'Автозаход',
           description: 'Авторизируйтесь сразу, а не напжимайте эту ****ную кнопку :#',
-          handler: (state) => localStorage.setItem('autoLogin', state),
+          handler: (state) => {
+            localStorage.setItem('autoLogin', state);
+          },
           model: 'autoLogin',
         },
       ],

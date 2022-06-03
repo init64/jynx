@@ -12,16 +12,12 @@
 </template>
 
 <script>
-import SettingsPage from './Settings.js';
-
 export default {
   name: 'LoginPage',
-  computed: Vuex.mapState(['user']),
   watch: {
     user(newValue) {
       if (newValue.authorized) {
-        this.addRoute({path: "/set", name: "SettingsSECPAge", component: SettingsPage})
-        this.router("/set")
+        this.router(localStorage.getItem("lastPage") || "/user")
       }
     },
   },

@@ -5,7 +5,7 @@
       <span class='option__description'> {{ data.description }} </span>
     </div>
     <label class='check'>
-      <input @input='inputHandler' :checked='this[data.model]' type='checkbox'>
+      <input :checked='this[data.model]' type='checkbox' @input='inputHandler'>
       <span />
     </label>
   </div>
@@ -21,10 +21,9 @@ export default {
     inputHandler(e) {
       this[this.data.model] = e.target.checked;
       this.data.handler(e.target.checked);
-    }
+    },
   },
-  computed: {
-  },
+  computed: {},
 };
 </script>
 
