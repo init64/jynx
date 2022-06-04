@@ -16,7 +16,6 @@ app.mixin({
       socket,
       listOfRoutes: router.options.routes,
       theme: 'dark',
-      autoLogin: localStorage.getItem('autoLogin') === 'true',
     };
   },
   computed: {
@@ -37,11 +36,13 @@ app.mixin({
       document.querySelector('html').setAttribute('theme', theme);
       localStorage.setItem('theme', theme);
     },
-    login(token = this.$store.state.user.token) {
+    login(token) {
       if (!token.trim()) return;
       this.socket.emit('user:login', token.trim());
+      console.log(token);
 
       this.socket.on('user:login', user => {
+        localStorage.setItem('token', token);
         this.loadUser(user);
       });
     },

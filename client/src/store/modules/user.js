@@ -1,7 +1,8 @@
 const user = {
   state: () => ({
+    loaded: false,
     authorized: false,
-    token: localStorage.getItem('token') || '',
+    token: '',
   }),
 };
 

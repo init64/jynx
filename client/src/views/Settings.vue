@@ -17,12 +17,11 @@ export default {
     return {
       options: [
         {
-          header: 'Автозаход',
-          description: 'Авторизируйтесь сразу, а не напжимайте эту ****ную кнопку :#',
+          header: 'Здесь был какой-то заголовок',
+          description: 'Здесь был какое-то описание',
           handler: (state) => {
-            localStorage.setItem('autoLogin', state);
+            console.log("Здесь было что то помимо console.log", state);
           },
-          model: 'autoLogin',
         },
       ],
     };

@@ -24,14 +24,14 @@ export default {
       this.setTheme(localStorage.getItem('theme'));
     }
 
-    if (this.autoLogin) {
+    if (localStorage.getItem('token')) {
       this.login(localStorage.getItem('token'));
     }
 
     window.addEventListener('contextmenu', e => {
       e.preventDefault();
     });
-  },
+  }
 };
 </script>
 

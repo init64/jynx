@@ -1,6 +1,7 @@
 <template>
   <div class='user-page'>
     Hello {{ user.username }}
+    <button @click='exitButtonHandler' class='exit-button'>Выйти из аккаунта</button>
   </div>
 </template>
 
@@ -9,7 +10,15 @@ export default {
   name: 'UserPage',
   mounted() {
     localStorage.setItem('lastPage', '/user');
-  }
+  },
+  methods: {
+    exitButtonHandler() {
+      this.$store.state.user = { authorized: false, token: '' };
+      localStorage.removeItem('token');
+      localStorage.removeItem('userID');
+      this.router('/login');
+    },
+  },
 };
 </script>
 

@@ -3,10 +3,10 @@
     <div class='login-container'>
       <span class='logo'>JYNX</span>
       <div>
-        <input v-model='this.user.token' class='token-input' placeholder='user token' type='text'>
+        <input v-model='tokenInput' class='token-input' placeholder='user token' type='text'>
         <button class='register-button' @click='register'>Нет аккаунта?</button>
       </div>
-      <button class='login-button' @click='login()'>Войти</button>
+      <button class='login-button' @click='login(tokenInput)'>Войти</button>
     </div>
   </div>
 </template>
@@ -14,10 +14,15 @@
 <script>
 export default {
   name: 'LoginPage',
+  data() {
+    return {
+      tokenInput: '',
+    };
+  },
   watch: {
     user(newValue) {
       if (newValue.authorized) {
-        this.router(localStorage.getItem("lastPage") || "/user")
+        this.router(localStorage.getItem('lastPage') || '/user');
       }
     },
   },
