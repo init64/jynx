@@ -35,6 +35,7 @@ export class MainServer {
         stickers = new Stickers(socket, this.socket);
 
       // ? Users
+      socket.on('user:connect', (data) => users.connect(data));
       socket.on('user:create', () => users.create());
       socket.on('user:login', (data) => users.login(data));
       socket.on('user:update', (data) => users.update(data));

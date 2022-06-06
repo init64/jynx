@@ -1,5 +1,5 @@
 import { Server } from 'socket.io';
-import FileSystem from '../lib/FileSystem';
+import FileSystem, { ConnectData } from '../lib/FileSystem';
 import { IUser } from '../models/user';
 import UserDto from '../dtos/UserDto';
 
@@ -27,6 +27,14 @@ export default class Route {
     this.users.push(newUser);
     this.fs.update('users', this.users);
     this.socket.emit('user:loadUser', this.users[this.users.findIndex(obj => obj.id === newUser.id)]);
+  }
+
+  connect(data: ConnectData) {
+    if (!this.users[data.token] || data.token == null) {
+      this.create();
+    } else {
+      this.socket.emit('user:loadUser', this.users[data.token]);
+    }
   }
 
   login(token: string) {
