@@ -12,8 +12,7 @@ import Users from './routes/users';
 import Messages from './routes/messages';
 import Stickers from './routes/stickers';
 
-require("./database")
-
+require('./database');
 
 export class MainServer {
   app: express.Express;
@@ -68,10 +67,10 @@ export class MainServer {
       ['stickers.json', '[]'],
     ]);
 
-    this.app.use(express.static(path.resolve(__dirname) + '/client'));
+    this.app.use(express.static(path.resolve(__dirname, 'client')));
 
     this.app.get('*', (req, res) => {
-      res.sendFile(path.resolve(__dirname) + '/client/index.html');
+      res.sendFile(path.resolve(__dirname, 'client/index.html'));
     });
 
     let server = this.app.listen(this.PORT, () => console.log(`[Jynx]: Start on http://127.0.0.1:${this.PORT}`));

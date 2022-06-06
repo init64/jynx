@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start:dev": "concurrently \"gulp dev\" \"tsc-watch --project . --outDir ./dist --onSuccess \\\"nodemon ./dist/index.js\\\" \" ",
+    "start:dev": "concurrently \"tsc-watch --outDir ./dist --onSuccess \\\"nodemon ./dist/index.js\\\" \" \"gulp dev\" ",
     "start": "npm run build && node ./dist/index.js",
     "build": "tsc && gulp build"
   },
