@@ -12,6 +12,9 @@ import Users from './routes/users';
 import Messages from './routes/messages';
 import Stickers from './routes/stickers';
 
+require("./database")
+
+
 export class MainServer {
   app: express.Express;
   PORT: string | number;

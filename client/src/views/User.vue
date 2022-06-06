@@ -13,9 +13,6 @@
 <script>
 export default {
   name: 'UserPage',
-  mounted() {
-    localStorage.setItem('lastPage', '/user');
-  },
   methods: {
     exitButtonHandler() {
       this.$store.commit('setUser', { authorized: false, token: '' });
@@ -23,6 +20,9 @@ export default {
       localStorage.removeItem('userID');
       this.router('/login');
     },
+  },
+  mounted() {
+    localStorage.setItem('lastPage', '/user');
   },
 };
 </script>

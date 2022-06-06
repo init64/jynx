@@ -29,6 +29,9 @@ export default {
     sendButtonHandler() {
       console.log("Chat send button handler");
     }
+  },
+  mounted() {
+    localStorage.setItem("lastPage", "/chat")
   }
 };
 </script>

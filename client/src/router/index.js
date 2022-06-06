@@ -7,10 +7,10 @@ export default VueRouter.createRouter({
   history: VueRouter.createWebHistory(),
   routes: [
     {
-      path: "/",
+      path: '/',
       redirect: () => {
-        return { path: "/login" }
-      }
+        return { path: localStorage.getItem('token') ? localStorage.getItem('lastPage') : '/login' };
+      },
     },
     {
       path: '/settings',
