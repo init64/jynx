@@ -1,9 +1,6 @@
 const gulp = require('gulp'),
   browserSync = require('browser-sync').create(),
   sass = require('gulp-sass')(require('sass')),
-  notify = require('gulp-notify'),
-  plumber = require('gulp-plumber'),
-  babel = require('gulp-babel'),
   rename = require('gulp-rename'),
   vueComponent = require('gulp-vue-single-file-component');
 
@@ -17,7 +14,7 @@ const config = {
     vue: app + 'src/**/*.vue',
     fonts: app + 'src/assets/fonts/**/*.*',
     img: app + 'src/assets/img/**/*.*',
-    style: app + 'src/assets/styles/**/*.*',
+    style: app + `src/assets/styles/**/*.*`,
     html: app + 'public/index.html',
   },
   dist: {
@@ -37,17 +34,6 @@ const config = {
   },
 };
 
-const webServer = () => {
-  browserSync.init({
-    server: {
-      baseDir: dist,
-    },
-    port: 9000,
-    host: 'localhost',
-    notify: false,
-  });
-};
-
 const watchFiles = () => {
   gulp.watch([config.watch.html], gulp.series(htmlTask));
   gulp.watch([config.watch.style], gulp.series(scssTask));
@@ -59,14 +45,6 @@ const watchFiles = () => {
 
 const htmlTask = () => {
   return gulp.src(config.app.html)
-    .pipe(plumber({
-      errorHandler: notify.onError(function(error) {
-        return {
-          title: 'HTML',
-          message: error.message,
-        };
-      }),
-    }))
     .pipe(gulp.dest(config.dist.html))
     .pipe(browserSync.reload({
       stream: true,
@@ -75,14 +53,6 @@ const htmlTask = () => {
 
 const scssTask = () => {
   return gulp.src(config.app.style)
-    .pipe(plumber({
-      errorHandler: notify.onError(function(error) {
-        return {
-          title: 'Style',
-          message: error.message,
-        };
-      }),
-    }))
     .pipe(sass().on('error', sass.logError))
     .pipe(gulp.dest(config.dist.style))
     .pipe(browserSync.reload({
@@ -92,15 +62,6 @@ const scssTask = () => {
 
 const jsTask = () => {
   return gulp.src(config.app.js)
-    .pipe(plumber({
-      errorHandler: notify.onError(function(error) {
-        return {
-          title: 'JS',
-          message: error.message,
-        };
-      }),
-    }))
-    // .pipe(babel({ plugins: ['@babel/plugin-transform-modules-amd'] }))
     .pipe(gulp.dest(config.dist.js))
     .pipe(browserSync.reload({
       stream: true,
@@ -109,16 +70,7 @@ const jsTask = () => {
 
 const vueTask = () => {
   return gulp.src(config.app.vue)
-    .pipe(plumber({
-      errorHandler: notify.onError(function(error) {
-        return {
-          title: 'VUE',
-          message: error.message,
-        };
-      }),
-    }))
     .pipe(vueComponent({ loadCssMethod: 'loadCss' }))
-    // .pipe(babel({ plugins: ['@babel/plugin-transform-modules-amd'] }))
     .pipe(rename({ extname: '.js' }))
     .pipe(gulp.dest(config.dist.js))
     .pipe(browserSync.reload({
@@ -128,14 +80,6 @@ const vueTask = () => {
 
 const fontsTask = () => {
   return gulp.src(config.app.fonts)
-    .pipe(plumber({
-      errorHandler: notify.onError(function(error) {
-        return {
-          title: 'fonts',
-          message: error.message,
-        };
-      }),
-    }))
     .pipe(gulp.dest(config.dist.fonts))
     .pipe(browserSync.reload({
       stream: true,
@@ -144,14 +88,6 @@ const fontsTask = () => {
 
 const imgTask = () => {
   return gulp.src(config.app.img)
-    .pipe(plumber({
-      errorHandler: notify.onError(function(error) {
-        return {
-          title: 'JS',
-          message: error.message,
-        };
-      }),
-    }))
     .pipe(gulp.dest(config.dist.img))
     .pipe(browserSync.reload({
       stream: true,
@@ -159,5 +95,5 @@ const imgTask = () => {
 };
 const build = gulp.series(htmlTask, scssTask, jsTask, fontsTask, imgTask, vueTask);
 
-gulp.task("build", build)
-gulp.task("dev", gulp.parallel(build, watchFiles))
+gulp.task('build', build);
+gulp.task('dev', gulp.parallel(build, watchFiles));

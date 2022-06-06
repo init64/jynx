@@ -13,7 +13,7 @@
 
 <script>
 export default {
-  name: 'OptionComponent',
+  name: 'Option',
   props: {
     data: Object,
   },

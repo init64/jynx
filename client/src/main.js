@@ -26,10 +26,9 @@ app.mixin({
       this.$router.push(path);
     },
     loadUser(user) {
-      this.$store.state.user = { ...this.$store.state.user, ...user, authorized: true };
+      this.$store.commit("setUser", { ...this.user, ...user, authorized: true });
       localStorage.setItem('token', user.token);
       localStorage.setItem('userID', user.id);
-      // this.router('/user');
     },
     setTheme(theme) {
       this.theme = theme;

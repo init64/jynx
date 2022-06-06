@@ -1,6 +1,7 @@
 import { Server } from 'socket.io';
-import FileSystem, { ConnectData } from '../lib/FileSystem';
+import FileSystem from '../lib/FileSystem';
 import { IUser } from '../models/user';
+import UserDto from '../dtos/UserDto';
 
 
 export default class Route {
@@ -10,7 +11,6 @@ export default class Route {
 
   constructor(socket) {
     this.socket = socket;
-
     this.fs = new FileSystem();
     this.users = this.fs.get('users');
   }
@@ -29,36 +29,32 @@ export default class Route {
     this.socket.emit('user:loadUser', this.users[this.users.findIndex(obj => obj.id === newUser.id)]);
   }
 
-  connect(data: ConnectData) {
-    if (!this.users[data.token] || data.token == null) this.create();
-    else this.socket.emit('user:loadUser', this.users[data.token]);
-  }
-
   login(token: string) {
-    const user: IUser = this.users[this.users.findIndex(obj => obj.token === token)]
+    const user: IUser = this.users[this.users.findIndex(obj => obj.token === token)];
     if (user) {
       this.socket.emit('user:login', user);
       this.socket['userID'] = user.id;
+    } else {
+      return { status: 404, message: 'User not found' };
     }
   }
 
   update(oldUser: IUser) {
     for (let param in oldUser) {
-      this.users[oldUser.token][param] = oldUser[param];
+      this.users[this.users.findIndex(obj => obj.id === oldUser.id)][param] = oldUser[param];
     }
     this.fs.update('users', this.users);
   }
 
   delete() {
-    const user: IUser = Object.values(this.users).find(item => item.id === this.socket['userID']);
-    delete this.users[this.users.findIndex(obj => obj.id === user.id)];
-    this.fs.update('users', this.users);
+    // const user: IUser = Object.values(this.users).find(item => item.id === this.socket['userID']);
+    // delete this.users[this.users.findIndex(obj => obj.id === user.id)];
+    this.fs.update('users', this.users.filter(obj => obj.id === this.socket['userID']));
   }
 
   get(userId: string) {
-    let user: IUser = this.users[this.users.findIndex(item => item.id === userId)];
-    if (!user) return { status: 404 };
-    delete user['token'];
-    return this.socket.emit('user:get', user);
+    const user: IUser = this.users[this.users.findIndex(item => item.id === userId)];
+    if (!user) return { status: 404, message: 'User not found' };
+    return this.socket.emit('user:get', new UserDto(user));
   }
 }

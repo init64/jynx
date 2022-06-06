@@ -1,11 +1,11 @@
-import { IUser } from './user';
+import UserDto from '../dtos/UserDto';
 
 export interface IMessage {
   content: string,
   id: string,
   type: string,
-  user: IUser | string,
-  date: number,
+  author: UserDto,
+  date: number | string,
   edited?: boolean
 }
 

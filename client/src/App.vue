@@ -24,6 +24,8 @@ export default {
       this.setTheme(localStorage.getItem('theme'));
     }
 
+    this.socket.emit('user:connect', localStorage['userID'])
+
     if (localStorage.getItem('token')) {
       this.login(localStorage.getItem('token'));
     }
@@ -31,6 +33,7 @@ export default {
     window.addEventListener('contextmenu', e => {
       e.preventDefault();
     });
+
   }
 };
 </script>

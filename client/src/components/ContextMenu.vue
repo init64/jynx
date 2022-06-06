@@ -1,11 +1,11 @@
 <template>
   <div class='context-menu'>
-    <div @click='user.authorized && router("/user")' :style='{backgroundImage: `url(${$store.state.user.avatar})`}' class='user-avatar' />
+    <div @click='user.authorized && router("/user")' :style='{backgroundImage: `url(${user.avatar})`}' class='user-avatar' />
     <ul class='buttons'>
-      <li v-if='!$store.state.user.authorized' :active="$route.path === '/login'" @click="router('/login')">
+      <li v-if='!user.authorized' :active="$route.path === '/login'" @click="router('/login')">
         <i class='uil uil-user'></i>
       </li>
-      <ul v-if='$store.state.user.authorized'>
+      <ul v-if='user.authorized'>
         <li :active="$route.path === '/chat'" @click="router('/chat')">
           <i class='uil uil-chat'></i>
         </li>

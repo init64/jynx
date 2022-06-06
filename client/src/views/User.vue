@@ -1,7 +1,12 @@
 <template>
   <div class='user-page'>
-    Hello {{ user.username }}
-    <button @click='exitButtonHandler' class='exit-button'>Выйти из аккаунта</button>
+    <div class='user__container'>
+      <div class='user__avatar' :style='{backgroundImage: `url(${user.avatar})`}' />
+      <div class='user__name'>
+        {{ user.username }}
+      </div>
+      <button @click='exitButtonHandler'>Exit</button>
+    </div>
   </div>
 </template>
 
@@ -13,7 +18,7 @@ export default {
   },
   methods: {
     exitButtonHandler() {
-      this.$store.state.user = { authorized: false, token: '' };
+      this.$store.commit('setUser', { authorized: false, token: '' });
       localStorage.removeItem('token');
       localStorage.removeItem('userID');
       this.router('/login');
@@ -31,6 +36,25 @@ export default {
   align-items: center;
   justify-content: center;
   flex-direction: column;
+
+  .user__container {
+    height: 100%;
+    width: 50%;
+    border: 1px solid white;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+
+    .user__avatar {
+      height: 100px;
+      width: 100px;
+      background-position: 50%;
+      background-size: cover;
+      background-repeat: no-repeat;
+      border: 3px solid var(--background-secondary);
+      border-radius: 50%;
+    }
+  }
 }
 
 </style>

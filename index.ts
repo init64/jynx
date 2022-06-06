@@ -14,14 +14,14 @@ import Stickers from './routes/stickers';
 
 export class MainServer {
   app: express.Express;
-  PORT: string;
+  PORT: string | number;
   socket: Server;
-  fs: any;
-  FS: any;
+  fs: typeof fs;
+  FS: FileSystem;
 
   constructor() {
     this.app = express();
-    this.PORT = process.env.PORT || '7000';
+    this.PORT = Number(process.env.PORT) || 7000;
 
     this.fs = fs;
     this.FS = new FileSystem();
@@ -35,15 +35,14 @@ export class MainServer {
         stickers = new Stickers(socket, this.socket);
 
       // ? Users
-      // socket.on('user:connect', (data: any) => users.connect(data));
       socket.on('user:create', () => users.create());
-      socket.on('user:login', (data: any) => users.login(data));
-      socket.on('user:update', (data: any) => users.update(data));
+      socket.on('user:login', (data) => users.login(data));
+      socket.on('user:update', (data) => users.update(data));
       socket.on('user:get', (userId: string) => users.get(userId));
       socket.on('user:delete', () => users.delete());
 
       // ? Chat
-      socket.on('chat:getMessages', () => messages.list());
+      socket.on('chat:getMessages', () => messages.getMessages());
       socket.on('chat:sendMessage', (content: any, type: string) => messages.sendMessage(content, type));
 
       // ? Messages
@@ -71,7 +70,7 @@ export class MainServer {
       res.sendFile(path.resolve(__dirname) + '/client/index.html');
     });
 
-    let server = this.app.listen(this.PORT, () => console.log(`[Jynx]: Start http://localhost:${this.PORT}`));
+    let server = this.app.listen(this.PORT, () => console.log(`[Jynx]: Start on http://127.0.0.1:${this.PORT}`));
     this.socket = new Server(server);
 
     this.loadSocket();

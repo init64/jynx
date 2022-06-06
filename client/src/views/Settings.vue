@@ -1,6 +1,6 @@
 <template>
   <div class='settings-page'>
-    <div class='settings-container'>
+    <div class='settings__container'>
       <span class='title'>Настройки</span>
       <div class='options'>
         <Option v-for='option in options' :data='option' />
@@ -20,7 +20,7 @@ export default {
           header: 'Здесь был какой-то заголовок',
           description: 'Здесь был какое-то описание',
           handler: (state) => {
-            console.log("Здесь было что то помимо console.log", state);
+            console.log('Здесь было что то помимо console.log', state);
           },
         },
       ],
@@ -37,25 +37,25 @@ export default {
   padding: 20px;
   display: block;
   //flex-direction: column;
-}
 
-.settings-container {
-  display: flex;
-  flex-direction: column;
-
-  .title {
-    width: max-content;
-    user-select: none;
-    line-height: 100%;
-    font-size: 31px;
-    font-weight: 600;
-    font-family: var(--font-header);
-    padding-bottom: 10px;
-  }
-
-  .options {
+  .settings__container {
     display: flex;
     flex-direction: column;
+
+    .title {
+      width: max-content;
+      user-select: none;
+      line-height: 100%;
+      font-size: 31px;
+      font-weight: 600;
+      font-family: var(--font-header);
+      padding-bottom: 10px;
+    }
+
+    .options {
+      display: flex;
+      flex-direction: column;
+    }
   }
 }
 </style>

@@ -7,6 +7,12 @@ export default VueRouter.createRouter({
   history: VueRouter.createWebHistory(),
   routes: [
     {
+      path: "/",
+      redirect: () => {
+        return { path: "/login" }
+      }
+    },
+    {
       path: '/settings',
       component: SettingsPage,
       name: 'SettingsPage',
