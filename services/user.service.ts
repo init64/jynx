@@ -38,7 +38,7 @@ class UserService {
   async updateUser(oldUser: UserDto) {
     // TODO
     // Переписать эту функцию, добавить метод проверки что ссылка являеться картинкой (Content-Type: image/png)
-    
+
     const user = await User.findOne({ raw: true, where: { id: oldUser.id } });
 
     if (!user) {

@@ -2,11 +2,17 @@
   <div class='chat-page'>
     <div class='chat__container'>
       <div class='chat__messages'>
-        <Message :author='{username: user.username, avatar: user.avatar}' message='Ты хуйло' />
+        <!--        <Message v-for='message in messages' :message='message' />-->
+        <Messages />
       </div>
       <div class='chat__message-input'>
-        <input v-model='messageInput' class='chat__input' placeholder='MessageModel' type='text'>
-        <button class='chat__message-send-button' @click='sendButtonHandler'>
+        <input @keypress='$event.key === "Enter" && sendButtonHandler()'
+               v-model='messageInput'
+               class='chat__input'
+               placeholder='Message'
+               type='text'>
+        <button class='chat__message-send-button'
+                @click='sendButtonHandler'>
           <i class='uil uil-message'></i>
         </button>
       </div>
@@ -15,11 +21,11 @@
 </template>
 
 <script>
-import Message from '../components/Message.js';
+import Messages from '../components/Messages.js';
 
 export default {
   name: 'ChatPage',
-  components: { Message },
+  components: { Messages },
   data() {
     return {
       messageInput: '',
@@ -27,7 +33,11 @@ export default {
   },
   methods: {
     sendButtonHandler() {
-      console.log('Chat send button handler');
+      console.log('Send button handler');
+      if (this.messageInput) {
+        this.socket.emit('chat:send-message', this.messageInput);
+        this.messageInput = '';
+      }
     },
   },
   mounted() {
@@ -49,6 +59,7 @@ export default {
     width: 70%;
 
     .chat__messages {
+      overflow-y: scroll;
       height: 91%;
       width: 100%;
     }

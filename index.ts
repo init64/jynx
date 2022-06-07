@@ -6,7 +6,7 @@ import * as path from 'path';
 // * Controllers
 // import Stickers from './controllers/stickers';
 import UserController from './controllers/user.controller';
-// import ChatController from './controllers/chat.controller';
+import ChatController from './controllers/chat.controller';
 
 // * Database
 import sequelize from './database';
@@ -26,7 +26,7 @@ export class MainServer {
       // Connect controllers
 
       new UserController(socket);
-      // new ChatController(socket);
+      new ChatController(socket, this.socket);
       // new Stickers(socket, this.socket);
 
       // // ? Stickers

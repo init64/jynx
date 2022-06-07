@@ -19,7 +19,7 @@ app.mixin({
     };
   },
   computed: {
-    ...Vuex.mapState(['user']),
+    ...Vuex.mapState(['user', 'messages']),
   },
   methods: {
     router(path) {
@@ -42,15 +42,17 @@ app.mixin({
 
       this.socket.emit('user:login', token.trim());
       this.socket.on('user:login', response => {
-        console.log(response);
-        this.loadUser(response.data);
+        if (response.code === 200) {
+          this.loadUser(response.data);
+        }
       });
     },
     register() {
       this.socket.emit('user:create');
       this.socket.on('user:create', response => {
-        console.log(response);
-        this.loadUser(response.data);
+        if (response.code === 200) {
+          this.loadUser(response.data);
+        }
       });
     },
   },

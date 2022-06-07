@@ -1,14 +1,16 @@
-import { Server } from 'socket.io';
+import { Server, Socket } from 'socket.io';
 import Message, { MessageModel } from '../models/message.model';
 import ResponseDto from '../dtos/ResponseDto';
 import User, { UserModel } from '../models/user.model';
 import UserDto from '../dtos/UserDto';
 
 class ChatService {
-  private readonly socket: Server;
+  private readonly socket: Socket;
+  private readonly io: Server;
 
-  constructor(socket) {
+  constructor(socket, io) {
     this.socket = socket;
+    this.io = io;
   }
 
   async getMessage(messageId: string) {
@@ -40,23 +42,25 @@ class ChatService {
       author: new UserDto(user),
     });
 
-    this.socket.emit('chat:send-message', new ResponseDto(200, 'Success send message', newMessage));
+    this.io.emit('chat:new-message', new ResponseDto(200, 'Success get new message', newMessage));
   }
 
   async updateMessage(messageId: string, content: string) {
     const message: MessageModel = await Message.findOne({ raw: true, where: { id: messageId } });
+    console.log('DATA FROM CLIENT - ', messageId, content);
 
     if (!message) {
+      console.log('Message not found');
       return this.socket.emit('chat:update-message:error', new ResponseDto(200, 'Message not found'));
     }
 
-    if (message.get('author')['id'] !== this.socket['userID']) {
-      return this.socket.emit('chat:update-message:error', new ResponseDto(401, 'Permission denied'));
-    }
+    // if (message['author']['id'] !== this.socket['userID']) {
+    //   console.log("Permission denied");
+    //   return this.socket.emit('chat:update-message:error', new ResponseDto(401, 'Permission denied'));
+    // }
 
-    message.set('content', content);
-
-    await message.save();
+    await Message.update({ content }, { where: { id: messageId } });
+    this.io.emit('chat:update-message', new ResponseDto(200, 'Success update message', {...message, content}));
   }
 
   async deleteMessage(messageId: string) {
@@ -66,11 +70,12 @@ class ChatService {
       return this.socket.emit('chat:delete-message:error', new ResponseDto(200, 'Message not found'));
     }
 
-    if (message.get('author')['id'] !== this.socket['userID']) {
-      return this.socket.emit('chat:delete-message:error', new ResponseDto(401, 'Permission denied'));
-    }
+    // if (message.get('author')['id'] !== this.socket['userID']) {
+    //   return this.socket.emit('chat:delete-message:error', new ResponseDto(401, 'Permission denied'));
+    // }
 
-    await message.destroy();
+    await Message.destroy({where: {id: messageId}})
+    this.io.emit('chat:delete-message', new ResponseDto(200, 'Success delete message', message));
   }
 }
 

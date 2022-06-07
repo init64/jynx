@@ -31,7 +31,6 @@ export default {
     window.addEventListener('contextmenu', e => {
       e.preventDefault();
     });
-
   },
 };
 </script>
