@@ -1,6 +1,7 @@
 <template>
   <div class='context-menu'>
-    <div @click='user.authorized && router("/user")' :style='{backgroundImage: `url(${user.avatar})`}' class='user-avatar' />
+    <div :style='{backgroundImage: `url(${user.avatar})`}' class='user-avatar'
+         @click='user.authorized && router("/user")' />
     <ul class='buttons'>
       <li v-if='!user.authorized' :active="$route.path === '/login'" @click="router('/login')">
         <i class='uil uil-user'></i>

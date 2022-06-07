@@ -26,7 +26,7 @@ app.mixin({
       this.$router.push(path);
     },
     loadUser(user) {
-      this.$store.commit("setUser", { ...this.user, ...user, authorized: true });
+      this.$store.commit('setUser', { ...this.user, ...user, authorized: true });
       localStorage.setItem('token', user.token);
       localStorage.setItem('userID', user.id);
     },
@@ -36,20 +36,21 @@ app.mixin({
       localStorage.setItem('theme', theme);
     },
     login(token) {
-      if (!token.trim()) return;
-      this.socket.emit('user:login', token.trim());
-      console.log(token);
+      if (!token.trim()) {
+        return;
+      }
 
-      this.socket.on('user:login', user => {
-        localStorage.setItem('token', token);
-        this.loadUser(user);
+      this.socket.emit('user:login', token.trim());
+      this.socket.on('user:login', response => {
+        console.log(response);
+        this.loadUser(response.data);
       });
     },
     register() {
       this.socket.emit('user:create');
-
-      this.socket.on('user:loadUser', user => {
-        this.loadUser(user);
+      this.socket.on('user:create', response => {
+        console.log(response);
+        this.loadUser(response.data);
       });
     },
   },

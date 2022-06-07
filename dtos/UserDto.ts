@@ -1,12 +1,10 @@
-import { IUser } from '../models/user';
-
 class UserDto {
   id: string;
   username: string;
   color: string;
   avatar: string;
 
-  constructor(model: IUser) {
+  constructor(model) {
     this.id = model.id;
     this.username = model.username;
     this.color = model.color;

@@ -2,11 +2,11 @@
   <div class='chat-page'>
     <div class='chat__container'>
       <div class='chat__messages'>
-        <Message message='Ты хуйло' :author='{username: user.username, avatar: user.avatar}'/>
+        <Message :author='{username: user.username, avatar: user.avatar}' message='Ты хуйло' />
       </div>
       <div class='chat__message-input'>
-        <input v-model='messageInput' type='text' placeholder='Message' class='chat__input'>
-        <button @click='sendButtonHandler' class='chat__message-send-button'>
+        <input v-model='messageInput' class='chat__input' placeholder='MessageModel' type='text'>
+        <button class='chat__message-send-button' @click='sendButtonHandler'>
           <i class='uil uil-message'></i>
         </button>
       </div>
@@ -18,21 +18,21 @@
 import Message from '../components/Message.js';
 
 export default {
-  name: "ChatPage",
-  components: {Message},
+  name: 'ChatPage',
+  components: { Message },
   data() {
     return {
-      messageInput: "",
-    }
+      messageInput: '',
+    };
   },
   methods: {
     sendButtonHandler() {
-      console.log("Chat send button handler");
-    }
+      console.log('Chat send button handler');
+    },
   },
   mounted() {
-    localStorage.setItem("lastPage", "/chat")
-  }
+    localStorage.setItem('lastPage', '/chat');
+  },
 };
 </script>
 

@@ -1,7 +1,7 @@
 <template>
   <div class='user-page'>
     <div class='user__container'>
-      <div class='user__avatar' :style='{backgroundImage: `url(${user.avatar})`}' />
+      <div :style='{backgroundImage: `url(${user.avatar})`}' class='user__avatar' />
       <div class='user__name'>
         {{ user.username }}
       </div>

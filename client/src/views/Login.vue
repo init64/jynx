@@ -22,7 +22,7 @@ export default {
   methods: {
     loginButtonHandler() {
       this.login(this.tokenInput);
-    }
+    },
   },
   watch: {
     user(newValue) {
@@ -30,7 +30,7 @@ export default {
         this.router(localStorage.getItem('lastPage') || '/user');
       }
     },
-  }
+  },
 };
 </script>
 

@@ -6,3 +6,8 @@ build-js
 .idea
 .vscode
 dist
+*/jynx.db
+jynx.db
+test.*
+test.ts
+test-client

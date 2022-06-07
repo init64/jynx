@@ -1,6 +1,6 @@
 <template>
   <div class='message'>
-    <div :style='{backgroundImage: `url(${author.avatar})`}' class='author__avatar'/>
+    <div :style='{backgroundImage: `url(${author.avatar})`}' class='author__avatar' />
     <div class='message__content'>
       <span class='author__name'>
         {{ author.username }}
@@ -17,8 +17,8 @@ export default {
   name: 'Message',
   props: {
     author: Object,
-    message: String
-  }
+    message: String,
+  },
 };
 </script>
 
