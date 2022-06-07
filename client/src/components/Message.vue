@@ -9,9 +9,12 @@
         <input type='text'
                @keypress='messageEditMode && $event.key === "Enter" && messageEditHandler()'
                @input='messageInput = $event.target.value'
+               v-if='messageEditMode'
                class='message__text'
-               :value='messageEditMode ? messageInput : message.content' :message-edit='messageEditMode'
-               :disabled='!messageEditMode'>
+               :value='messageInput' :message-edit='messageEditMode'>
+        <div v-if='!messageEditMode'
+             class='markdown-content message__text'
+             v-html='markdown(message.content)'></div>
       </div>
     </div>
     <div v-if='message.author.id === user.id' class='message__options'>
@@ -26,6 +29,8 @@
 </template>
 
 <script>
+import rules from './MarkdownRules.js';
+
 export default {
   name: 'Message',
   props: {
@@ -37,6 +42,11 @@ export default {
       messageInput: this.message.content,
     };
   },
+  watch: {
+    'message.content': function(newValue) {
+      this.messageInput = newValue
+    }
+  },
   methods: {
     messageEditHandler() {
       if (this.messageInput !== this.message.content) {
@@ -46,8 +56,13 @@ export default {
       this.messageEditMode = false;
     },
     deleteMessageHandler() {
-      this.socket.emit("message:delete", this.message.id)
-    }
+      this.socket.emit('message:delete', this.message.id);
+    },
+    markdown(text) {
+      let markdownText = text.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+      for (let [rule, template] of rules) markdownText = markdownText.replace(rule, template);
+      return markdownText;
+    },
   },
 };
 </script>

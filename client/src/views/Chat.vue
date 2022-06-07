@@ -2,7 +2,6 @@
   <div class='chat-page'>
     <div class='chat__container'>
       <div class='chat__messages'>
-        <!--        <Message v-for='message in messages' :message='message' />-->
         <Messages />
       </div>
       <div class='chat__message-input'>
@@ -10,7 +9,7 @@
                v-model='messageInput'
                class='chat__input'
                placeholder='Message'
-               type='text'>
+               type='text'/>
         <button class='chat__message-send-button'
                 @click='sendButtonHandler'>
           <i class='uil uil-message'></i>
