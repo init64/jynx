@@ -1,5 +1,5 @@
 import { Server } from 'socket.io';
-import User, { IUser, UserModel } from '../models/user.model';
+import User, { UserModel } from '../models/user.model';
 import generate from '../lib/generate';
 import UserDto from '../dtos/UserDto';
 import ResponseDto from '../dtos/ResponseDto';
@@ -35,7 +35,10 @@ class UserService {
     }
   }
 
-  async updateUser(oldUser: IUser) {
+  async updateUser(oldUser: UserDto) {
+    // TODO
+    // Переписать эту функцию, добавить метод проверки что ссылка являеться картинкой (Content-Type: image/png)
+    
     const user = await User.findOne({ raw: true, where: { id: oldUser.id } });
 
     if (!user) {
@@ -48,7 +51,7 @@ class UserService {
 
     await user.save();
 
-    this.socket.emit('user:update', user);
+    this.socket.emit('user:update', new ResponseDto(200, "Success update user", user));
   }
 
   async getUser(userId: string) {
@@ -58,7 +61,7 @@ class UserService {
       return this.socket.emit('user:get:error', new ResponseDto(404, 'User not found'));
     }
 
-    this.socket.emit('user:get', new UserDto(user));
+    this.socket.emit('user:get', new ResponseDto(200, 'Success get user', new UserDto(user)));
   }
 
   async deleteUser() {
