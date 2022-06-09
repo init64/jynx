@@ -35,23 +35,36 @@ class UserService {
     }
   }
 
-  async updateUser(oldUser: UserDto) {
+  async updateUser(userId: string, updateProps: UserDto) {
     // TODO
     // Переписать эту функцию, добавить метод проверки что ссылка являеться картинкой (Content-Type: image/png)
 
-    const user = await User.findOne({ raw: true, where: { id: oldUser.id } });
+    if (!userId || !updateProps) {
+      return this.socket.emit('user:update:error', new ResponseDto(500, 'Bad user data'));
+    }
+
+    const user = await User.findOne({ raw: true, where: { id: userId } });
 
     if (!user) {
       this.socket.emit('user:update:error', new ResponseDto(404, 'User not found'));
     }
 
-    for (let param in oldUser) {
-      user[param] = oldUser[param];
+    const propsBlackList = [
+      'token',
+      'id',
+    ];
+
+    for (let prop in updateProps) {
+      if (!propsBlackList.includes(prop)) {
+        user[prop] = updateProps[prop];
+      } else {
+        return this.socket.emit('user:update:error', new ResponseDto(500, 'Bad user data'));
+      }
     }
 
-    await user.save();
+    await User.update(user, { where: { id: userId } });
 
-    this.socket.emit('user:update', new ResponseDto(200, "Success update user", user));
+    this.socket.emit('user:update', new ResponseDto(200, 'Success update user', new UserDto(user)));
   }
 
   async getUser(userId: string) {
@@ -65,6 +78,10 @@ class UserService {
   }
 
   async deleteUser() {
+    if (!this.socket["userID"]) {
+      this.socket.emit("chat:get-messages:error", new ResponseDto(400, "Error, you not authorized"))
+    }
+
     const user = await User.findOne({ where: { id: this.socket['userID'] } });
 
     if (!user) {

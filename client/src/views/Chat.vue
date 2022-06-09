@@ -32,7 +32,6 @@ export default {
   },
   methods: {
     sendButtonHandler() {
-      console.log('Send button handler');
       if (this.messageInput) {
         this.socket.emit('chat:send-message', this.messageInput);
         this.messageInput = '';
@@ -40,7 +39,9 @@ export default {
     },
   },
   mounted() {
-    localStorage.setItem('lastPage', '/chat');
+    if (this.user.authorized) {
+      localStorage.setItem('lastPage', '/chat');
+    }
   },
 };
 </script>

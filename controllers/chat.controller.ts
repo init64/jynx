@@ -15,10 +15,7 @@ export default class ChatController {
     this.socket.on('chat:send-message', (body, type) => this.ChatService.sendMessage(body, type));
 
     // ? Message
-    this.socket.on('message:update', (messageId, content) => {
-      console.log("DATA FROM CLIENT ON TOP LEVEL - ", messageId, content);
-      this.ChatService.updateMessage(messageId, content);
-    });
+    this.socket.on('message:update', (messageId, content) => this.ChatService.updateMessage(messageId, content));
     this.socket.on('message:delete', (messageId) => this.ChatService.deleteMessage(messageId));
   }
 }

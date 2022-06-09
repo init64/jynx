@@ -1,5 +1,5 @@
 <template>
-  <Message v-for='message in messages' :message='message' />
+  <Message v-for='message in messages' :key='message.id' :message='message' />
 </template>
 
 <script>
@@ -12,15 +12,11 @@ export default {
     this.socket.emit('chat:get-messages');
 
     this.socket.on('chat:get-messages', response => {
-      if (response.code === 200) {
-        this.$store.commit('setMessages', response.data);
-      }
+      this.$store.commit('setMessages', response.data);
     });
 
     this.socket.on('chat:new-message', response => {
-      if (response.code === 200) {
-        this.$store.commit('pushMessage', response.data);
-      }
+      this.$store.commit('pushMessage', response.data);
     });
 
     this.socket.on('chat:update-message', response => {
@@ -38,7 +34,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-
-</style>

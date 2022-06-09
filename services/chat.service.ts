@@ -24,12 +24,20 @@ class ChatService {
   }
 
   async getMessages() {
+    if (!this.socket["userID"]) {
+      this.socket.emit("chat:get-messages:error", new ResponseDto(400, "Error, you not authorized"))
+    }
+
     const messages = await Message.findAll();
 
     this.socket.emit('chat:get-messages', new ResponseDto(200, 'Success get messages', messages));
   }
 
   async sendMessage(body: string, type: string = 'message') {
+    if (!this.socket["userID"]) {
+      this.socket.emit("chat:get-messages:error", new ResponseDto(400, "Error, you not authorized"))
+    }
+
     const user: UserModel = await User.findOne({ where: { id: this.socket['userID'] } });
 
     if (!user) {
@@ -47,10 +55,8 @@ class ChatService {
 
   async updateMessage(messageId: string, content: string) {
     const message: MessageModel = await Message.findOne({ raw: true, where: { id: messageId } });
-    console.log('DATA FROM CLIENT - ', messageId, content);
 
     if (!message) {
-      console.log('Message not found');
       return this.socket.emit('chat:update-message:error', new ResponseDto(200, 'Message not found'));
     }
 

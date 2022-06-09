@@ -7,7 +7,7 @@
           <div :style='{backgroundImage: `url(${user.avatar})`}' class='user__avatar' />
           <div class='user__data'>
             <span
-              class='user__username'>{{ user.username.split('#')[0][0].toUpperCase() + user.username.split('#')[0].substring(1) }}<span>#{{ user.username.split('#')[1] }}</span></span>
+              class='user__username'>{{ username }}<span>{{ userHashTag }}</span></span>
           </div>
         </div>
         <div class='user__settings'>
@@ -16,32 +16,46 @@
               <span class='option__title'>USERNAME</span>
               <span class='option__value'>{{ user.username }}</span>
             </div>
-            <button class='option__edit-button'>Edit</button>
+            <button @click='editNameModal = true' class='option__edit-button'>Edit</button>
           </div>
           <div class='user__settings-option'>
             <div class='option__info'>
               <span class='option__title'>COLOR</span>
               <span class='option__value'>{{ user.color }}</span>
             </div>
-            <button class='option__edit-button'>Edit</button>
+            <button @click='editColorModal = true' class='option__edit-button'>Edit</button>
           </div>
           <div class='user__settings-option'>
             <div class='option__info'>
               <span class='option__title'>AVATAR</span>
               <span class='option__value'>{{ user.avatar }}</span>
             </div>
-            <button class='option__edit-button'>Edit</button>
+            <button @click='editAvatarModal = true' class='option__edit-button'>Edit</button>
           </div>
         </div>
       </div>
     </div>
-    <!--      <button @click='exitButtonHandler'>Exit</button>-->
   </div>
+  <EditUsernameModal :visible='editNameModal' @visible='editNameModal = $event' />
+  <EditUserColorModal :visible='editColorModal' @visible='editColorModal = $event' />
+  <EditUserAvatarModal :visible='editAvatarModal' @visible='editAvatarModal = $event'/>
 </template>
 
 <script>
+import EditUsernameModal from '../components/EditUsernameModal.js';
+import EditUserColorModal from '../components/EditUserColorModal.js';
+import EditUserAvatarModal from '../components/EditUserAvatarModal.js';
+
 export default {
   name: 'UserPage',
+  components: { EditUserAvatarModal, EditUserColorModal, EditUsernameModal },
+  data() {
+    return {
+      editNameModal: false,
+      editColorModal: false,
+      editAvatarModal: false,
+    };
+  },
   methods: {
     exitButtonHandler() {
       this.$store.commit('setUser', { authorized: false, token: '' });
@@ -50,8 +64,27 @@ export default {
       this.router('/login');
     },
   },
+  computed: {
+    username() {
+      if (this.user.username.split('#')[1]) {
+        let username = this.user.username.split('#')[0];
+        return username[0].toUpperCase() + username.substring(1);
+      } else {
+        return this.user.username[0].toUpperCase() + this.user.username.substring(1);
+      }
+    },
+    userHashTag() {
+      if (this.user.username.split('#')[1]) {
+        return this.user.username.split('#')[1];
+      } else {
+        return '';
+      }
+    },
+  },
   mounted() {
-    localStorage.setItem('lastPage', '/user');
+    if (this.user.authorized) {
+      localStorage.setItem('lastPage', '/user');
+    }
   },
 };
 </script>
@@ -144,7 +177,7 @@ export default {
 
           .option__title {
             font-family: var(--font-header);
-            font-weight: 500;
+            font-weight: 600;
             font-size: 15px;
             color: var(--text-secondary);
           }

@@ -47,7 +47,7 @@ export default {
     //background: #fff;
     //border: 1px solid white;
     text-align: left;
-    min-width: 400px;
+    min-width: 300px;
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -55,6 +55,7 @@ export default {
     div {
       display: flex;
       flex-direction: column;
+      width: 100%;
     }
 
     .logo {

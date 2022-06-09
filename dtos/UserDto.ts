@@ -1,8 +1,8 @@
 class UserDto {
   id: string;
-  username: string;
-  color: string;
-  avatar: string;
+  username?: string;
+  color?: string;
+  avatar?: string;
 
   constructor(model) {
     this.id = model.id;

@@ -42,17 +42,13 @@ app.mixin({
 
       this.socket.emit('user:login', token.trim());
       this.socket.on('user:login', response => {
-        if (response.code === 200) {
-          this.loadUser(response.data);
-        }
+        this.loadUser(response.data);
       });
     },
     register() {
       this.socket.emit('user:create');
       this.socket.on('user:create', response => {
-        if (response.code === 200) {
-          this.loadUser(response.data);
-        }
+        this.loadUser(response.data);
       });
     },
   },

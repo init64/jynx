@@ -10,6 +10,9 @@ export default Vuex.createStore({
     setUser(state, payload) {
       state.user = payload;
     },
+    updateUser(state, payload) {
+      state.user = { ...state.user, ...payload };
+    },
     setMessages(state, payload) {
       state.messages = payload;
     },
