@@ -1,14 +1,14 @@
 <template>
-  <input @input='$emit("input", $event)' :placeholder='placeholder' :class='["custom-input", this.class]' type='text'>
+  <input :class='["custom-input", this.class]' :placeholder='placeholder' type='text' @input='$emit("input", $event)'>
 </template>
 
 <script>
 export default {
-  name: "Input",
+  name: 'Input',
   props: {
     class: String,
-    placeholder: String
-  }
+    placeholder: String,
+  },
 };
 </script>
 

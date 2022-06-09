@@ -1,6 +1,10 @@
 <template>
-  <Modal class='user-modal__edit-avatar' :visible='visible' @visible='$emit("visible", $event)'>
-        <span class='edit-avatar__title'>
+  <Modal
+    :onHide='onModalHide'
+    :visible='visible'
+    class='user-modal__edit-username'
+    @visible='$emit("visible", $event)'>
+    <span class='edit-username__title'>
       Change your username
     </span>
     <span class='edit-username__description'>
@@ -8,11 +12,12 @@
     </span>
     <div class='edit-username__container'>
       <!--      <Input/>-->
-      <input v-model='usernameInput' placeholder='Username' type='text' class='edit-username__input'>
+      <input v-model='usernameInput' class='edit-username__input' placeholder='Username' type='text'>
     </div>
     <div class='edit-username__buttons'>
-      <button @click='$emit("visible", false)' class='edit-username__cancel-button'>Cancel</button>
-      <button @click='editUsernameHandler' class='edit-username__done-button'>Done</button>
+      <button class='edit-username__cancel-button' @click='() => {onModalHide(); $emit("visible", false)}'>Cancel
+      </button>
+      <button class='edit-username__done-button' @click='editUsernameHandler'>Done</button>
     </div>
   </Modal>
 </template>
@@ -25,38 +30,42 @@ export default {
   },
   data() {
     return {
-      usernameInput: ""
-    }
+      usernameInput: '',
+    };
   },
   methods: {
     editUsernameHandler() {
       if (this.usernameInput && this.usernameInput !== this.user.username) {
-        this.socket.emit("user:update", this.user.id, {username: this.usernameInput})
+        this.socket.emit('user:update', this.user.id, { username: this.usernameInput });
 
-        this.socket.on("user:update", response => {
-          this.$store.commit("updateUser", response.data)
-        })
+        this.socket.on('user:update', response => {
+          this.$store.commit('updateUser', response.data);
+        });
 
-        this.socket.on("user:update:error", response => {
+        this.socket.on('user:update:error', response => {
           console.log(response);
-        })
+        });
       }
 
-      this.$emit("visible", false)
-    }
-  }
+      this.onModalHide();
+      this.$emit('visible', false);
+    },
+    onModalHide() {
+      this.usernameInput = '';
+    },
+  },
 };
 </script>
 
 <style lang='scss' scoped>
-.user-modal__edit-avatar {
+.user-modal__edit-username {
   display: flex;
   align-items: center;
   flex-direction: column;
   max-width: 500px;
   width: 100%;
 
-  .edit-avatar__title {
+  .edit-username__title {
     font-family: var(--font-header);
     font-size: 25px;
     font-weight: 600;

@@ -6,22 +6,23 @@
         <span class='author__name'>
           {{ message.author.username }}
         </span>
-        <input type='text'
-               @keypress='messageEditMode && $event.key === "Enter" && messageEditHandler()'
-               @input='messageInput = $event.target.value'
-               v-if='messageEditMode'
+        <input v-if='messageEditMode'
+               :message-edit='messageEditMode'
+               :value='messageInput'
                class='message__text'
-               :value='messageInput' :message-edit='messageEditMode'>
+               type='text'
+               @input='messageInput = $event.target.value'
+               @keypress='messageEditMode && $event.key === "Enter" && messageEditHandler()'>
         <div v-if='!messageEditMode'
              class='markdown-content message__text'
              v-html='markdown(message.content)'></div>
       </div>
     </div>
     <div v-if='message.author.id === user.id' class='message__options'>
-      <div @click='!messageEditMode ? messageEditMode = true : messageEditHandler()' class='message__option'>
+      <div class='message__option' @click='!messageEditMode ? messageEditMode = true : messageEditHandler()'>
         <i class='uil uil-pen'></i>
       </div>
-      <div @click='deleteMessageHandler()' class='message__option message__delete-option'>
+      <div class='message__option message__delete-option' @click='deleteMessageHandler()'>
         <i class='uil uil-trash'></i>
       </div>
     </div>
@@ -44,8 +45,8 @@ export default {
   },
   watch: {
     'message.content': function(newValue) {
-      this.messageInput = newValue
-    }
+      this.messageInput = newValue;
+    },
   },
   methods: {
     messageEditHandler() {

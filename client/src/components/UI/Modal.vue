@@ -1,7 +1,7 @@
 <template>
   <Transition>
-    <div v-if='visible' @click='$emit("visible", false)' class='modal__screen'>
-      <div @click='$event.stopPropagation()' :class='["modal__content", this.class]'>
+    <div v-if='visible' class='modal__screen' @click='() => {onHide(); $emit("visible", false)}'>
+      <div :class='["modal__content", this.class]' @click='$event.stopPropagation()'>
         <slot></slot>
       </div>
     </div>
@@ -10,11 +10,17 @@
 
 <script>
 export default {
-  name: "Modal",
+  name: 'Modal',
   props: {
     visible: Boolean,
-    class: String
-  }
+    class: String,
+    onHide: {
+      type: Function,
+      required: false,
+      default: () => {
+      },
+    },
+  },
 };
 </script>
 

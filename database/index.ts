@@ -3,7 +3,7 @@ import { Sequelize } from 'sequelize';
 
 const DB_SOURCE = path.resolve(__dirname, 'jynx.db');
 
-const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USERNAME, process.env.DB_PASSWORD,{
+const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USERNAME, process.env.DB_PASSWORD, {
   dialect: 'sqlite',
   storage: DB_SOURCE,
 });

@@ -5,11 +5,11 @@
         <Messages />
       </div>
       <div class='chat__message-input'>
-        <input @keypress='$event.key === "Enter" && sendButtonHandler()'
-               v-model='messageInput'
+        <input v-model='messageInput'
                class='chat__input'
                placeholder='Message'
-               type='text'/>
+               type='text'
+               @keypress='$event.key === "Enter" && sendButtonHandler()' />
         <button class='chat__message-send-button'
                 @click='sendButtonHandler'>
           <i class='uil uil-message'></i>

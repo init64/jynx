@@ -1,5 +1,8 @@
 <template>
-  <Modal class='user-modal__edit-avatar' :visible='visible' @visible='$emit("visible", $event)'>
+  <Modal :onHide='onModalHide'
+         :visible='visible'
+         class='user-modal__edit-avatar'
+         @visible='$emit("visible", $event)'>
     <span class='edit-avatar__title'>
       Change your user avatar
     </span>
@@ -7,11 +10,11 @@
       Enter a new avatar (url to image)
     </span>
     <div class='edit-avatar__container'>
-      <input v-model='avatarInput' placeholder='Avatar' type='text' class='edit-avatar__input'>
+      <input v-model='avatarInput' class='edit-avatar__input' placeholder='Avatar' type='text'>
     </div>
     <div class='edit-avatar__buttons'>
-      <button @click='$emit("visible", false)' class='edit-avatar__cancel-button'>Cancel</button>
-      <button @click='editUserAvatarHandler' class='edit-avatar__done-button'>Done</button>
+      <button class='edit-avatar__cancel-button' @click='() => {onModalHide(); $emit("visible", false)}'>Cancel</button>
+      <button class='edit-avatar__done-button' @click='editUserAvatarHandler'>Done</button>
     </div>
   </Modal>
 </template>
@@ -41,7 +44,11 @@ export default {
         });
       }
 
+      this.onModalHide();
       this.$emit('visible', false);
+    },
+    onModalHide() {
+      this.avatarInput = '';
     },
   },
 };

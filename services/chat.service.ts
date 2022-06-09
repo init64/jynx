@@ -24,8 +24,8 @@ class ChatService {
   }
 
   async getMessages() {
-    if (!this.socket["userID"]) {
-      this.socket.emit("chat:get-messages:error", new ResponseDto(400, "Error, you not authorized"))
+    if (!this.socket['userID']) {
+      this.socket.emit('chat:get-messages:error', new ResponseDto(401, 'Error, you not authorized'));
     }
 
     const messages = await Message.findAll();
@@ -34,8 +34,8 @@ class ChatService {
   }
 
   async sendMessage(body: string, type: string = 'message') {
-    if (!this.socket["userID"]) {
-      this.socket.emit("chat:get-messages:error", new ResponseDto(400, "Error, you not authorized"))
+    if (!this.socket['userID']) {
+      this.socket.emit('chat:get-messages:error', new ResponseDto(401, 'Error, you not authorized'));
     }
 
     const user: UserModel = await User.findOne({ where: { id: this.socket['userID'] } });
@@ -66,7 +66,7 @@ class ChatService {
     // }
 
     await Message.update({ content }, { where: { id: messageId } });
-    this.io.emit('chat:update-message', new ResponseDto(200, 'Success update message', {...message, content}));
+    this.io.emit('chat:update-message', new ResponseDto(200, 'Success update message', { ...message, content }));
   }
 
   async deleteMessage(messageId: string) {
@@ -80,7 +80,7 @@ class ChatService {
     //   return this.socket.emit('chat:delete-message:error', new ResponseDto(401, 'Permission denied'));
     // }
 
-    await Message.destroy({where: {id: messageId}})
+    await Message.destroy({ where: { id: messageId } });
     this.io.emit('chat:delete-message', new ResponseDto(200, 'Success delete message', message));
   }
 }

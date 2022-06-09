@@ -5,5 +5,5 @@ import Input from './Input.js';
 export default {
   Option,
   Modal,
-  Input
+  Input,
 };

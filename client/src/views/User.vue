@@ -1,7 +1,7 @@
 <template>
   <div class='user-page'>
     <div class='user__container'>
-      <div class='user__color' :style='{backgroundColor: user.color}' />
+      <div :style='{backgroundColor: user.color}' class='user__color' />
       <div class='user__content'>
         <div class='user__info'>
           <div :style='{backgroundImage: `url(${user.avatar})`}' class='user__avatar' />
@@ -16,21 +16,21 @@
               <span class='option__title'>USERNAME</span>
               <span class='option__value'>{{ user.username }}</span>
             </div>
-            <button @click='editNameModal = true' class='option__edit-button'>Edit</button>
+            <button class='option__edit-button' @click='editNameModal = true'>Edit</button>
           </div>
           <div class='user__settings-option'>
             <div class='option__info'>
               <span class='option__title'>COLOR</span>
               <span class='option__value'>{{ user.color }}</span>
             </div>
-            <button @click='editColorModal = true' class='option__edit-button'>Edit</button>
+            <button class='option__edit-button' @click='editColorModal = true'>Edit</button>
           </div>
           <div class='user__settings-option'>
             <div class='option__info'>
               <span class='option__title'>AVATAR</span>
               <span class='option__value'>{{ user.avatar }}</span>
             </div>
-            <button @click='editAvatarModal = true' class='option__edit-button'>Edit</button>
+            <button class='option__edit-button' @click='editAvatarModal = true'>Edit</button>
           </div>
         </div>
       </div>
@@ -38,7 +38,7 @@
   </div>
   <EditUsernameModal :visible='editNameModal' @visible='editNameModal = $event' />
   <EditUserColorModal :visible='editColorModal' @visible='editColorModal = $event' />
-  <EditUserAvatarModal :visible='editAvatarModal' @visible='editAvatarModal = $event'/>
+  <EditUserAvatarModal :visible='editAvatarModal' @visible='editAvatarModal = $event' />
 </template>
 
 <script>

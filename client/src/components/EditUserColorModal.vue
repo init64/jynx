@@ -1,17 +1,17 @@
 <template>
-  <Modal class='user-modal__edit-avatar' :visible='visible' @visible='$emit("visible", $event)'>
-        <span class='edit-avatar__title'>
+  <Modal :onHide='onModalHide' :visible='visible' class='user-modal__edit-color' @visible='$emit("visible", $event)'>
+    <span class='edit-color__title'>
       Change your color
     </span>
-    <span class='edit-avatar__description'>
+    <span class='edit-color__description'>
       Enter a new color (in hex)
     </span>
-    <div class='edit-avatar__container'>
-      <input v-model='colorInput' placeholder='Color' type='text' class='edit-avatar__input'>
+    <div class='edit-color__container'>
+      <input v-model='colorInput' class='edit-color__input' placeholder='Color' type='text'>
     </div>
-    <div class='edit-avatar__buttons'>
-      <button @click='$emit("visible", false)' class='edit-avatar__cancel-button'>Cancel</button>
-      <button @click='editUserColorHandler' class='edit-avatar__done-button'>Done</button>
+    <div class='edit-color__buttons'>
+      <button class='edit-color__cancel-button' @click='() => {onModalHide(); $emit("visible", false)}'>Cancel</button>
+      <button class='edit-color__done-button' @click='editUserColorHandler'>Done</button>
     </div>
   </Modal>
 </template>
@@ -24,44 +24,48 @@ export default {
   },
   data() {
     return {
-      colorInput: ""
-    }
+      colorInput: '',
+    };
   },
   methods: {
     editUserColorHandler() {
       if (this.colorInput && this.colorInput !== this.user.color) {
-        this.socket.emit("user:update", this.user.id, {color: this.colorInput})
+        this.socket.emit('user:update', this.user.id, { color: this.colorInput });
 
-        this.socket.on("user:update", response => {
-          this.$store.commit("updateUser", response.data)
-        })
+        this.socket.on('user:update', response => {
+          this.$store.commit('updateUser', response.data);
+        });
 
-        this.socket.on("user:update:error", response => {
+        this.socket.on('user:update:error', response => {
           console.log(response);
-        })
+        });
       }
 
-      this.$emit("visible", false)
-    }
-  }
+      this.onModalHide();
+      this.$emit('visible', false);
+    },
+    onModalHide() {
+      this.colorInput = '';
+    },
+  },
 };
 </script>
 
 <style lang='scss' scoped>
-.user-modal__edit-avatar {
+.user-modal__edit-color {
   display: flex;
   align-items: center;
   flex-direction: column;
   max-width: 500px;
   width: 100%;
 
-  .edit-avatar__title {
+  .edit-color__title {
     font-family: var(--font-header);
     font-size: 25px;
     font-weight: 600;
   }
 
-  .edit-avatar__description {
+  .edit-color__description {
     margin-top: 20px;
     font-family: var(--font-secondary);
     font-size: 15px;
@@ -69,11 +73,11 @@ export default {
     color: var(--text-secondary)
   }
 
-  .edit-avatar__container {
+  .edit-color__container {
     width: 100%;
     margin-top: 30px;
 
-    .edit-avatar__input {
+    .edit-color__input {
       width: 100%;
       padding: 10px;
       border-radius: 5px;
@@ -86,7 +90,7 @@ export default {
     }
   }
 
-  .edit-avatar__buttons {
+  .edit-color__buttons {
     margin-top: 40px;
     width: 100%;
     height: 10%;
@@ -94,7 +98,7 @@ export default {
     justify-content: right;
     align-items: center;
 
-    .edit-avatar__done-button {
+    .edit-color__done-button {
       background-color: var(--background-thirty);
       color: var(--text-primary);
       font-family: var(--font-primary);
@@ -107,7 +111,7 @@ export default {
       margin-left: 5px;
     }
 
-    .edit-avatar__cancel-button {
+    .edit-color__cancel-button {
       margin-right: 5px;
       background: none;
       color: var(--text-primary);
