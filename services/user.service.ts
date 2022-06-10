@@ -40,7 +40,7 @@ class UserService {
     // Переписать эту функцию, добавить метод проверки что ссылка являеться картинкой (Content-Type: image/png)
 
     if (!userId || !updateProps) {
-      return this.socket.emit('user:update:error', new ResponseDto(400, 'Bad user data'));
+      return this.socket.emit('user:update:error', new ResponseDto(400, 'Bad update props'));
     }
 
     const user = await User.findOne({ raw: true, where: { id: userId } });
@@ -50,13 +50,25 @@ class UserService {
     }
 
     if (updateProps.avatar && !await IsUrlImage(updateProps.avatar)) {
-      return this.socket.emit('user:update:error', new ResponseDto(400, 'Bad user data'));
+      return this.socket.emit('user:update:error', new ResponseDto(400, 'Bad update props'));
     }
 
-    const propsBlackList = [
-      'token',
-      'id',
-    ];
+    const hexRegex = /^#([0-9a-f]{3}){1,2}$/i;
+
+    if (updateProps.color) {
+      if (updateProps.color[0] !== "#") {
+        updateProps.color = "#" + updateProps.color;
+      }
+
+      if (!hexRegex.test(updateProps.color)) {
+        return this.socket.emit('user:update:error', new ResponseDto(400, 'Bad update props'));
+      }
+    }
+
+      const propsBlackList = [
+        'token',
+        'id',
+      ];
 
     for (let prop in updateProps) {
       if (!propsBlackList.includes(prop)) {
