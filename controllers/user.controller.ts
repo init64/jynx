@@ -13,6 +13,6 @@ export default class UserController {
     this.socket.on('user:login', (token) => this.UserService.login(token));
     this.socket.on('user:update', (userId, updateProps) => this.UserService.updateUser(userId, updateProps));
     this.socket.on('user:get', (userId) => this.UserService.getUser(userId));
-    this.socket.on('user:delete', () => this.UserService.deleteUser());
+    this.socket.on('user:delete', (userId) => this.UserService.deleteUser(userId));
   }
 }

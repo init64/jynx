@@ -81,18 +81,18 @@ class UserService {
     this.socket.emit('user:get', new ResponseDto(200, 'Success get user', new UserDto(user)));
   }
 
-  async deleteUser() {
-    if (!this.socket['userID']) {
-      this.socket.emit('chat:get-messages:error', new ResponseDto(401, 'Error, you not authorized'));
+  async deleteUser(userId: string) {
+    if (!userId) {
+      this.socket.emit('user:delete:error', new ResponseDto(401, 'Error, you not authorized'));
     }
 
-    const user = await User.findOne({ where: { id: this.socket['userID'] } });
+    const user = await User.findOne({ where: { id: userId } });
 
     if (!user) {
       return this.socket.emit('user:delete:error', new ResponseDto(404, 'User not found'));
     }
 
-    await user.destroy();
+    await User.destroy({ where: { id: userId } });
     this.socket.emit('user:delete', new ResponseDto(200, 'Success delete user'));
   }
 }

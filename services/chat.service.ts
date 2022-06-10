@@ -35,7 +35,7 @@ class ChatService {
 
   async sendMessage(body: string, type: string = 'message') {
     if (!this.socket['userID']) {
-      this.socket.emit('chat:get-messages:error', new ResponseDto(401, 'Error, you not authorized'));
+      this.socket.emit('chat:send-message:error', new ResponseDto(401, 'Error, you not authorized'));
     }
 
     const user: UserModel = await User.findOne({ where: { id: this.socket['userID'] } });

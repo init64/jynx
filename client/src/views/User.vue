@@ -32,6 +32,9 @@
             </div>
             <button class='option__edit-button' @click='editAvatarModal = true'>Edit</button>
           </div>
+          <button class='user__settings-exit-button' @click='exitButtonHandler'>
+            Exit
+          </button>
         </div>
       </div>
     </div>
@@ -75,7 +78,7 @@ export default {
     },
     userHashTag() {
       if (this.user.username.split('#')[1]) {
-        return this.user.username.split('#')[1];
+        return "#" + this.user.username.split('#')[1];
       } else {
         return '';
       }
@@ -100,7 +103,7 @@ export default {
   flex-direction: column;
 
   .user__container {
-    height: 60%;
+    height: 63%;
     width: 50%;
     display: flex;
     align-items: center;
@@ -164,6 +167,20 @@ export default {
       background-color: var(--background-primary);
       border-radius: 10px;
       padding: 5px 20px;
+
+      .user__settings-exit-button {
+        float: right;
+        background-color: var(--background-thirty);
+        color: var(--text-primary);
+        font-family: var(--font-primary);
+        font-weight: 600;
+        padding-inline: 20px;
+        padding-block: 11px;
+        border-radius: 6px;
+        border: none;
+        cursor: pointer;
+        margin-top: 13px;
+      }
 
       .user__settings-option {
         display: flex;
