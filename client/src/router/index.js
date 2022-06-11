@@ -9,7 +9,9 @@ export default VueRouter.createRouter({
     {
       path: '/',
       redirect: () => {
-        return { path: localStorage.getItem('token') ? localStorage.getItem('lastPage') : '/login' };
+        return {
+          path: localStorage.getItem('token') && localStorage.getItem('lastPage') ? localStorage.getItem('lastPage') : '/login',
+        };
       },
     },
     {

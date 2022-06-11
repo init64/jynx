@@ -1,6 +1,11 @@
 <template>
   <div ref='chatMessages' class='chat__messages'>
-    <Message v-for='message in messages' :key='message.id' :message='message' />
+    <Message
+      @openAuthorModal='$emit("openAuthorModal", $event)'
+      v-for='message in messages'
+      :key='message.id'
+      :message='message'
+    />
   </div>
 </template>
 
@@ -47,7 +52,7 @@ export default {
 
     this.socket.on('user:update', response => {
       if (response.code === 200) {
-        this.$store.commit("editAuthorOfMessages", response.data)
+        this.$store.commit('editAuthorOfMessages', response.data);
       }
     });
   },

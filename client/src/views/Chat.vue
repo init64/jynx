@@ -1,7 +1,7 @@
 <template>
   <div class='chat-page'>
     <div class='chat__container'>
-      <Messages />
+      <Messages @openAuthorModal='openAuthorModal' />
       <div class='chat__message-input'>
         <input v-model='messageInput'
                class='chat__input'
@@ -15,16 +15,20 @@
       </div>
     </div>
   </div>
+  <UserModal :visible='authorModal' @visible='authorModal = false' :userId='authorIdModal' />
 </template>
 
 <script>
 import Messages from '../components/Messages.js';
+import UserModal from '../components/UserModal.js';
 
 export default {
   name: 'ChatPage',
-  components: { Messages },
+  components: { UserModal, Messages },
   data() {
     return {
+      authorModal: false,
+      authorIdModal: localStorage.getItem('userID') || '',
       messageInput: '',
     };
   },
@@ -34,6 +38,10 @@ export default {
         this.socket.emit('chat:send-message', this.messageInput);
         this.messageInput = '';
       }
+    },
+    openAuthorModal(userId) {
+      this.authorIdModal = userId;
+      this.authorModal = true;
     },
   },
   mounted() {

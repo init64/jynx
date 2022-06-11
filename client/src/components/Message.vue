@@ -1,10 +1,11 @@
 <template>
-  <div  class='message'>
+  <div class='message'>
     <div class='message__container'>
-      <div :style='{backgroundImage: `url(${message.author.avatar})`}' class='author__avatar' />
+      <div @click='openAuthorModal' :style='{backgroundImage: `url(${message.author.avatar})`}'
+           class='author__avatar' />
       <div class='message__content'>
         <div class='message__title'>
-          <span class='author__name'>
+          <span @click='openAuthorModal' class='author__name'>
             {{ authorName }}
           </span>
           <span class='message__date'>
@@ -74,6 +75,9 @@ export default {
     },
     getFormatedDate(date) {
       return `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`;
+    },
+    openAuthorModal() {
+      this.$emit('openAuthorModal', this.message.author.id);
     },
   },
   computed: {
