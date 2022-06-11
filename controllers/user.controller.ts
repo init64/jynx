@@ -1,13 +1,13 @@
-import { Server } from 'socket.io';
+import { Socket } from 'socket.io';
 import UserService from '../services/user.service';
 
 export default class UserController {
-  private readonly socket: Server;
+  private readonly socket: Socket;
   private readonly UserService: UserService;
 
-  constructor(socket) {
+  constructor(socket, io) {
     this.socket = socket;
-    this.UserService = new UserService(socket);
+    this.UserService = new UserService(socket, io);
 
     this.socket.on('user:create', () => this.UserService.createUser());
     this.socket.on('user:login', (token) => this.UserService.login(token));

@@ -39,11 +39,9 @@ export default {
         this.socket.emit('user:update', this.user.id, { username: this.usernameInput });
 
         this.socket.on('user:update', response => {
-          this.$store.commit('updateUser', response.data);
-        });
-
-        this.socket.on('user:update:error', response => {
-          console.log(response);
+          if (response.code === 200) {
+            this.$store.commit('updateUser', response.data);
+          }
         });
       }
 

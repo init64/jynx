@@ -25,7 +25,7 @@ export class MainServer {
     this.socket.on('connection', socket => {
       // Connect controllers
 
-      new UserController(socket);
+      new UserController(socket, this.socket);
       new ChatController(socket, this.socket);
       // new Stickers(socket, this.socket);
 

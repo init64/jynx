@@ -25,8 +25,15 @@ export default Vuex.createStore({
         ...payload.data,
       };
     },
-    deleteMessage(state, messageId) {
-      state.messages = state.messages.filter(obj => obj.id !== messageId);
+    deleteMessage(state, payload) {
+      state.messages = state.messages.filter(obj => obj.id !== payload);
     },
+    editAuthorOfMessages(state, payload) {
+      state.messages = state.messages.map(message => {
+        if (message.author.id === payload.author.id) {
+          message.author = payload.author
+        }
+      })
+    }
   },
 });

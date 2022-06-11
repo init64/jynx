@@ -1,21 +1,29 @@
 <template>
-  <div class='message'>
-    <div class='message__data'>
+  <div  class='message'>
+    <div class='message__container'>
       <div :style='{backgroundImage: `url(${message.author.avatar})`}' class='author__avatar' />
       <div class='message__content'>
-        <span class='author__name'>
-          {{ message.author.username }}
-        </span>
-        <input v-if='messageEditMode'
-               :message-edit='messageEditMode'
-               :value='messageInput'
-               class='message__text'
-               type='text'
-               @input='messageInput = $event.target.value'
-               @keypress='messageEditMode && $event.key === "Enter" && messageEditHandler()'>
-        <div v-if='!messageEditMode'
-             class='markdown-content message__text'
-             v-html='markdown(message.content)'></div>
+        <div class='message__title'>
+          <span class='author__name'>
+            {{ authorName }}
+          </span>
+          <span class='message__date'>
+            {{ messageCreatedDate }}
+          </span>
+        </div>
+        <div class='message__data'>
+          <input v-if='messageEditMode'
+                 :message-edit='messageEditMode'
+                 :value='messageInput'
+                 class='message__text'
+                 type='text'
+                 @input='messageInput = $event.target.value'
+                 @keypress='messageEditMode && $event.key === "Enter" && messageEditHandler()'>
+          <div v-if='!messageEditMode'
+               class='markdown-content message__text'
+               v-html='markdown(message.content)'></div>
+          <span v-if='message.createdAt !== message.updatedAt' class='message__edited'>(edited)</span>
+        </div>
       </div>
     </div>
     <div v-if='message.author.id === user.id' class='message__options'>
@@ -64,6 +72,30 @@ export default {
       for (let [rule, template] of rules) markdownText = markdownText.replace(rule, template);
       return markdownText;
     },
+    getFormatedDate(date) {
+      return `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`;
+    },
+  },
+  computed: {
+    messageCreatedDate() {
+      const messageDate = {
+        date: new Date(this.message.createdAt),
+        formatedDate: this.getFormatedDate(new Date(this.message.createdAt)),
+      };
+      const currentDate = {
+        date: new Date(),
+        formatedDate: this.getFormatedDate(new Date()),
+      };
+
+      if (currentDate.formatedDate === messageDate.formatedDate) {
+        return `Today at ${messageDate.date.getHours()}:${String(messageDate.date.getMinutes()).padStart(2, '0')}`;
+      } else {
+        return messageDate.formatedDate;
+      }
+    },
+    authorName() {
+      return this.message.author.username[0].toUpperCase() + this.message.author.username.substr(1);
+    },
   },
 };
 </script>
@@ -77,7 +109,7 @@ export default {
   margin-block: 5px;
   border-radius: 5px;
 
-  .message__data {
+  .message__container {
     display: flex;
   }
 
@@ -133,18 +165,48 @@ export default {
     display: flex;
     flex-direction: column;
 
-    .message__text {
-      margin-top: 5px;
-      background: none;
-      border: none;
-      color: var(--text-primary);
-      font-family: var(--font-primary);
+    .message__title {
+      display: flex;
+      align-items: center;
+
+      .author__name {
+        font-family: var(--font-header);
+        font-size: 17px;
+        color: var(--text-primary);
+      }
+
+      .message__date {
+        margin-left: 7px;
+        font-family: var(--font-secondary);
+        font-size: 14px;
+        color: var(--text-secondary);
+      }
     }
 
-    .message__text[message-edit="true"] {
-      background-color: var(--background-thirty);
-      border-radius: 5px;
-      padding: 10px;
+    .message__data {
+      display: flex;
+      align-items: center;
+
+      .message__text {
+        margin-top: 5px;
+        background: none;
+        border: none;
+        color: var(--text-primary);
+        font-family: var(--font-primary);
+      }
+
+      .message__text[message-edit="true"] {
+        background-color: var(--background-thirty);
+        border-radius: 5px;
+        padding: 10px;
+      }
+
+      .message__edited {
+        margin-left: 4px;
+        font-family: var(--font-secondary);
+        font-size: 12px;
+        color: var(--text-secondary);
+      }
     }
   }
 }

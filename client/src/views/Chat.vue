@@ -1,9 +1,7 @@
 <template>
   <div class='chat-page'>
     <div class='chat__container'>
-      <div class='chat__messages'>
-        <Messages />
-      </div>
+      <Messages />
       <div class='chat__message-input'>
         <input v-model='messageInput'
                class='chat__input'
@@ -57,12 +55,6 @@ export default {
   .chat__container {
     height: 100%;
     width: 70%;
-
-    .chat__messages {
-      overflow-y: scroll;
-      height: 91%;
-      width: 100%;
-    }
 
     .chat__message-input {
       display: flex;

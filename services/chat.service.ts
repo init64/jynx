@@ -17,7 +17,7 @@ class ChatService {
     const message = await Message.findOne({ raw: true, where: { id: messageId } });
 
     if (!message) {
-      this.socket.emit('message:get', new ResponseDto(404, 'Message not found', message));
+      this.socket.emit('message:get', ResponseDto.NotFoundError('Message not found'));
     } else {
       this.socket.emit('message:get', new ResponseDto(200, 'Success get message', message));
     }
@@ -25,23 +25,22 @@ class ChatService {
 
   async getMessages() {
     if (!this.socket['userID']) {
-      this.socket.emit('chat:get-messages:error', new ResponseDto(401, 'Error, you not authorized'));
+      return this.socket.emit('chat:get-messages', ResponseDto.UnauthorizedError());
     }
 
     const messages = await Message.findAll();
-
     this.socket.emit('chat:get-messages', new ResponseDto(200, 'Success get messages', messages));
   }
 
   async sendMessage(body: string, type: string = 'message') {
     if (!this.socket['userID']) {
-      this.socket.emit('chat:send-message:error', new ResponseDto(401, 'Error, you not authorized'));
+      return this.socket.emit('chat:send-message', ResponseDto.UnauthorizedError());
     }
 
     const user: UserModel = await User.findOne({ where: { id: this.socket['userID'] } });
 
     if (!user) {
-      return this.socket.emit('chat:send-message:error', new ResponseDto(404, 'User not found'));
+      return this.socket.emit('chat:send-message', ResponseDto.NotFoundError('User not found'));
     }
 
     const newMessage = await Message.create({
@@ -50,16 +49,20 @@ class ChatService {
       author: new UserDto(user),
     });
 
-    this.io.emit('chat:new-message', new ResponseDto(200, 'Success get new message', newMessage));
+    // TODO
+    // Пофиксить баг с двойным ответом от сервера
+
+    this.io.emit('chat:new-message', new ResponseDto(200, 'Success create new message', newMessage));
   }
 
   async updateMessage(messageId: string, content: string) {
     const message: MessageModel = await Message.findOne({ raw: true, where: { id: messageId } });
 
     if (!message) {
-      return this.socket.emit('chat:update-message:error', new ResponseDto(200, 'Message not found'));
+      return this.socket.emit('chat:update-message', ResponseDto.NotFoundError("Message not found"));
     }
 
+    console.log(message);
     // if (message['author']['id'] !== this.socket['userID']) {
     //   console.log("Permission denied");
     //   return this.socket.emit('chat:update-message:error', new ResponseDto(401, 'Permission denied'));
@@ -73,7 +76,7 @@ class ChatService {
     const message: MessageModel = await Message.findOne({ raw: true, where: { id: messageId } });
 
     if (!message) {
-      return this.socket.emit('chat:delete-message:error', new ResponseDto(200, 'Message not found'));
+      return this.socket.emit('chat:delete-message', ResponseDto.NotFoundError("Message not found"));
     }
 
     // if (message.get('author')['id'] !== this.socket['userID']) {

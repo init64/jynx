@@ -1,5 +1,7 @@
 <template>
-  <Message v-for='message in messages' :key='message.id' :message='message' />
+  <div ref='chatMessages' class='chat__messages'>
+    <Message v-for='message in messages' :key='message.id' :message='message' />
+  </div>
 </template>
 
 <script>
@@ -9,20 +11,31 @@ export default {
   name: 'Messages',
   components: { Message },
   mounted() {
+    // TODO
+    // Сделать функцию scrollToBottom
+
     this.socket.emit('chat:get-messages');
 
     this.socket.on('chat:get-messages', response => {
-      this.$store.commit('setMessages', response.data);
+      if (response.code === 200) {
+        this.$store.commit('setMessages', response.data);
+      }
     });
 
     this.socket.on('chat:new-message', response => {
-      this.$store.commit('pushMessage', response.data);
+      if (response.code === 200) {
+        this.$store.commit('pushMessage', response.data);
+      }
     });
 
     this.socket.on('chat:update-message', response => {
       if (response.code === 200) {
-        const { id, content } = response.data;
-        this.$store.commit('setMessageById', { id, data: { content } });
+        const {
+          id,
+          content,
+          updatedAt,
+        } = response.data;
+        this.$store.commit('setMessage', { id, content, updatedAt });
       }
     });
 
@@ -31,6 +44,20 @@ export default {
         this.$store.commit('deleteMessage', response.data.id);
       }
     });
+
+    this.socket.on('user:update', response => {
+      if (response.code === 200) {
+        this.$store.commit("editAuthorOfMessages", response.data)
+      }
+    });
   },
 };
 </script>
+
+<style lang='scss' scoped>
+.chat__messages {
+  overflow-y: scroll;
+  height: 91%;
+  width: 100%;
+}
+</style>

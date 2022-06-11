@@ -18,20 +18,6 @@
             </div>
             <button class='option__edit-button' @click='setting.handler()'>Edit</button>
           </div>
-          <!--          <div class='user__settings-option'>-->
-          <!--            <div class='option__info'>-->
-          <!--              <span class='option__title'>COLOR</span>-->
-          <!--              <span class='option__value'>{{ user.color }}</span>-->
-          <!--            </div>-->
-          <!--            <button class='option__edit-button' @click='editColorModal = true'>Edit</button>-->
-          <!--          </div>-->
-          <!--          <div class='user__settings-option'>-->
-          <!--            <div class='option__info'>-->
-          <!--              <span class='option__title'>AVATAR</span>-->
-          <!--              <span class='option__value'>{{ user.avatar }}</span>-->
-          <!--            </div>-->
-          <!--            <button class='option__edit-button' @click='editAvatarModal = true'>Edit</button>-->
-          <!--          </div>-->
           <button class='user__settings-exit-button' @click='exitButtonHandler'>
             Exit
           </button>
