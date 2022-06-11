@@ -3,6 +3,7 @@ import router from './router/index.js';
 import store from './store/index.js';
 import UIComponents from './components/UI/index.js';
 
+
 const app = Vue.createApp(App);
 const socket = io(location.origin);
 

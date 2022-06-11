@@ -145,9 +145,9 @@ export default {
   &:hover {
     background-color: var(--background-secondary);
 
-    //.author__avatar {
-    //  border: 3px solid var(--background-primary);
-    //}
+    .author__avatar {
+      border: 3px solid var(--background-primary);
+    }
 
     .message__options {
       display: flex;
@@ -162,6 +162,7 @@ export default {
     background-size: cover;
     background-repeat: no-repeat;
     border-radius: 50%;
+    cursor: pointer;
   }
 
   .message__content {
@@ -174,6 +175,7 @@ export default {
       align-items: center;
 
       .author__name {
+        cursor: pointer;
         font-family: var(--font-header);
         font-size: 17px;
         color: var(--text-primary);

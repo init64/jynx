@@ -1,5 +1,5 @@
 <template>
-  <Transition>
+  <Transition name='modal'>
     <div v-if='visible' class='modal__screen' @click='() => {onHide(); $emit("visible", false)}'>
       <div :class='["modal__content", this.class]' @click='$event.stopPropagation()'>
         <slot></slot>

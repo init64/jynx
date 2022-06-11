@@ -11,16 +11,35 @@
           </div>
         </div>
         <div class='user__settings'>
+          <div class='user__settings-option'>
+            <div class='option__info'>
+              <span class='option__title'>TOKEN</span>
+              <span class='option__value'>{{ userToken }}</span>
+            </div>
+            <button class='option__edit-button' @click='showFullToken = !showFullToken'>
+              {{ showFullToken ? "Hide" : "Show" }}
+            </button>
+          </div>
           <div v-for='setting in userSettings' class='user__settings-option'>
             <div class='option__info'>
               <span class='option__title'>{{ setting.title }}</span>
               <span class='option__value'>{{ setting.value() }}</span>
             </div>
-            <button class='option__edit-button' @click='setting.handler()'>Edit</button>
+            <button v-if='setting.handler' class='option__edit-button' @click='setting.handler()'>
+              Edit
+            </button>
           </div>
-          <button class='user__settings-exit-button' @click='exitButtonHandler'>
-            Exit
-          </button>
+          <div class='settings__buttons'>
+            <button @click='deleteAccountButtonHandler' v-if='showDeleteButton' class='buttons__delete-account-button'>
+              Delete account
+            </button>
+            <button @click='showDeleteButton = !showDeleteButton' class='buttons__show-delete-button'>
+              <i class='uil uil-ellipsis-h'></i>
+            </button>
+            <button class='buttons__exit-button' @click='exitButtonHandler'>
+              Exit
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -43,6 +62,8 @@ export default {
       editNameModal: false,
       editColorModal: false,
       editAvatarModal: false,
+      showDeleteButton: false,
+      showFullToken: false,
       userSettings: [
         {
           title: 'USERNAME',
@@ -69,6 +90,10 @@ export default {
       localStorage.removeItem('userID');
       this.router('/login');
     },
+    deleteAccountButtonHandler() {
+      this.socket.emit('user:delete', this.user.id);
+      this.exitButtonHandler();
+    },
   },
   computed: {
     username() {
@@ -86,6 +111,13 @@ export default {
         return '';
       }
     },
+    userToken() {
+      if (this.showFullToken) {
+        return this.user.token;
+      } else {
+        return this.user.token.slice(0, this.user.token.length/2) + "..."
+      }
+    }
   },
   mounted() {
     if (this.user.authorized) {
@@ -106,15 +138,15 @@ export default {
   flex-direction: column;
 
   .user__container {
-    height: 63%;
-    width: 50%;
+    width: 60%;
+    max-width: 700px;
     display: flex;
     align-items: center;
     flex-direction: column;
     border-radius: 10px;
 
     .user__color {
-      height: 25%;
+      height: 100px;
       width: 100%;
       border-top-left-radius: 10px;
       border-top-right-radius: 10px;
@@ -122,11 +154,11 @@ export default {
 
     .user__content {
       background-color: var(--background-thirty);
-      height: 75%;
       width: 100%;
       border-bottom-left-radius: 10px;
       border-bottom-right-radius: 10px;
       padding-inline: 20px;
+      padding-bottom: 20px;
 
       .user__info {
         display: flex;
@@ -164,24 +196,54 @@ export default {
 
       .user__settings {
         width: 100%;
-        height: 71%;
+        height: auto;
         margin-top: 20px;
         background-color: var(--background-primary);
         border-radius: 10px;
         padding: 5px 20px;
 
-        .user__settings-exit-button {
-          float: right;
-          background-color: var(--background-thirty);
-          color: var(--text-primary);
-          font-family: var(--font-primary);
-          font-weight: 600;
-          padding-inline: 20px;
-          padding-block: 11px;
-          border-radius: 6px;
-          border: none;
-          cursor: pointer;
-          margin-top: 13px;
+        .settings__buttons {
+          display: flex;
+          align-items: center;
+          justify-content: right;
+          margin-top: 15px;
+          margin-bottom: 5px;
+
+          .buttons__exit-button {
+            background-color: var(--background-thirty);
+            color: var(--text-primary);
+            font-family: var(--font-primary);
+            font-weight: 600;
+            padding-inline: 20px;
+            padding-block: 11px;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+          }
+
+          .buttons__show-delete-button {
+            cursor: pointer;
+            background: none;
+            border: none;
+            height: max-content;
+            color: var(--text-primary);
+            font-family: var(--font-header);
+            font-size: 25px;
+            margin-right: 10px;
+          }
+
+          .buttons__delete-account-button {
+            background-color: var(--background-thirty);
+            color: var(--text-primary);
+            font-family: var(--font-primary);
+            font-weight: 600;
+            padding-inline: 20px;
+            padding-block: 11px;
+            border-radius: 4px;
+            border: none;
+            cursor: pointer;
+            margin-right: 10px;
+          }
         }
 
         .user__settings-option {
@@ -209,7 +271,7 @@ export default {
           }
 
           .option__edit-button {
-            padding-inline: 20px;
+            width: 60px;
             padding-block: 8px;
             border: none;
             background-color: var(--background-secondary);

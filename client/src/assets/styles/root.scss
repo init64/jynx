@@ -17,7 +17,7 @@
   --background-darked: rgba(0, 0, 0, 0.6);
   --text-primary: #fff;
   --text-secondary: #636363;
-  --text-red: #d40a0a;
+  --text-red: #e70c0c;
   --font-primary: "Inter", sans-serif;
   --font-secondary: "Open Sans", sans-serif;
   --font-header: "Poppins", sans-serif;
@@ -37,6 +37,16 @@ body {
 
 .v-enter-from,
 .v-leave-to {
+  opacity: 0;
+}
+
+.modal-enter-active,
+.modal-leave-active {
+  transition: opacity 350ms ease;
+}
+
+.modal-enter-from,
+.modal-leave-to {
   opacity: 0;
 }
 

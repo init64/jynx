@@ -48,6 +48,8 @@ export default {
     if (this.user.authorized) {
       localStorage.setItem('lastPage', '/chat');
     }
+
+    Notification.requestPermission()
   },
 };
 </script>

@@ -88,7 +88,7 @@ class UserService {
     const user: UserModel = await User.findOne({ raw: true, where: { id: userId } });
 
     if (!user) {
-      return this.socket.emit('user:get',  ResponseDto.NotFoundError("User not found"));
+      return this.socket.emit('user:get', ResponseDto.NotFoundError("User not found"));
     }
 
     this.socket.emit('user:get', new ResponseDto(200, 'Success get user', new UserDto(user)));

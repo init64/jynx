@@ -30,6 +30,9 @@ export default {
     this.socket.on('chat:new-message', response => {
       if (response.code === 200) {
         this.$store.commit('pushMessage', response.data);
+        if (response.data.author.id !== this.user.id) {
+          new Notification(response.data.author.username, { body: response.data.content });
+        }
       }
     });
 

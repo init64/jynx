@@ -1,7 +1,7 @@
 <template>
   <div class='settings-page'>
     <div class='settings__container'>
-      <span class='title'>Настройки</span>
+      <span class='title'>Settings</span>
       <div class='options'>
         <Option v-for='option in options' :data='option' />
       </div>
@@ -17,10 +17,10 @@ export default {
     return {
       options: [
         {
-          header: 'Здесь был какой-то заголовок',
-          description: 'Здесь был какое-то описание',
+          header: 'There was a headline here',
+          description: 'There was some description',
           handler: (state) => {
-            console.log('Здесь было что то помимо console.log', state);
+            console.log('There was something besides console.log', state);
           },
         },
       ],

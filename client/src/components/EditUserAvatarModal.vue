@@ -4,7 +4,7 @@
          class='user-modal__edit-avatar'
          @visible='$emit("visible", $event)'>
     <span class='edit-avatar__title'>
-      Change your user avatar
+      Change your avatar
     </span>
     <span class='edit-avatar__description'>
       Enter a new avatar (url to image)
