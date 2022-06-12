@@ -20,14 +20,15 @@ app.mixin({
     };
   },
   computed: {
-    ...Vuex.mapState(['user', 'messages']),
+    ...Vuex.mapState('user', ['user']),
+    ...Vuex.mapState('messages', ['messages'])
   },
   methods: {
     router(path) {
       this.$router.push(path);
     },
     loadUser(user) {
-      this.$store.commit('setUser', { ...this.user, ...user, authorized: true });
+      this.$store.commit('user/setUser', { ...this.user, ...user, authorized: true }, { root: true });
       localStorage.setItem('token', user.token);
       localStorage.setItem('userID', user.id);
     },

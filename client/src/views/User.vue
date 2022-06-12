@@ -1,5 +1,5 @@
 <template>
-  <div class='user-page'>
+  <div v-if='user.authorized' class='user-page'>
     <div class='user__container'>
       <div :style='{backgroundColor: user.color}' class='user__color' />
       <div class='user__content'>
@@ -17,7 +17,7 @@
               <span class='option__value'>{{ userToken }}</span>
             </div>
             <button class='option__edit-button' @click='showFullToken = !showFullToken'>
-              {{ showFullToken ? "Hide" : "Show" }}
+              {{ showFullToken ? 'Hide' : 'Show' }}
             </button>
           </div>
           <div v-for='setting in userSettings' class='user__settings-option'>
@@ -77,7 +77,7 @@ export default {
         },
         {
           title: 'AVATAR',
-          value: () => this.user.avatar,
+          value: () => this.userAvatar,
           handler: () => this.editAvatarModal = true,
         },
       ],
@@ -85,7 +85,7 @@ export default {
   },
   methods: {
     exitButtonHandler() {
-      this.$store.commit('setUser', { authorized: false, token: '' });
+      this.$store.commit('user/setUser', { authorized: false, token: '' });
       localStorage.removeItem('token');
       localStorage.removeItem('userID');
       this.router('/login');
@@ -115,9 +115,16 @@ export default {
       if (this.showFullToken) {
         return this.user.token;
       } else {
-        return this.user.token.slice(0, this.user.token.length/2) + "..."
+        return this.user.token.slice(0, this.user.token.length / 2) + '...';
       }
-    }
+    },
+    userAvatar() {
+      if (this.user.avatar.length >= 60) {
+        return this.user.avatar.slice(0, 45) + '...';
+      }
+
+      return this.user.avatar;
+    },
   },
   mounted() {
     if (this.user.authorized) {
@@ -271,7 +278,7 @@ export default {
           }
 
           .option__edit-button {
-            width: 60px;
+            min-width: 60px;
             padding-block: 8px;
             border: none;
             background-color: var(--background-secondary);

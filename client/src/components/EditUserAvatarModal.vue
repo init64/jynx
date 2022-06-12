@@ -37,7 +37,7 @@ export default {
 
         this.socket.on('user:update', response => {
           if (response.code === 200) {
-            this.$store.commit('updateUser', response.data);
+            this.$store.commit('user/updateUser', response.data);
           }
         });
       }

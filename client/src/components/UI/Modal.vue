@@ -1,7 +1,7 @@
 <template>
   <Transition name='modal'>
     <div v-if='visible' class='modal__screen' @click='() => {onHide(); $emit("visible", false)}'>
-      <div :class='["modal__content", this.class]' @click='$event.stopPropagation()'>
+      <div :class='[!overWriteClass && "modal__content", this.class]' @click='$event.stopPropagation()'>
         <slot></slot>
       </div>
     </div>
@@ -13,13 +13,22 @@ export default {
   name: 'Modal',
   props: {
     visible: Boolean,
-    class: String,
+    class: {
+      type: String,
+      required: false,
+      default: ""
+    },
     onHide: {
       type: Function,
       required: false,
       default: () => {
       },
     },
+    overWriteClass: {
+      type: Boolean,
+      default: false,
+      required: false
+    }
   },
 };
 </script>

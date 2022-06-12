@@ -1,5 +1,5 @@
 <template>
-  <div class='chat-page'>
+  <div v-if='user.authorized' class='chat-page'>
     <div class='chat__container'>
       <Messages @openAuthorModal='openAuthorModal' />
       <div class='chat__message-input'>

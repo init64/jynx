@@ -23,13 +23,13 @@ export default {
 
     this.socket.on('chat:get-messages', response => {
       if (response.code === 200) {
-        this.$store.commit('setMessages', response.data);
+        this.$store.commit('messages/setMessages', response.data);
       }
     });
 
     this.socket.on('chat:new-message', response => {
       if (response.code === 200) {
-        this.$store.commit('pushMessage', response.data);
+        this.$store.commit('messages/pushMessage', response.data);
         if (response.data.author.id !== this.user.id) {
           new Notification(response.data.author.username, { body: response.data.content });
         }
@@ -43,19 +43,19 @@ export default {
           content,
           updatedAt,
         } = response.data;
-        this.$store.commit('setMessage', { id, content, updatedAt });
+        this.$store.commit('messages/setMessage', { id, content, updatedAt });
       }
     });
 
     this.socket.on('chat:delete-message', response => {
       if (response.code === 200) {
-        this.$store.commit('deleteMessage', response.data.id);
+        this.$store.commit('messages/deleteMessage', response.data.id);
       }
     });
 
     this.socket.on('user:update', response => {
       if (response.code === 200) {
-        this.$store.commit('editAuthorOfMessages', response.data);
+        this.$store.commit('messages/editAuthorOfMessages', response.data);
       }
     });
   },
